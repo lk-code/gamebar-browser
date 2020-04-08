@@ -1,4 +1,6 @@
-﻿using System;
+﻿using browser.Views;
+using Microsoft.Gaming.XboxGameBar;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +24,9 @@ namespace browser
     /// </summary>
     sealed partial class App : Application
     {
+        private XboxGameBarWidget widgetBrowser = null;
+        private XboxGameBarWidget widgetBrowserSettings = null;
+
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
         /// und daher das logische Äquivalent von main() bzw. WinMain().
@@ -30,6 +35,110 @@ namespace browser
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            XboxGameBarWidgetActivatedEventArgs widgetArgs = null;
+
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                IProtocolActivatedEventArgs protocolArgs = args as IProtocolActivatedEventArgs;
+                string scheme = protocolArgs.Uri.Scheme;
+
+                if (scheme.Equals("ms-gamebarwidget"))
+                {
+                    widgetArgs = args as XboxGameBarWidgetActivatedEventArgs;
+                }
+            }
+
+            if (widgetArgs != null)
+            {
+                //
+                // Activation Notes:
+                //
+                //    If IsLaunchActivation is true, this is Game Bar launching a new instance
+                // of our widget. This means we have a NEW CoreWindow with corresponding UI
+                // dispatcher, and we MUST create and hold onto a new XboxGameBarWidget.
+                //
+                // Otherwise this is a subsequent activation coming from Game Bar. We MUST
+                // continue to hold the XboxGameBarWidget created during initial activation
+                // and ignore this repeat activation, or just observe the URI command here and act 
+                // accordingly.  It is ok to perform a navigate on the root frame to switch 
+                // views/pages if needed.  Game Bar lets us control the URI for sending widget to
+                // widget commands or receiving a command from another non-widget process. 
+                //
+                // Important Cleanup Notes:
+                //    When our widget is closed--by Game Bar or us calling XboxGameBarWidget.Close()-,
+                // the CoreWindow will get a closed event.  We can register for Window.Closed
+                // event to know when our partucular widget has shutdown, and cleanup accordingly.
+                //
+                // NOTE: If a widget's CoreWindow is the LAST CoreWindow being closed for the process
+                // then we won't get the Window.Closed event.  However, we will get the OnSuspending
+                // call and can use that for cleanup.
+                //
+                if (widgetArgs.IsLaunchActivation)
+                {
+                    var rootFrame = new Frame();
+                    rootFrame.NavigationFailed += OnNavigationFailed;
+                    Window.Current.Content = rootFrame;
+
+                    // Navigate to correct view
+                    if (widgetArgs.AppExtensionId == "WidgetBrowser")
+                    {
+                        this.widgetBrowser = new XboxGameBarWidget(
+                            widgetArgs,
+                            Window.Current.CoreWindow,
+                            rootFrame);
+                        rootFrame.Navigate(typeof(BrowserWidget), this.widgetBrowser);
+
+                        Window.Current.Closed += WidgetBrowserWindow_Closed;
+                    }
+                    else if (widgetArgs.AppExtensionId == "WidgetBrowserSettings")
+                    {
+                        this.widgetBrowserSettings = new XboxGameBarWidget(
+                            widgetArgs,
+                            Window.Current.CoreWindow,
+                            rootFrame);
+                        rootFrame.Navigate(typeof(BrowserSettings), this.widgetBrowserSettings);
+
+                        Window.Current.Closed += WidgetBrowserSettingsWindow_Closed;
+                    }
+                    else
+                    {
+                        // Unknown - Game Bar should never send you an unknown App Extension Id
+                        return;
+                    }
+
+                    Window.Current.Activate();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WidgetBrowserWindow_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        {
+            this.widgetBrowser = null;
+            Window.Current.Closed -= WidgetBrowserWindow_Closed;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WidgetBrowserSettingsWindow_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        {
+            this.widgetBrowserSettings = null;
+            Window.Current.Closed -= WidgetBrowserSettingsWindow_Closed;
         }
 
         /// <summary>
@@ -93,7 +202,10 @@ namespace browser
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
+
+            this.widgetBrowser = null;
+            this.widgetBrowserSettings = null;
+
             deferral.Complete();
         }
     }
