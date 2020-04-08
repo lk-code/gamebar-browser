@@ -62,5 +62,37 @@ namespace browser.Views
         {
             await _widget.ActivateSettingsAsync();
         }
+
+        private void TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            switch(e.Key)
+            {
+                case Windows.System.VirtualKey.Enter:
+                case Windows.System.VirtualKey.GamepadA:
+                    {
+                        // enter the new url
+                        this.GoToPage(this.BrowserWidget_HeaderUri_TextBox.Text);
+                    } break;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uri"></param>
+        private void GoToPage(string uriValue)
+        {
+            Uri uri = new Uri(uriValue);
+            this.GoToPage(uri);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uri"></param>
+        private void GoToPage(Uri uri)
+        {
+            this.BrowserWidget_MainContent_WebView.Source = uri;
+        }
     }
 }
