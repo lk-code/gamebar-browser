@@ -8,15 +8,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="2dacd156-1002-4733-941c-a83dd844c4ed"
-    Publisher="CN=larsk"
+    Name="45012KrimmerStudios.InGameBrowser"
+    Publisher="CN=685DD444-787C-4F01-AFD6-C59B21F062E1"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="2dacd156-1002-4733-941c-a83dd844c4ed" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="6336f3ac-0d55-46f7-a7a3-0f11df4c7e4f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Xbox Game Bar InGame Browser</DisplayName>
-    <PublisherDisplayName>larsk</PublisherDisplayName>
+    <DisplayName>InGame Browser</DisplayName>
+    <PublisherDisplayName>Lars Krämer</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -33,7 +33,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="browser.App">
       <uap:VisualElements
-        DisplayName="Xbox Game Bar InGame Browser"
+        DisplayName="InGame Browser"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Xbox Game Bar InGame Browser"

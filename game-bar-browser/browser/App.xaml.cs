@@ -1,4 +1,7 @@
 ﻿using browser.Views;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Gaming.XboxGameBar;
 using System;
 using System.Collections.Generic;
@@ -35,6 +38,18 @@ namespace browser
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            this.initializeAppCenter();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void initializeAppCenter()
+        {
+            AppCenter.Start("2abc16d4-e957-4e05-a5da-2a12492e7bca",
+                   typeof(Analytics),
+                   typeof(Crashes));
         }
 
         /// <summary>
