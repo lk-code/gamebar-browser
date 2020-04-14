@@ -51,13 +51,14 @@
 
             <TextBox
                 x:Name="BrowserWidget_HeaderUri_TextBox"
+                x:Uid="BrowserWidget_HeaderUri_TextBox"
                 Grid.Column="1"
                 Height="40"
                 Margin="4"
                 Padding="6"
                 FontSize="18"
                 KeyUp="TextBox_KeyUp"
-                PlaceholderText="Webadresse suchen oder eingeben" />
+                PlaceholderText="__BrowserWidget_HeaderUri_TextBox__" />
 
 
             <StackPanel
