@@ -27,25 +27,22 @@
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
 
-                <Button
-                    Width="40"
-                    Height="40"
-                    Margin="4">
-                    <SymbolIcon Symbol="Back" />
+                <Button Style="{StaticResource NavigationButtonStyle}">
+                    <Viewbox MaxWidth="32" MaxHeight="32">
+                        <SymbolIcon Symbol="Back" />
+                    </Viewbox>
                 </Button>
 
-                <Button
-                    Width="40"
-                    Height="40"
-                    Margin="4">
-                    <SymbolIcon Symbol="Forward" />
+                <Button Style="{StaticResource NavigationButtonStyle}">
+                    <Viewbox MaxWidth="32" MaxHeight="32">
+                        <SymbolIcon Symbol="Forward" />
+                    </Viewbox>
                 </Button>
 
-                <Button
-                    Width="40"
-                    Height="40"
-                    Margin="4">
-                    <SymbolIcon Symbol="Refresh" />
+                <Button Style="{StaticResource NavigationButtonStyle}">
+                    <Viewbox MaxWidth="32" MaxHeight="32">
+                        <SymbolIcon Symbol="Refresh" />
+                    </Viewbox>
                 </Button>
             </StackPanel>
 

@@ -7,6 +7,7 @@
     <Application.Resources>
         <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
             <ResourceDictionary.ThemeDictionaries>
+
                 <ResourceDictionary x:Key="Default">
                     <AcrylicBrush
                         x:Key="CMapUwpAcrylicBrush"
@@ -28,7 +29,14 @@
                         TintColor="White"
                         TintOpacity="0.4" />
                 </ResourceDictionary>
+
             </ResourceDictionary.ThemeDictionaries>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Style/DefaultStyle.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 
