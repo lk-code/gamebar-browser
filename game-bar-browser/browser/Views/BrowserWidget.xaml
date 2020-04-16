@@ -2,6 +2,7 @@
     x:Class="browser.Views.BrowserWidget"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:browser.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,7 +12,7 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -27,19 +28,28 @@
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
 
-                <Button Style="{StaticResource NavigationButtonStyle}">
+                <Button
+                    Width="32"
+                    Height="32"
+                    Margin="2">
                     <Viewbox MaxWidth="32" MaxHeight="32">
                         <SymbolIcon Symbol="Back" />
                     </Viewbox>
                 </Button>
 
-                <Button Style="{StaticResource NavigationButtonStyle}">
+                <Button
+                    Width="32"
+                    Height="32"
+                    Margin="2">
                     <Viewbox MaxWidth="32" MaxHeight="32">
                         <SymbolIcon Symbol="Forward" />
                     </Viewbox>
                 </Button>
 
-                <Button Style="{StaticResource NavigationButtonStyle}">
+                <Button
+                    Width="32"
+                    Height="32"
+                    Margin="2">
                     <Viewbox MaxWidth="32" MaxHeight="32">
                         <SymbolIcon Symbol="Refresh" />
                     </Viewbox>
@@ -50,13 +60,12 @@
                 x:Name="BrowserWidget_HeaderUri_TextBox"
                 x:Uid="BrowserWidget_HeaderUri_TextBox"
                 Grid.Column="1"
-                Height="40"
-                Margin="4"
-                Padding="6"
-                FontSize="18"
+                Height="32"
+                Margin="2"
+                Padding="5"
+                FontSize="14"
                 KeyUp="TextBox_KeyUp"
                 PlaceholderText="__BrowserWidget_HeaderUri_TextBox__" />
-
 
             <StackPanel
                 Grid.Column="2"
@@ -64,10 +73,12 @@
                 Orientation="Horizontal">
 
                 <Button
-                    Width="40"
-                    Height="40"
-                    Margin="4">
-                    <SymbolIcon Symbol="Bookmarks" />
+                    Width="32"
+                    Height="32"
+                    Margin="2">
+                    <Viewbox MaxWidth="32" MaxHeight="32">
+                        <SymbolIcon Symbol="More" />
+                    </Viewbox>
                 </Button>
 
             </StackPanel>
