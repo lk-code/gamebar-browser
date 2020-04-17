@@ -11,7 +11,10 @@
     <Grid Background="{ThemeResource CMapUwpAcrylicBrush}">
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Test" />
+            <TextBlock
+                Margin="16"
+                HorizontalAlignment="Center"
+                Text="Test" />
         </StackPanel>
     </Grid>
 </Page>

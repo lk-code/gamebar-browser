@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BrowserWidget_HeaderUri_TextBox.PlaceholderText" xml:space="preserve">
+  <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton.Label" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="BrowserWidget_AppMenuCommandBarFlyout_ShareButton.Label" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="BrowserWidget_AppMenuCommandBarFlyout_ShareButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="BrowserWidget_HeaderUriAutoSuggestBox.PlaceholderText" xml:space="preserve">
     <value>Search or enter web address</value>
+  </data>
+  <data name="BrowserWidget_MoreMenuButton.Text" xml:space="preserve">
+    <value>Menu</value>
   </data>
 </root>
