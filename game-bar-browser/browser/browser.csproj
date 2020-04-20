@@ -127,10 +127,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\WebUriProcessor\WebUriProcessorComponent.cs" />
+    <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BrowserWidgetViewModel.cs" />
     <Compile Include="Views\BrowserSettings.xaml.cs">
       <DependentUpon>BrowserSettings.xaml</DependentUpon>
     </Compile>
@@ -234,9 +237,7 @@
       <Version>2.4.0-prerelease.200322001</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

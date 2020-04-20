@@ -71,6 +71,7 @@
                 KeyUp="BrowserWidget_HeaderUriAutoSuggestBox_KeyUp"
                 PlaceholderText="__BrowserWidget_HeaderUriAutoSuggestBox_PlaceholderText__"
                 SuggestionChosen="BrowserWidget_HeaderUriAutoSuggestBox_SuggestionChosen"
+                Text="{Binding AdressBarDisplayText}"
                 TextChanged="BrowserWidget_HeaderUriAutoSuggestBox_TextChanged" />
 
             <StackPanel
@@ -91,7 +92,7 @@
                             <AppBarButton
                                 x:Name="BrowserWidget_AppMenuCommandBarFlyout_ShareButton"
                                 x:Uid="BrowserWidget_AppMenuCommandBarFlyout_ShareButton"
-                                Click="BrowserWidget_AppMenuCommandBarFlyout_ShareButton_Clicked"
+                                Command="{Binding OpenShareMenuCommand}"
                                 Icon="Share"
                                 Label="__BrowserWidget_AppMenuCommandBarFlyout_ShareButton_Label__"
                                 ToolTipService.ToolTip="__BrowserWidget_AppMenuCommandBarFlyout_ShareButton_ToolTipService_ToolTip__" />
@@ -104,7 +105,7 @@
                                 <AppBarButton
                                     x:Name="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton"
                                     x:Uid="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton"
-                                    Click="OnElementClicked"
+                                    Command="{Binding OpenSettingsCommand}"
                                     Label="__BrowserWidget_AppMenuCommandBarFlyout_SettingsButton_Label__" />
                             </muxc:CommandBarFlyout.SecondaryCommands>
                         </muxc:CommandBarFlyout>
