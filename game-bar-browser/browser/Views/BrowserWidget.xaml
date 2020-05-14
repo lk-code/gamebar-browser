@@ -126,7 +126,13 @@
         <WebView
             x:Name="BrowserWidget_MainContent_WebView"
             Grid.Row="1"
-            Source="{Binding WebViewAdressSource, Mode=TwoWay}" />
+            Source="{Binding WebViewAdressSource, Mode=TwoWay}">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="NavigationStarting">
+                    <core:InvokeCommandAction Command="{Binding WebViewSourceChangingCommand}" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </WebView>
 
     </Grid>
 

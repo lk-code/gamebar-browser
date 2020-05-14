@@ -4,6 +4,7 @@ using Microsoft.Gaming.XboxGameBar;
 using System;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 namespace browser.ViewModels
@@ -34,6 +35,11 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         public ICommand AdressBarKeyUpCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand WebViewSourceChangingCommand { get; set; }
 
         #endregion
 
@@ -200,6 +206,22 @@ namespace browser.ViewModels
             {
                 this.ProcessAdressVarKeyUp(eventArgs as KeyRoutedEventArgs);
             });
+
+            this.WebViewSourceChangingCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessWebViewSourceChanging(eventArgs as WebViewNavigationStartingEventArgs);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ProcessWebViewSourceChanging(WebViewNavigationStartingEventArgs eventArgs)
+        {
+            string newUriValue = eventArgs.Uri.ToString();
+
+            this.ProcessChangingWebViewSource(newUriValue);
+            
         }
 
         /// <summary>
@@ -207,7 +229,7 @@ namespace browser.ViewModels
         /// </summary>
         private void ProcessAdressVarKeyUp(KeyRoutedEventArgs eventArgs)
         {
-            switch(eventArgs.Key)
+            switch (eventArgs.Key)
             {
                 case Windows.System.VirtualKey.Enter:
                     {
@@ -215,7 +237,8 @@ namespace browser.ViewModels
                         string adressValue = this.AdressBarDisplayText;
 
                         this.ProcessAdressBarValue(adressValue);
-                    } break;
+                    }
+                    break;
             }
         }
 
