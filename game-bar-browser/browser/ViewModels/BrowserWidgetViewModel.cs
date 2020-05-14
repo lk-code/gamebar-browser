@@ -1,19 +1,16 @@
-﻿using browser.Core;
+﻿using browser.core.Components.WebUriProcessor;
+using browser.Core;
 using Microsoft.Gaming.XboxGameBar;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml.Input;
 
 namespace browser.ViewModels
 {
-    public class BrowserWidgetViewModel : INotifyPropertyChanged
+    public class BrowserWidgetViewModel : BaseViewModel
     {
         #region # events #
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -32,6 +29,11 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         public ICommand OpenShareMenuCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AdressBarKeyUpCommand { get; set; }
 
         #endregion
 
@@ -53,9 +55,25 @@ namespace browser.ViewModels
             }
             set
             {
-                this.ProcessAdressBarValue(_adressBarDisplayText);
-
                 SetProperty(ref _adressBarDisplayText, value);
+            }
+        }
+
+        string _webViewAdressSource = string.Empty;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string WebViewAdressSource
+        {
+            get
+            {
+                return _webViewAdressSource;
+            }
+            set
+            {
+                SetProperty(ref _webViewAdressSource, value);
+
+                this.ProcessChangingWebViewSource(this._webViewAdressSource);
             }
         }
 
@@ -115,21 +133,42 @@ namespace browser.ViewModels
 
         #region # private logic #
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="webViewSource"></param>
+        private void ProcessChangingWebViewSource(string webViewSource)
+        {
+            if(webViewSource != this._adressBarDisplayText)
+            {
+                this.AdressBarDisplayText = webViewSource;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requestedUriValue"></param>
         private void ProcessAdressBarValue(string requestedUriValue)
         {
             string sourceUriValue = requestedUriValue;
             Uri targetUri = null;
+            WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
 
             // is valid url
-            if (WebUr)
+            if (webUriProcessorComponent.IsValidUri(sourceUriValue))
             {
                 targetUri = new Uri(sourceUriValue);
-            } else if(true)
+            } else if(webUriProcessorComponent.IsValidAdress(sourceUriValue))
             {
-
+                targetUri = webUriProcessorComponent.CreateUriFromDomain(sourceUriValue);
+            } else
+            {
+                // create uri for search engine
             }
 
-            this._adressBarDisplayText = targetUri.ToString();
+            this.AdressBarDisplayText = targetUri.ToString();
+            this.WebViewAdressSource = this.AdressBarDisplayText;
         }
 
         /// <summary>
@@ -147,15 +186,37 @@ namespace browser.ViewModels
         /// </summary>
         private void InitializeCommands()
         {
-            this.OpenSettingsCommand = new RelayCommand(() =>
+            this.OpenSettingsCommand = new RelayCommand((eventArgs) =>
             {
                 this.OpenXboxGameBarWidgetSettings();
             });
 
-            this.OpenShareMenuCommand = new RelayCommand(() =>
+            this.OpenShareMenuCommand = new RelayCommand((eventArgs) =>
             {
                 this.OpenShareMenu();
             });
+
+            this.AdressBarKeyUpCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessAdressVarKeyUp(eventArgs as KeyRoutedEventArgs);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ProcessAdressVarKeyUp(KeyRoutedEventArgs eventArgs)
+        {
+            switch(eventArgs.Key)
+            {
+                case Windows.System.VirtualKey.Enter:
+                    {
+                        // process the content
+                        string adressValue = this.AdressBarDisplayText;
+
+                        this.ProcessAdressBarValue(adressValue);
+                    } break;
+            }
         }
 
         /// <summary>
@@ -163,8 +224,6 @@ namespace browser.ViewModels
         /// </summary>
         private void OpenShareMenu()
         {
-            this.AdressBarDisplayText = "Dönerbude in Solingen";
-
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
 
@@ -193,47 +252,6 @@ namespace browser.ViewModels
         private async void OpenXboxGameBarWidgetSettings()
         {
             await this.XboxGameBarWidgetInstance.ActivateSettingsAsync();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="propertyName"></param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            var changed = PropertyChanged;
-            if (changed == null)
-            {
-                return;
-            }
-
-            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="backingStore"></param>
-        /// <param name="value"></param>
-        /// <param name="propertyName"></param>
-        /// <param name="onChanged"></param>
-        /// <returns></returns>
-        protected bool SetProperty<T>(ref T backingStore,
-            T value,
-            [CallerMemberName]string propertyName = "",
-            Action onChanged = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-            {
-                return false;
-            }
-
-            backingStore = value;
-            onChanged?.Invoke();
-            OnPropertyChanged(propertyName);
-
-            return true;
         }
 
         #endregion

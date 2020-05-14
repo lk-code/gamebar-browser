@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Windows.UI.Xaml.Input;
 
 namespace browser.Core
 {
@@ -11,7 +12,7 @@ namespace browser.Core
         /// <summary>
         /// 
         /// </summary>
-        private readonly Action _execute;
+        private readonly Action<object> _execute;
 
         /// <summary>
         /// 
@@ -27,7 +28,7 @@ namespace browser.Core
         /// Creates a new command that can always execute.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
-        public RelayCommand(Action execute)
+        public RelayCommand(Action<object> execute)
             : this(execute, null)
         {
         }
@@ -37,7 +38,7 @@ namespace browser.Core
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public RelayCommand(Action<object> execute, Func<bool> canExecute)
         {
             _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
@@ -63,7 +64,7 @@ namespace browser.Core
         /// </param>
         public void Execute(object parameter)
         {
-            _execute();
+            _execute(parameter);
         }
 
         /// <summary>

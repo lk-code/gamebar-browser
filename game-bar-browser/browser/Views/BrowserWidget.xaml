@@ -2,7 +2,9 @@
     x:Class="browser.Views.BrowserWidget"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:browser.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
@@ -68,11 +70,16 @@
                 Padding="5"
                 AutomationProperties.Name="Browser Adress AutoSuggestBox"
                 FontSize="14"
-                KeyUp="BrowserWidget_HeaderUriAutoSuggestBox_KeyUp"
                 PlaceholderText="__BrowserWidget_HeaderUriAutoSuggestBox_PlaceholderText__"
                 SuggestionChosen="BrowserWidget_HeaderUriAutoSuggestBox_SuggestionChosen"
-                Text="{Binding AdressBarDisplayText}"
-                TextChanged="BrowserWidget_HeaderUriAutoSuggestBox_TextChanged" />
+                Text="{Binding AdressBarDisplayText, Mode=TwoWay}"
+                TextChanged="BrowserWidget_HeaderUriAutoSuggestBox_TextChanged">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="KeyUp">
+                        <core:InvokeCommandAction Command="{Binding AdressBarKeyUpCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AutoSuggestBox>
 
             <StackPanel
                 Grid.Column="2"
@@ -119,7 +126,7 @@
         <WebView
             x:Name="BrowserWidget_MainContent_WebView"
             Grid.Row="1"
-            Source="https://www.bing.com" />
+            Source="{Binding WebViewAdressSource, Mode=TwoWay}" />
 
     </Grid>
 

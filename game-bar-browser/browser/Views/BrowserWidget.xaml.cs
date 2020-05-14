@@ -100,6 +100,7 @@ namespace browser.Views
                     sender.Text + "10",
                     sender.Text + "11"
                 };
+
                 this.BrowserWidget_HeaderUriAutoSuggestBox.ItemsSource = suggestions;
             }
         }
@@ -111,7 +112,7 @@ namespace browser.Views
         /// <param name="args"></param>
         private void BrowserWidget_HeaderUriAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            this.GoToPage(args.SelectedItem.ToString());
+            // this.GoToPage(args.SelectedItem.ToString());
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace browser.Views
                 case Windows.System.VirtualKey.GamepadA:
                     {
                         // enter the new url
-                        this.GoToPage(this.BrowserWidget_HeaderUriAutoSuggestBox.Text);
+                        // this.GoToPage(this.BrowserWidget_HeaderUriAutoSuggestBox.Text);
                     }
                     break;
             }
