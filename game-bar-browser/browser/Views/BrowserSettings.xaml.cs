@@ -1,4 +1,5 @@
-﻿using Microsoft.Gaming.XboxGameBar;
+﻿using browser.ViewModels;
+using Microsoft.Gaming.XboxGameBar;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,12 +24,36 @@ namespace browser.Views
     /// </summary>
     public sealed partial class BrowserSettings : Page
     {
+        #region # public properties #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BrowserSettingsViewModel viewModel;
+
+        #endregion
+
         /// <summary>
         /// 
         /// </summary>
         public BrowserSettings()
         {
             this.InitializeComponent();
+
+            this.DataContext = viewModel = new BrowserSettingsViewModel();
         }
+
+        #region # private properties #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.viewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+        }
+
+        #endregion
     }
 }

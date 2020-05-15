@@ -1,4 +1,6 @@
-﻿using browser.core.Components.WebUriProcessor;
+﻿using browser.Components.SearchEngine;
+using browser.Components.Storage;
+using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using Microsoft.Gaming.XboxGameBar;
 using System;
@@ -50,6 +52,16 @@ namespace browser.ViewModels
         #endregion
 
         #region # private properties #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private StorageManager _storageManager { get; set; } = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private SearchEngineProcessor _searchEngineProcessor { get; set; } = null;
 
         #endregion
 
@@ -150,6 +162,8 @@ namespace browser.ViewModels
         /// </summary>
         public BrowserWidgetViewModel()
         {
+            this.InitializeStorageManager();
+            this.InitializeSearchEngineProcessor();
             this.InitializeCommands();
         }
 
@@ -195,6 +209,31 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        private void InitializeSearchEngineProcessor()
+        {
+            this._searchEngineProcessor = new SearchEngineProcessor();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadSearchEngineData()
+        {
+            string selectedSearchEngineKey = this._storageManager.GetValue<string>(StorageKey.SEARCH_ENGINE, StorageDefaults.SEARCH_ENGINE);
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeStorageManager()
+        {
+            this._storageManager = new StorageManager();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="webViewSource"></param>
         private void ProcessChangingWebViewSource(string webViewSource)
         {
@@ -223,7 +262,9 @@ namespace browser.ViewModels
                 targetUri = webUriProcessorComponent.CreateUriFromDomain(sourceUriValue);
             } else
             {
-                // create uri for search engine
+                string selectedSearchEngineKey = this._storageManager.GetValue<string>(StorageKey.SEARCH_ENGINE, StorageDefaults.SEARCH_ENGINE);
+
+                targetUri = this._searchEngineProcessor.RenderSearchUri(selectedSearchEngineKey, sourceUriValue);
             }
 
             this.AdressBarDisplayText = targetUri.ToString();

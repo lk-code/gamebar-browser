@@ -127,12 +127,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\SearchEngine\SearchEngine.cs" />
+    <Compile Include="Components\SearchEngine\SearchEngineProcessor.cs" />
+    <Compile Include="Components\Storage\StorageDefaults.cs" />
+    <Compile Include="Components\Storage\StorageKey.cs" />
+    <Compile Include="Components\Storage\StorageManager.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BrowserSettingsViewModel.cs" />
     <Compile Include="ViewModels\BrowserWidgetViewModel.cs" />
     <Compile Include="Views\BrowserSettings.xaml.cs">
       <DependentUpon>BrowserSettings.xaml</DependentUpon>
