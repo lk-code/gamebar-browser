@@ -2,6 +2,7 @@
 using browser.Core;
 using Microsoft.Gaming.XboxGameBar;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Controls;
@@ -40,6 +41,11 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         public ICommand WebViewSourceChangingCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AdressBarSuggestionChosenCommand { get; set; }
 
         #endregion
 
@@ -119,6 +125,22 @@ namespace browser.ViewModels
             }
         }
 
+        ObservableCollection<string> _adressBarSuggestValues = new ObservableCollection<string>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public ObservableCollection<string> AdressBarSuggestValues
+        {
+            get
+            {
+                return _adressBarSuggestValues;
+            }
+            set
+            {
+                _adressBarSuggestValues = value;
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -138,6 +160,37 @@ namespace browser.ViewModels
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeCommands()
+        {
+            this.OpenSettingsCommand = new RelayCommand((eventArgs) =>
+            {
+                this.OpenXboxGameBarWidgetSettings();
+            });
+
+            this.OpenShareMenuCommand = new RelayCommand((eventArgs) =>
+            {
+                this.OpenShareMenu();
+            });
+
+            this.AdressBarKeyUpCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessAdressVarKeyUp(eventArgs as KeyRoutedEventArgs);
+            });
+
+            this.WebViewSourceChangingCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessWebViewSourceChanging(eventArgs as WebViewNavigationStartingEventArgs);
+            });
+
+            this.AdressBarSuggestionChosenCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessAdressBarSuggestionChosen((eventArgs as AutoSuggestBoxSuggestionChosenEventArgs));
+            });
+        }
 
         /// <summary>
         /// 
@@ -190,27 +243,11 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void InitializeCommands()
+        private void ProcessAdressBarSuggestionChosen(AutoSuggestBoxSuggestionChosenEventArgs eventArgs)
         {
-            this.OpenSettingsCommand = new RelayCommand((eventArgs) =>
-            {
-                this.OpenXboxGameBarWidgetSettings();
-            });
+            string chosenSuggestValue = (eventArgs.SelectedItem as string);
 
-            this.OpenShareMenuCommand = new RelayCommand((eventArgs) =>
-            {
-                this.OpenShareMenu();
-            });
-
-            this.AdressBarKeyUpCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessAdressVarKeyUp(eventArgs as KeyRoutedEventArgs);
-            });
-
-            this.WebViewSourceChangingCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessWebViewSourceChanging(eventArgs as WebViewNavigationStartingEventArgs);
-            });
+            this.ProcessAdressBarValue(chosenSuggestValue);
         }
 
         /// <summary>
@@ -221,7 +258,6 @@ namespace browser.ViewModels
             string newUriValue = eventArgs.Uri.ToString();
 
             this.ProcessChangingWebViewSource(newUriValue);
-            
         }
 
         /// <summary>
@@ -229,17 +265,33 @@ namespace browser.ViewModels
         /// </summary>
         private void ProcessAdressVarKeyUp(KeyRoutedEventArgs eventArgs)
         {
-            switch (eventArgs.Key)
+            if(eventArgs.Key == Windows.System.VirtualKey.Enter)
             {
-                case Windows.System.VirtualKey.Enter:
-                    {
-                        // process the content
-                        string adressValue = this.AdressBarDisplayText;
+                // process the content
+                string adressValue = this.AdressBarDisplayText;
 
-                        this.ProcessAdressBarValue(adressValue);
-                    }
-                    break;
+                this.ProcessAdressBarValue(adressValue);
+
+                return;
             }
+
+            this.ProcessAutoSuggestValues();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ProcessAutoSuggestValues()
+        {
+            string currentAdressBarValue = this.AdressBarDisplayText;
+
+            this.AdressBarSuggestValues.Clear();
+
+            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #0");
+            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #1");
+            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #2");
+            this.AdressBarSuggestValues.Add($"{currentAdressBarValue}");
+            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #3");
         }
 
         /// <summary>

@@ -70,13 +70,15 @@
                 Padding="5"
                 AutomationProperties.Name="Browser Adress AutoSuggestBox"
                 FontSize="14"
+                ItemsSource="{Binding AdressBarSuggestValues}"
                 PlaceholderText="__BrowserWidget_HeaderUriAutoSuggestBox_PlaceholderText__"
-                SuggestionChosen="BrowserWidget_HeaderUriAutoSuggestBox_SuggestionChosen"
-                Text="{Binding AdressBarDisplayText, Mode=TwoWay}"
-                TextChanged="BrowserWidget_HeaderUriAutoSuggestBox_TextChanged">
+                Text="{Binding AdressBarDisplayText, Mode=TwoWay}">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="KeyUp">
                         <core:InvokeCommandAction Command="{Binding AdressBarKeyUpCommand}" />
+                    </core:EventTriggerBehavior>
+                    <core:EventTriggerBehavior EventName="SuggestionChosen">
+                        <core:InvokeCommandAction Command="{Binding AdressBarSuggestionChosenCommand}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AutoSuggestBox>
@@ -107,7 +109,6 @@
                                 <AppBarButton
                                     x:Name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
                                     x:Uid="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
-                                    Click="OnElementClicked"
                                     Label="__BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton_Label__" />
                                 <AppBarButton
                                     x:Name="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton"
