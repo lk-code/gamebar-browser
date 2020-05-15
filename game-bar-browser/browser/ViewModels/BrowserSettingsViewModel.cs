@@ -2,11 +2,14 @@
 using browser.Components.Storage;
 using browser.Core;
 using Microsoft.Gaming.XboxGameBar;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace browser.ViewModels
 {
@@ -26,6 +29,16 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         public ICommand SearchEngineSelectionChangedCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ShowHomepageButtonToggledCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand HomepageUriKeyUpCommand { get; set; }
 
         #endregion
 
@@ -107,7 +120,39 @@ namespace browser.ViewModels
             }
             set
             {
-                _searchEngineSelectedItem = value;
+                SetProperty(ref _searchEngineSelectedItem, value);
+            }
+        }
+
+        string _homepageUriSettingValue = string.Empty;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string HomepageUriSettingValue
+        {
+            get
+            {
+                return _homepageUriSettingValue;
+            }
+            set
+            {
+                SetProperty(ref _homepageUriSettingValue, value);
+            }
+        }
+
+        bool _showHomepageButtonSettingValue = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ShowHomepageButtonSettingValue
+        {
+            get
+            {
+                return _showHomepageButtonSettingValue;
+            }
+            set
+            {
+                SetProperty(ref _showHomepageButtonSettingValue, value);
             }
         }
 
@@ -122,6 +167,7 @@ namespace browser.ViewModels
         {
             this.InitializeStorageManager();
             this.InitializeSearchEngineProcessor();
+            this.LoadSettingValues();
             this.InitializeCommands();
         }
 
@@ -142,6 +188,66 @@ namespace browser.ViewModels
             {
                 this.ProcessSearchEngineSelectionChanged(eventArgs as SelectionChangedEventArgs);
             });
+
+            this.ShowHomepageButtonToggledCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessShowHomepageButtonToggled(eventArgs as RoutedEventArgs);
+            });
+
+            this.HomepageUriKeyUpCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessHomepageUriTextChanged(eventArgs as KeyRoutedEventArgs);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadSettingValues()
+        {
+            this.LoadSearchEngineSetting();
+            this.LoadHomepageUriSetting();
+            this.LoadShowHomepageButtonSetting();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadShowHomepageButtonSetting()
+        {
+            bool showHomepageButton = this._storageManager.GetValue<bool>(StorageKey.SHOW_HOMEPAGE_BUTTON, StorageDefaults.SHOW_HOMEPAGE_BUTTON);
+            this.ShowHomepageButtonSettingValue = showHomepageButton;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadHomepageUriSetting()
+        {
+            string homepageUri = this._storageManager.GetValue<string>(StorageKey.HOMEPAGE_URI, StorageDefaults.HOMEPAGE_URI);
+            this.HomepageUriSettingValue = homepageUri;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessHomepageUriTextChanged(KeyRoutedEventArgs eventArgs)
+        {
+            string homepageUri = (eventArgs.OriginalSource as TextBox).Text;
+
+            this._storageManager.SetValue(StorageKey.HOMEPAGE_URI, homepageUri);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessShowHomepageButtonToggled(RoutedEventArgs eventArgs)
+        {
+            bool showHomepageButton = (eventArgs.OriginalSource as ToggleSwitch).IsOn;
+
+            this._storageManager.SetValue(StorageKey.SHOW_HOMEPAGE_BUTTON, showHomepageButton);
         }
 
         /// <summary>
@@ -168,8 +274,6 @@ namespace browser.ViewModels
 
             this.AvailableSearchEngines.Clear();
             this.AvailableSearchEngines = availableSearchEnginesCollection;
-
-            this.LoadSearchEngineSetting();
         }
 
         /// <summary>

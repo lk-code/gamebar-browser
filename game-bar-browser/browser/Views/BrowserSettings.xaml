@@ -10,34 +10,62 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
-    <Grid Padding="8">
+    <Grid Padding="8,0,8,0">
 
         <StackPanel Orientation="Vertical">
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+            <ComboBox
+                x:Name="BrowserSettings_SearchEngineComboBox"
+                x:Uid="BrowserSettings_SearchEngineComboBox"
+                Margin="0,8,0,0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Header="__Search_Engine__"
+                ItemsSource="{Binding AvailableSearchEngines}"
+                PlaceholderText="__Pick_a_search_engine__"
+                SelectedItem="{Binding SearchEngineSelectedItem}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Title}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding SearchEngineSelectionChangedCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </ComboBox>
 
-                <ComboBox
-                    x:Name="BrowserSettings_SearchEngineComboBox"
-                    x:Uid="BrowserSettings_SearchEngineComboBox"
-                    Header="__Search_Engine__"
-                    ItemsSource="{Binding AvailableSearchEngines}"
-                    PlaceholderText="__Pick_a_search_engine__"
-                    SelectedItem="{Binding SearchEngineSelectedItem}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{Binding Title}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                    <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="SelectionChanged">
-                            <core:InvokeCommandAction Command="{Binding SearchEngineSelectionChangedCommand}" />
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </ComboBox>
+            <TextBox
+                x:Name="BrowserSettings_HomepageUriTextBox"
+                x:Uid="BrowserSettings_HomepageUriTextBox"
+                Margin="0,8,0,0"
+                Header="__Homepage_Uri__"
+                PlaceholderText="__Homepage_Uri_Placeholder__"
+                Text="{Binding HomepageUriSettingValue, Mode=TwoWay}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="KeyUp">
+                        <core:InvokeCommandAction Command="{Binding HomepageUriKeyUpCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </TextBox>
 
-            </StackPanel>
+            <ToggleSwitch
+                x:Name="BrowserSettings_ShowHomepageButtonToggleSwitch"
+                x:Uid="BrowserSettings_ShowHomepageButtonToggleSwitch"
+                Margin="0,8,0,0"
+                Header="__Show_Homepage_Button__"
+                IsOn="{Binding ShowHomepageButtonSettingValue, Mode=TwoWay}"
+                OffContent="__No__"
+                OnContent="__Yes__">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Toggled">
+                        <core:InvokeCommandAction Command="{Binding ShowHomepageButtonToggledCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </ToggleSwitch>
 
         </StackPanel>
 

@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
+    <value>Homepage Url</value>
+  </data>
+  <data name="BrowserSettings_HomepageUriTextBox.PlaceholderText" xml:space="preserve">
+    <value>Url der Website</value>
+  </data>
   <data name="BrowserSettings_SearchEngineComboBox.Header" xml:space="preserve">
     <value>Suchmaschine</value>
   </data>
   <data name="BrowserSettings_SearchEngineComboBox.PlaceholderText" xml:space="preserve">
     <value>Wähle deine Suchmaschine</value>
+  </data>
+  <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.Header" xml:space="preserve">
+    <value>Schaltfläche "Startseite" anzeigen</value>
+  </data>
+  <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OffContent" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OnContent" xml:space="preserve">
+    <value>Ja</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Feedback</value>

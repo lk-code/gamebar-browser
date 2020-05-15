@@ -153,6 +153,22 @@ namespace browser.ViewModels
             }
         }
 
+        bool _showHomepageButton = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ShowHomepageButton
+        {
+            get
+            {
+                return _showHomepageButton;
+            }
+            set
+            {
+                SetProperty(ref _showHomepageButton, value);
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -164,6 +180,8 @@ namespace browser.ViewModels
         {
             this.InitializeStorageManager();
             this.InitializeSearchEngineProcessor();
+            this.InitializeAdressBarButtons();
+            this.InitializeHomepage();
             this.InitializeCommands();
         }
 
@@ -209,18 +227,38 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void InitializeSearchEngineProcessor()
+        private void InitializeHomepage()
         {
-            this._searchEngineProcessor = new SearchEngineProcessor();
+            string homepageUri = this._storageManager.GetValue<string>(StorageKey.HOMEPAGE_URI, StorageDefaults.HOMEPAGE_URI);
+            homepageUri = homepageUri.Trim();
+
+            if (string.IsNullOrEmpty(homepageUri)
+                || string.IsNullOrWhiteSpace(homepageUri))
+            {
+                return;
+            }
+
+            Uri targetUri = this.GetProcessedUriFromRequestValue(homepageUri);
+
+            this.GoToUri(targetUri);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void LoadSearchEngineData()
+        private void InitializeAdressBarButtons()
         {
-            string selectedSearchEngineKey = this._storageManager.GetValue<string>(StorageKey.SEARCH_ENGINE, StorageDefaults.SEARCH_ENGINE);
+            bool showHomepageButton = this._storageManager.GetValue<bool>(StorageKey.SHOW_HOMEPAGE_BUTTON, StorageDefaults.SHOW_HOMEPAGE_BUTTON);
 
+            this.ShowHomepageButton = showHomepageButton;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeSearchEngineProcessor()
+        {
+            this._searchEngineProcessor = new SearchEngineProcessor();
         }
 
         /// <summary>
@@ -250,6 +288,28 @@ namespace browser.ViewModels
         private void ProcessAdressBarValue(string requestedUriValue)
         {
             string sourceUriValue = requestedUriValue;
+            Uri targetUri = this.GetProcessedUriFromRequestValue(requestedUriValue);
+
+            this.GoToUri(targetUri);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetUri"></param>
+        private void GoToUri(Uri targetUri)
+        {
+            this.AdressBarDisplayText = targetUri.ToString();
+            this.WebViewAdressSource = this.AdressBarDisplayText;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requestedUriValue"></param>
+        private Uri GetProcessedUriFromRequestValue(string requestedUriValue)
+        {
+            string sourceUriValue = requestedUriValue;
             Uri targetUri = null;
             WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
 
@@ -257,18 +317,19 @@ namespace browser.ViewModels
             if (webUriProcessorComponent.IsValidUri(sourceUriValue))
             {
                 targetUri = new Uri(sourceUriValue);
-            } else if(webUriProcessorComponent.IsValidAdress(sourceUriValue))
+            }
+            else if (webUriProcessorComponent.IsValidAdress(sourceUriValue))
             {
                 targetUri = webUriProcessorComponent.CreateUriFromDomain(sourceUriValue);
-            } else
+            }
+            else
             {
                 string selectedSearchEngineKey = this._storageManager.GetValue<string>(StorageKey.SEARCH_ENGINE, StorageDefaults.SEARCH_ENGINE);
 
                 targetUri = this._searchEngineProcessor.RenderSearchUri(selectedSearchEngineKey, sourceUriValue);
             }
 
-            this.AdressBarDisplayText = targetUri.ToString();
-            this.WebViewAdressSource = this.AdressBarDisplayText;
+            return targetUri;
         }
 
         /// <summary>

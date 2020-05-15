@@ -117,17 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
+    <value>Homepage Url</value>
+  </data>
+  <data name="BrowserSettings_HomepageUriTextBox.PlaceholderText" xml:space="preserve">
+    <value>Url of the website</value>
+  </data>
   <data name="BrowserSettings_SearchEngineComboBox.Header" xml:space="preserve">
     <value>Search-Engine</value>
   </data>
   <data name="BrowserSettings_SearchEngineComboBox.PlaceholderText" xml:space="preserve">
     <value>Choose your search engine</value>
   </data>
+  <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.Header" xml:space="preserve">
+    <value>Show "Home" button</value>
+  </data>
+  <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OffContent" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OnContent" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Feedback</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton.Label" xml:space="preserve">
-    <value>Einstellungen</value>
+    <value>Settings</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_ShareButton.Label" xml:space="preserve">
     <value>Share</value>
