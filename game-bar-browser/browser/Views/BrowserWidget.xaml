@@ -11,6 +11,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
+
     <Page.Resources>
         <converters:BoolToVisibilityConverter
             x:Key="BoolToVisibilityConverter"
@@ -145,6 +146,8 @@
         <WebView
             x:Name="BrowserWidget_MainContent_WebView"
             Grid.Row="1"
+            NavigationCompleted="BrowserWidget_MainContent_WebView_NavigationCompleted"
+            ScriptNotify="BrowserWidget_MainContent_WebView_ScriptNotify"
             Source="{Binding WebViewAdressSource, Mode=TwoWay}">
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="NavigationStarting">

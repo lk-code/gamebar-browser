@@ -123,6 +123,9 @@
   <data name="BrowserSettings_HomepageUriTextBox.PlaceholderText" xml:space="preserve">
     <value>Url der Website</value>
   </data>
+  <data name="BrowserSettings_SaveSettingsButton.Content" xml:space="preserve">
+    <value>Einstellungen speichern</value>
+  </data>
   <data name="BrowserSettings_SearchEngineComboBox.Header" xml:space="preserve">
     <value>Suchmaschine</value>
   </data>

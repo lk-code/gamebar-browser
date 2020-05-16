@@ -2,6 +2,7 @@
     x:Class="browser.Views.BrowserSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -9,6 +10,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter
+            x:Key="BoolToVisibilityConverter"
+            FalseValue="Visible"
+            TrueValue="Collapsed" />
+    </Page.Resources>
 
     <Grid Padding="8,0,8,0">
 
@@ -23,7 +31,7 @@
                 Header="__Search_Engine__"
                 ItemsSource="{Binding AvailableSearchEngines}"
                 PlaceholderText="__Pick_a_search_engine__"
-                SelectedItem="{Binding SearchEngineSelectedItem}">
+                SelectedItem="{Binding SearchEngineSelectedItem, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
@@ -46,8 +54,8 @@
                 PlaceholderText="__Homepage_Uri_Placeholder__"
                 Text="{Binding HomepageUriSettingValue, Mode=TwoWay}">
                 <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="KeyUp">
-                        <core:InvokeCommandAction Command="{Binding HomepageUriKeyUpCommand}" />
+                    <core:EventTriggerBehavior EventName="LostFocus">
+                        <core:InvokeCommandAction Command="{Binding HomepageUriLostFocusCommand}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </TextBox>
@@ -66,6 +74,19 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </ToggleSwitch>
+
+            <Button
+                x:Name="BrowserSettings_SaveSettingsButton"
+                x:Uid="BrowserSettings_SaveSettingsButton"
+                Margin="0,8,0,0"
+                Content="__Save_Settings__"
+                Visibility="{Binding IsSettingsFormSaveButtonVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding SaveSettingsButtonClickCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </Button>
 
         </StackPanel>
 

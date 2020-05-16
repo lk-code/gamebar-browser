@@ -2,14 +2,11 @@
 using browser.Components.Storage;
 using browser.Core;
 using Microsoft.Gaming.XboxGameBar;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 namespace browser.ViewModels
 {
@@ -38,11 +35,21 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public ICommand HomepageUriKeyUpCommand { get; set; }
+        public ICommand HomepageUriLostFocusCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand SaveSettingsButtonClickCommand { get; set; }
 
         #endregion
 
         #region # private properties #
+
+        /// <summary>
+        /// If true a save button is shown and only when clicking on it will be saved.
+        /// </summary>
+        private const bool SAVE_VIA_BUTTON = false;
 
         /// <summary>
         /// 
@@ -89,6 +96,22 @@ namespace browser.ViewModels
             set
             {
                 _xboxGameBarWidgetControlInstance = value;
+            }
+        }
+
+        bool _isSettingsFormSaveButtonVisible = SAVE_VIA_BUTTON;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSettingsFormSaveButtonVisible
+        {
+            get
+            {
+                return _isSettingsFormSaveButtonVisible;
+            }
+            set
+            {
+                SetProperty(ref _isSettingsFormSaveButtonVisible, value);
             }
         }
 
@@ -194,10 +217,86 @@ namespace browser.ViewModels
                 this.ProcessShowHomepageButtonToggled(eventArgs as RoutedEventArgs);
             });
 
-            this.HomepageUriKeyUpCommand = new RelayCommand((eventArgs) =>
+            this.HomepageUriLostFocusCommand = new RelayCommand((eventArgs) =>
             {
-                this.ProcessHomepageUriTextChanged(eventArgs as KeyRoutedEventArgs);
+                this.ProcessHomepageUriLostFocus(eventArgs as RoutedEventArgs);
             });
+
+            this.SaveSettingsButtonClickCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessSaveSettingsButtonClick(eventArgs as RoutedEventArgs);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessSaveSettingsButtonClick(RoutedEventArgs eventArgs)
+        {
+            if (SAVE_VIA_BUTTON == true)
+            {
+                this.SaveSearchEngineSetting();
+                this.SaveHomepageUriSetting();
+                this.SaveShowHomepageButtonSetting();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SaveShowHomepageButtonSetting()
+        {
+            bool showHomepageButton = this.ShowHomepageButtonSettingValue;
+
+            this.SaveShowHomepageButtonSettingValue(showHomepageButton);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="showHomepageButton"></param>
+        private void SaveShowHomepageButtonSettingValue(bool showHomepageButton)
+        {
+            this._storageManager.SetValue(StorageKey.SHOW_HOMEPAGE_BUTTON, showHomepageButton);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SaveHomepageUriSetting()
+        {
+            string homepageUri = this.HomepageUriSettingValue;
+
+            this.SaveHomepageUriSettingValue(homepageUri);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="homepageUri"></param>
+        private void SaveHomepageUriSettingValue(string homepageUri)
+        {
+            this._storageManager.SetValue(StorageKey.HOMEPAGE_URI, homepageUri);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SaveSearchEngineSetting()
+        {
+            SearchEngine selectedSearchEngine = this.SearchEngineSelectedItem;
+
+            this.SaveSearchEngineSettingValue(selectedSearchEngine);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="selectedSearchEngine"></param>
+        private void SaveSearchEngineSettingValue(SearchEngine selectedSearchEngine)
+        {
+            this._storageManager.SetValue(StorageKey.SEARCH_ENGINE, selectedSearchEngine.Key);
         }
 
         /// <summary>
@@ -232,11 +331,14 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         /// <param name="eventArgs"></param>
-        private void ProcessHomepageUriTextChanged(KeyRoutedEventArgs eventArgs)
+        private void ProcessHomepageUriLostFocus(RoutedEventArgs eventArgs)
         {
-            string homepageUri = (eventArgs.OriginalSource as TextBox).Text;
+            if (SAVE_VIA_BUTTON == false)
+            {
+                string homepageUri = (eventArgs.OriginalSource as TextBox).Text;
 
-            this._storageManager.SetValue(StorageKey.HOMEPAGE_URI, homepageUri);
+                this.SaveHomepageUriSettingValue(homepageUri);
+            }
         }
 
         /// <summary>
@@ -245,9 +347,12 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void ProcessShowHomepageButtonToggled(RoutedEventArgs eventArgs)
         {
-            bool showHomepageButton = (eventArgs.OriginalSource as ToggleSwitch).IsOn;
+            if (SAVE_VIA_BUTTON == false)
+            {
+                bool showHomepageButton = (eventArgs.OriginalSource as ToggleSwitch).IsOn;
 
-            this._storageManager.SetValue(StorageKey.SHOW_HOMEPAGE_BUTTON, showHomepageButton);
+                this.SaveShowHomepageButtonSettingValue(showHomepageButton);
+            }
         }
 
         /// <summary>
@@ -256,9 +361,12 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void ProcessSearchEngineSelectionChanged(SelectionChangedEventArgs eventArgs)
         {
-            SearchEngine selectedSearchEngine = (eventArgs.AddedItems[0] as SearchEngine);
+            if(SAVE_VIA_BUTTON == false)
+            {
+                SearchEngine selectedSearchEngine = (eventArgs.AddedItems[0] as SearchEngine);
 
-            this._storageManager.SetValue(StorageKey.SEARCH_ENGINE, selectedSearchEngine.Key);
+                this.SaveSearchEngineSettingValue(selectedSearchEngine);
+            }
         }
 
         /// <summary>

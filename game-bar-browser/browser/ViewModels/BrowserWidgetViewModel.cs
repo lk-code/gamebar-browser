@@ -49,6 +49,11 @@ namespace browser.ViewModels
         /// </summary>
         public ICommand AdressBarSuggestionChosenCommand { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand WebViewDocumentTitleChangedCommand { get; set; }
+
         #endregion
 
         #region # private properties #
@@ -169,6 +174,22 @@ namespace browser.ViewModels
             }
         }
 
+        string _webViewCurrentTitle = string.Empty;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string WebViewCurrentTitle
+        {
+            get
+            {
+                return _webViewCurrentTitle;
+            }
+            set
+            {
+                SetProperty(ref _webViewCurrentTitle, value);
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -222,6 +243,20 @@ namespace browser.ViewModels
             {
                 this.ProcessAdressBarSuggestionChosen((eventArgs as AutoSuggestBoxSuggestionChosenEventArgs));
             });
+
+            this.WebViewDocumentTitleChangedCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessWebViewDocumentTitleChanged((eventArgs as string));
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessWebViewDocumentTitleChanged(string eventArgs)
+        {
+            this.WebViewCurrentTitle = eventArgs;
         }
 
         /// <summary>
@@ -414,8 +449,8 @@ namespace browser.ViewModels
         /// <param name="args"></param>
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
-            string pageTitle = "Google";
-            string pageUri = "https://www.google.de";
+            string pageTitle = this.WebViewCurrentTitle;
+            string pageUri = this.AdressBarDisplayText;
 
             DataRequest request = args.Request;
             request.Data.Properties.Title = pageTitle;

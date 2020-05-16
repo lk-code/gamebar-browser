@@ -77,10 +77,11 @@ namespace browser.Components.Storage
         public void SetValue(StorageKey requestedKey, object value)
         {
             ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-            ApplicationDataCompositeValue composite = new ApplicationDataCompositeValue();
+            ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values[this._roamingSettingsKey];
 
             string requestedKeyName = this.GetRequestedKeyName(requestedKey);
             composite[requestedKeyName] = value;
+
             roamingSettings.Values[this._roamingSettingsKey] = composite;
         }
 

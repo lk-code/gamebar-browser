@@ -17,7 +17,7 @@ namespace browser.Views
         /// <summary>
         /// 
         /// </summary>
-        BrowserWidgetViewModel viewModel;
+        BrowserWidgetViewModel ViewModel;
 
         #endregion
 
@@ -28,7 +28,9 @@ namespace browser.Views
         {
             this.InitializeComponent();
 
-            this.DataContext = viewModel = new BrowserWidgetViewModel();
+            this.DataContext = ViewModel = new BrowserWidgetViewModel();
+
+            this.LoadWebViewEnv();
         }
 
         #region # private properties #
@@ -39,7 +41,45 @@ namespace browser.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.viewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+            this.ViewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+        }
+
+        #endregion
+
+        #region # readout document title #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void BrowserWidget_MainContent_WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            this.LoadWebViewEnv();
+
+            this.ViewModel.WebViewDocumentTitleChangedCommand.Execute(this.BrowserWidget_MainContent_WebView.DocumentTitle);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadWebViewEnv()
+        {
+            string functionString = " new MutationObserver(function () { window.external.notify(document.title); }).observe(document.querySelector('title'), { childList: true })";
+
+            this.BrowserWidget_MainContent_WebView.InvokeScriptAsync("eval", new string[] { functionString });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserWidget_MainContent_WebView_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+            string title = e.Value;
+
+            this.ViewModel.WebViewDocumentTitleChangedCommand.Execute(title);
         }
 
         #endregion
