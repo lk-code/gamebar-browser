@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Printing;
 
 namespace browser.Components.TempHistory
 {
@@ -99,18 +96,36 @@ namespace browser.Components.TempHistory
         /// 
         /// </summary>
         /// <returns></returns>
-        public string GoBack()
+        public Uri GoBack()
         {
-            return string.Empty;
+            if(this.CanGoBack() == true)
+            {
+                this._currentIndex--;
+
+                Uri requestedHistoryUri = this._temporaryHistory.Where(x => x.Index == this._currentIndex).First().Uri;
+
+                return requestedHistoryUri;
+            }
+
+            throw new TempHistoryInvalidNavigationException("you can not go back");
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string GoForward()
+        public Uri GoForward()
         {
-            return string.Empty;
+            if (this.CanGoForward() == true)
+            {
+                this._currentIndex++;
+
+                Uri requestedHistoryUri = this._temporaryHistory.Where(x => x.Index == this._currentIndex).First().Uri;
+
+                return requestedHistoryUri;
+            }
+
+            throw new TempHistoryInvalidNavigationException("you can not go forward");
         }
 
         #endregion

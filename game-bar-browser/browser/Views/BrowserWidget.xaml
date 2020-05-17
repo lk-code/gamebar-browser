@@ -42,7 +42,8 @@
                     Width="32"
                     Height="32"
                     Margin="2"
-                    CornerRadius="16">
+                    CornerRadius="16"
+                    IsEnabled="{Binding IsActionButtonBackEnabled}">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="Click">
                             <core:InvokeCommandAction Command="{Binding ActionButtonBackClickCommand}" />
@@ -57,7 +58,8 @@
                     Width="32"
                     Height="32"
                     Margin="2"
-                    CornerRadius="16">
+                    CornerRadius="16"
+                    IsEnabled="{Binding IsActionButtonForwardEnabled}">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="Click">
                             <core:InvokeCommandAction Command="{Binding ActionButtonForwardClickCommand}" />

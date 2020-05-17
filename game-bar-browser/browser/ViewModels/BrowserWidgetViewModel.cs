@@ -108,6 +108,11 @@ namespace browser.ViewModels
         /// </summary>
         private TempHistoryManager _tempHistoryManager { get; set; } = null;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool _navigateInTempHistory { get; set; } = false;
+
         #endregion
 
         #region # public properties #
@@ -230,6 +235,38 @@ namespace browser.ViewModels
             }
         }
 
+        bool _isActionButtonBackEnabled = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsActionButtonBackEnabled
+        {
+            get
+            {
+                return _isActionButtonBackEnabled;
+            }
+            set
+            {
+                SetProperty(ref _isActionButtonBackEnabled, value);
+            }
+        }
+
+        bool _isActionButtonForwardEnabled = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsActionButtonForwardEnabled
+        {
+            get
+            {
+                return _isActionButtonForwardEnabled;
+            }
+            set
+            {
+                SetProperty(ref _isActionButtonForwardEnabled, value);
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -331,7 +368,14 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void ProcessActionButtonBackClick(RoutedEventArgs eventArgs)
         {
+            if(this._tempHistoryManager.CanGoBack() == true)
+            {
+                this._navigateInTempHistory = true;
 
+                Uri backUriValue = this._tempHistoryManager.GoBack();
+
+                this.GoToUri(backUriValue);
+            }
         }
 
         /// <summary>
@@ -340,7 +384,33 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void ProcessActionButtonForwardClick(RoutedEventArgs eventArgs)
         {
+            if (this._tempHistoryManager.CanGoForward() == true)
+            {
+                this._navigateInTempHistory = true;
 
+                Uri forwardUriValue = this._tempHistoryManager.GoForward();
+
+                this.GoToUri(forwardUriValue);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ProcessTempHistoryActionButtons()
+        {
+            this.IsActionButtonBackEnabled = false;
+            this.IsActionButtonForwardEnabled = false;
+
+            if (this._tempHistoryManager.CanGoBack())
+            {
+                this.IsActionButtonBackEnabled = true;
+            }
+
+            if (this._tempHistoryManager.CanGoForward())
+            {
+                this.IsActionButtonForwardEnabled = true;
+            }
         }
 
         /// <summary>
@@ -372,6 +442,27 @@ namespace browser.ViewModels
         {
             this._tempHistoryManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText));
             this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
+
+            this.AddPageToTempHistory(this.WebViewCurrentTitle, this.AdressBarDisplayText);
+
+            this.ProcessTempHistoryActionButtons();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="webViewCurrentTitle"></param>
+        /// <param name="adressBarDisplayText"></param>
+        private void AddPageToTempHistory(string webViewCurrentTitle, string adressBarDisplayText)
+        {
+            if(this._navigateInTempHistory == true)
+            {
+                this._navigateInTempHistory = false;
+
+                return;
+            }
+
+            this._tempHistoryManager.Add(webViewCurrentTitle, new Uri(adressBarDisplayText));
         }
 
         /// <summary>
@@ -468,6 +559,8 @@ namespace browser.ViewModels
         {
             this.AdressBarDisplayText = targetUri.ToString();
             this.WebViewAdressSource = this.AdressBarDisplayText;
+
+            this.ProcessTempHistoryActionButtons();
         }
 
         /// <summary>
