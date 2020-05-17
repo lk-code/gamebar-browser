@@ -1,4 +1,5 @@
-﻿using browser.Components.SearchEngine;
+﻿using browser.Components.History;
+using browser.Components.SearchEngine;
 using browser.Components.Storage;
 using browser.core.Components.WebUriProcessor;
 using browser.Core;
@@ -42,7 +43,7 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public ICommand WebViewSourceChangingCommand { get; set; }
+        public ICommand WebViewNavigationStartingCommand { get; set; }
 
         /// <summary>
         /// 
@@ -53,6 +54,11 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         public ICommand WebViewDocumentTitleChangedCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand WebViewNavigationCompletedCommand { get; set; }
 
         #endregion
 
@@ -67,6 +73,11 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         private SearchEngineProcessor _searchEngineProcessor { get; set; } = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private HistoryManager _historyManager { get; set; } = null;
 
         #endregion
 
@@ -200,6 +211,7 @@ namespace browser.ViewModels
         public BrowserWidgetViewModel()
         {
             this.InitializeStorageManager();
+            this.InitializeHistoryManager();
             this.InitializeSearchEngineProcessor();
             this.InitializeAdressBarButtons();
             this.InitializeHomepage();
@@ -234,9 +246,9 @@ namespace browser.ViewModels
                 this.ProcessAdressVarKeyUp(eventArgs as KeyRoutedEventArgs);
             });
 
-            this.WebViewSourceChangingCommand = new RelayCommand((eventArgs) =>
+            this.WebViewNavigationStartingCommand = new RelayCommand((eventArgs) =>
             {
-                this.ProcessWebViewSourceChanging(eventArgs as WebViewNavigationStartingEventArgs);
+                this.ProcessWebViewNavigationStarting(eventArgs as WebViewNavigationStartingEventArgs);
             });
 
             this.AdressBarSuggestionChosenCommand = new RelayCommand((eventArgs) =>
@@ -248,6 +260,20 @@ namespace browser.ViewModels
             {
                 this.ProcessWebViewDocumentTitleChanged((eventArgs as string));
             });
+
+            this.WebViewNavigationCompletedCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessWebViewNavigationCompleted((eventArgs as WebViewNavigationCompletedEventArgs));
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessWebViewNavigationCompleted(WebViewNavigationCompletedEventArgs eventArgs)
+        {
+            this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
         }
 
         /// <summary>
@@ -302,6 +328,14 @@ namespace browser.ViewModels
         private void InitializeStorageManager()
         {
             this._storageManager = new StorageManager();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeHistoryManager()
+        {
+            this._historyManager = new HistoryManager();
         }
 
         /// <summary>
@@ -390,7 +424,7 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void ProcessWebViewSourceChanging(WebViewNavigationStartingEventArgs eventArgs)
+        private void ProcessWebViewNavigationStarting(WebViewNavigationStartingEventArgs eventArgs)
         {
             string newUriValue = eventArgs.Uri.ToString();
 

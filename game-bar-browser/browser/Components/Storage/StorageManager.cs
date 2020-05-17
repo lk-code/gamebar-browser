@@ -79,6 +79,11 @@ namespace browser.Components.Storage
             ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
             ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values[this._roamingSettingsKey];
 
+            if(composite == null)
+            {
+                composite = new ApplicationDataCompositeValue();
+            }
+
             string requestedKeyName = this.GetRequestedKeyName(requestedKey);
             composite[requestedKeyName] = value;
 
@@ -97,6 +102,7 @@ namespace browser.Components.Storage
         private string GetRequestedKeyName(StorageKey requestedKey)
         {
             string requestedKeyName = requestedKey.ToString().ToUpper();
+            requestedKeyName = requestedKeyName.Replace('-', '_');
 
             return requestedKeyName;
         }

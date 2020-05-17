@@ -151,7 +151,10 @@
             Source="{Binding WebViewAdressSource, Mode=TwoWay}">
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="NavigationStarting">
-                    <core:InvokeCommandAction Command="{Binding WebViewSourceChangingCommand}" />
+                    <core:InvokeCommandAction Command="{Binding WebViewNavigationStartingCommand}" />
+                </core:EventTriggerBehavior>
+                <core:EventTriggerBehavior EventName="NavigationCompleted">
+                    <core:InvokeCommandAction Command="{Binding WebViewNavigationCompletedCommand}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </WebView>

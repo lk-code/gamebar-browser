@@ -127,6 +127,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\History\HistoryItem.cs" />
+    <Compile Include="Components\History\HistoryManager.cs" />
     <Compile Include="Components\SearchEngine\SearchEngine.cs" />
     <Compile Include="Components\SearchEngine\SearchEngineProcessor.cs" />
     <Compile Include="Components\Storage\StorageDefaults.cs" />
@@ -258,6 +260,7 @@
       <Name>browser.core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
