@@ -25,10 +25,20 @@ namespace browser.Components.History
 
         #region # private properties #
 
+        /// <summary>
+        /// 
+        /// </summary>
         private const string HISTORY_INDEX_DATE_SCHEME = "yyyy-MM-dd";
-        private const string HISTORY_STORAGE_KEY = "HistorySettings";
-        private const string HISTORY_STORAGE_ITEMS_COMPOSITE_KEY = "HISTORY_ITEMS";
-        private const string HISTORY_STORAGE_INDEX_COMPOSITE_KEY = "HISTORY_INDEX";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string HISTORY_STORAGE_FILE_INDEX_NAME = "history_index.dat";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string HISTORY_STORAGE_FILE_ITEMS_NAME = "history_items_{0}.dat";
 
         #endregion
 
@@ -54,16 +64,20 @@ namespace browser.Components.History
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, List<HistoryItem>> GetHistory()
+        public async Task<Dictionary<string, List<HistoryItem>>> GetHistoryAsync()
         {
-            List<string> historyIndex = this.GetHistoryIndex();
+            List<string> historyIndex = await this.GetHistoryIndexAsync();
             Dictionary<string, List<HistoryItem>> history = new Dictionary<string, List<HistoryItem>>();
 
             foreach (string historyIndexEntry in historyIndex)
             {
-                List<HistoryItem> historyItems = this.GetHistoryItemsForDay(historyIndexEntry);
+                List<HistoryItem> historyItems = await this.GetHistoryItemsForDayAsync(historyIndexEntry);
 
-                history.Add(historyIndexEntry, historyItems);
+                if(historyItems != null
+                    && historyItems.Count() > 0)
+                {
+                    history.Add(historyIndexEntry, historyItems);
+                }
             }
 
             return history;
@@ -94,29 +108,48 @@ namespace browser.Components.History
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="historyDateTime"></param>
+        /// <returns></returns>
+        private string GetFileNameForHistoryItems(DateTime historyDateTime)
+        {
+            string todayIndexKey = historyDateTime.ToString(HISTORY_INDEX_DATE_SCHEME);
+
+            string historyFileName = this.GetFileNameForHistoryItems(todayIndexKey);
+
+            return historyFileName;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="historyDateValue"></param>
+        /// <returns></returns>
+        private string GetFileNameForHistoryItems(string historyDateValue)
+        {
+            string todayIndexKey = historyDateValue.Replace('-', '_');
+            string historyFileName = string.Format(HISTORY_STORAGE_FILE_ITEMS_NAME, todayIndexKey);
+
+            return historyFileName;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="dateValue"></param>
         /// <returns></returns>
-        private List<HistoryItem> GetHistoryItemsForDay(string dateValue)
+        private async Task<List<HistoryItem>> GetHistoryItemsForDayAsync(string dateValue)
         {
-            ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-            ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values[HISTORY_STORAGE_KEY];
+            string historyFileName = this.GetFileNameForHistoryItems(dateValue);
+            StorageFolder roamingStorageFolder = ApplicationData.Current.RoamingFolder;
+            StorageFile historyItemsStorageFile = await roamingStorageFolder.CreateFileAsync(historyFileName, CreationCollisionOption.OpenIfExists);
 
-            if (composite == null)
+            string historyJsonContentValue = await FileIO.ReadTextAsync(historyItemsStorageFile);
+            if (historyJsonContentValue.Trim().Length <= 2)
             {
                 return new List<HistoryItem>();
             }
 
-            string dateIndexKey = dateValue.Replace('-', '_');
-
-            string requestedKeyName = this.GetRequestedKeyName(HISTORY_STORAGE_ITEMS_COMPOSITE_KEY + "_" + dateIndexKey);
-            object compositeValue = composite[requestedKeyName];
-
-            if (compositeValue == null)
-            {
-                return new List<HistoryItem>();
-            }
-
-            string historyJsonContent = (compositeValue as string);
+            string historyJsonContent = historyJsonContentValue;
 
             List<HistoryItem> history = JsonConvert.DeserializeObject<List<HistoryItem>>(historyJsonContent);
 
@@ -127,53 +160,41 @@ namespace browser.Components.History
         /// 
         /// </summary>
         /// <param name="historyItem"></param>
-        private void SaveHistoryItem(HistoryItem historyItem)
+        private async void SaveHistoryItem(HistoryItem historyItem)
         {
             this.EnsureIndexForDate(historyItem.Visited);
 
-            ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-            ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values[HISTORY_STORAGE_KEY];
+            string historyFileName = this.GetFileNameForHistoryItems(historyItem.Visited);
+            StorageFolder roamingStorageFolder = ApplicationData.Current.RoamingFolder;
+            StorageFile historyItemsStorageFile = await roamingStorageFolder.CreateFileAsync(historyFileName, CreationCollisionOption.OpenIfExists);
 
-            if (composite == null)
+            string historyJsonContent = JsonConvert.SerializeObject(new List<HistoryItem>());
+            string historyJsonContentValue = await FileIO.ReadTextAsync(historyItemsStorageFile);
+
+            if (historyJsonContentValue.Trim().Length > historyJsonContent.Length)
             {
-                composite = new ApplicationDataCompositeValue();
+                historyJsonContent = historyJsonContentValue;
             }
 
-            if (composite != null)
+            string historyItemJsonContent = JsonConvert.SerializeObject(historyItem);
+
+            if(historyJsonContent.Trim().Length > 2)
             {
-                string todayIndexKey = historyItem.Visited.ToString(HISTORY_INDEX_DATE_SCHEME);
-                string requestedKeyName = this.GetRequestedKeyName(HISTORY_STORAGE_ITEMS_COMPOSITE_KEY + "_" + todayIndexKey);
-                object compositeValue = composite[requestedKeyName];
-
-                string historyJsonContent = JsonConvert.SerializeObject(new List<HistoryItem>());
-
-                if(compositeValue != null)
-                {
-                    historyJsonContent = (compositeValue as string);
-                }
-
-                string historyItemJsonContent = JsonConvert.SerializeObject(historyItem);
-
-                if(historyJsonContent.Trim().Length > 2)
-                {
-                    historyJsonContent = historyJsonContent.Insert(historyJsonContent.Length - 1, ",");
-                }
-
-                historyJsonContent = historyJsonContent.Insert(historyJsonContent.Length - 1, historyItemJsonContent);
-
-                composite[requestedKeyName] = historyJsonContent;
-
-                roamingSettings.Values[HISTORY_STORAGE_KEY] = composite;
+                historyJsonContent = historyJsonContent.Insert(historyJsonContent.Length - 1, ",");
             }
+
+            historyJsonContent = historyJsonContent.Insert(historyJsonContent.Length - 1, historyItemJsonContent);
+
+            await FileIO.WriteTextAsync(historyItemsStorageFile, historyJsonContent);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="historyItem"></param>
-        private void EnsureIndexForDate(DateTime historyItemDate)
+        private async void EnsureIndexForDate(DateTime historyItemDate)
         {
-            List<string> historyIndex = this.GetHistoryIndex();
+            List<string> historyIndex = await this.GetHistoryIndexAsync();
             string todayIndexKey = historyItemDate.ToString(HISTORY_INDEX_DATE_SCHEME);
 
             if (!historyIndex.Contains(todayIndexKey))
@@ -181,55 +202,43 @@ namespace browser.Components.History
                 historyIndex.Add(todayIndexKey);
             }
 
-            this.SaveHistoryIndex(historyIndex);
+            historyIndex = historyIndex.Distinct().ToList();
+
+            this.SaveHistoryIndexAsync(historyIndex);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="historyIndex"></param>
-        private void SaveHistoryIndex(List<string> historyIndex)
+        private async void SaveHistoryIndexAsync(List<string> historyIndex)
         {
-            ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-            ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values[HISTORY_STORAGE_KEY];
-
-            if (composite == null)
-            {
-                composite = new ApplicationDataCompositeValue();
-            }
+            StorageFolder roamingStorageFolder = ApplicationData.Current.RoamingFolder;
+            StorageFile historyIndexStorageFile = await roamingStorageFolder.CreateFileAsync(HISTORY_STORAGE_FILE_INDEX_NAME, CreationCollisionOption.OpenIfExists);
 
             string historyIndexJsonContent = JsonConvert.SerializeObject(historyIndex);
 
-            string requestedKeyName = this.GetRequestedKeyName(HISTORY_STORAGE_INDEX_COMPOSITE_KEY);
-            composite[requestedKeyName] = historyIndexJsonContent;
-
-            roamingSettings.Values[HISTORY_STORAGE_KEY] = composite;
+            await FileIO.WriteTextAsync(historyIndexStorageFile, historyIndexJsonContent);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        private List<string> GetHistoryIndex()
+        private async Task<List<string>> GetHistoryIndexAsync()
         {
-            ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-            ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values[HISTORY_STORAGE_KEY];
+            StorageFolder roamingStorageFolder = ApplicationData.Current.RoamingFolder;
+            StorageFile historyIndexStorageFile = await roamingStorageFolder.CreateFileAsync(HISTORY_STORAGE_FILE_INDEX_NAME, CreationCollisionOption.OpenIfExists);
 
             List<string> historyIndex = new List<string>();
 
-            if (composite != null)
+            string historyIndexJsonContent = await FileIO.ReadTextAsync(historyIndexStorageFile);
+
+            if(historyIndexJsonContent.Trim().Length >= 2)
             {
-                string requestedKeyName = this.GetRequestedKeyName(HISTORY_STORAGE_INDEX_COMPOSITE_KEY);
-                object compositeValue = composite[requestedKeyName];
-
-                if(compositeValue != null)
-                {
-                    string historyIndexJsonContent = (compositeValue as string);
-                    historyIndex = JsonConvert.DeserializeObject<List<string>>(historyIndexJsonContent);
-                }
+                historyIndex = JsonConvert.DeserializeObject<List<string>>(historyIndexJsonContent);
+                historyIndex = historyIndex.OrderByDescending(x => x).ToList();
             }
-
-            historyIndex = historyIndex.OrderByDescending(x => x).ToList();
 
             return historyIndex;
         }

@@ -1,6 +1,7 @@
 ﻿using browser.Components.History;
 using browser.Components.SearchEngine;
 using browser.Components.Storage;
+using browser.Components.TempHistory;
 using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using Microsoft.Gaming.XboxGameBar;
@@ -10,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
@@ -62,6 +64,26 @@ namespace browser.ViewModels
         /// </summary>
         public ICommand WebViewNavigationCompletedCommand { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ActionButtonBackClickCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ActionButtonForwardClickCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ActionButtonRefreshClickCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ActionButtonHomeClickCommand { get; set; }
+
         #endregion
 
         #region # private properties #
@@ -80,6 +102,11 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         private HistoryManager _historyManager { get; set; } = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private TempHistoryManager _tempHistoryManager { get; set; } = null;
 
         #endregion
 
@@ -215,9 +242,10 @@ namespace browser.ViewModels
             this.InitializeStorageManager();
             this.InitializeHistoryManager();
             this.InitializeSearchEngineProcessor();
+            this.InitializeTemporaryHistory();
             this.InitializeAdressBarButtons();
-            this.InitializeHomepage();
             this.InitializeCommands();
+            this.LoadHomepageToWebView();
         }
 
         #endregion
@@ -267,6 +295,73 @@ namespace browser.ViewModels
             {
                 this.ProcessWebViewNavigationCompleted((eventArgs as WebViewNavigationCompletedEventArgs));
             });
+
+            this.ActionButtonBackClickCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessActionButtonBackClick((eventArgs as RoutedEventArgs));
+            });
+
+            this.ActionButtonForwardClickCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessActionButtonForwardClick((eventArgs as RoutedEventArgs));
+            });
+
+            this.ActionButtonRefreshClickCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessActionButtonRefreshClick((eventArgs as RoutedEventArgs));
+            });
+
+            this.ActionButtonHomeClickCommand = new RelayCommand((eventArgs) =>
+            {
+                this.ProcessActionButtonHomeClick((eventArgs as RoutedEventArgs));
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeTemporaryHistory()
+        {
+            this._tempHistoryManager = new TempHistoryManager();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessActionButtonBackClick(RoutedEventArgs eventArgs)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessActionButtonForwardClick(RoutedEventArgs eventArgs)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessActionButtonRefreshClick(RoutedEventArgs eventArgs)
+        {
+            string currentAdressUri = this.WebViewAdressSource;
+
+            this.WebViewAdressSource = string.Empty;
+            this.WebViewAdressSource = currentAdressUri;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessActionButtonHomeClick(RoutedEventArgs eventArgs)
+        {
+            this.LoadHomepageToWebView();
         }
 
         /// <summary>
@@ -275,6 +370,7 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void ProcessWebViewNavigationCompleted(WebViewNavigationCompletedEventArgs eventArgs)
         {
+            this._tempHistoryManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText));
             this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
         }
 
@@ -290,7 +386,7 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void InitializeHomepage()
+        private void LoadHomepageToWebView()
         {
             string homepageUri = this._storageManager.GetValue<string>(StorageKey.HOMEPAGE_URI, StorageDefaults.HOMEPAGE_URI);
             homepageUri = homepageUri.Trim();
@@ -454,13 +550,13 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void ProcessAutoSuggestValues()
+        private async void ProcessAutoSuggestValues()
         {
             string currentAdressBarValue = this.AdressBarDisplayText;
 
             this.AdressBarSuggestValues.Clear();
 
-            Dictionary<string, List<HistoryItem>> history = this._historyManager.GetHistory();
+            Dictionary<string, List<HistoryItem>> history = await this._historyManager.GetHistoryAsync();
 
             var foundedItems = history.Select(
                 x => x.Value.Where(

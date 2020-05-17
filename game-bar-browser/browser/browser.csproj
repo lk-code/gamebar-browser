@@ -134,6 +134,8 @@
     <Compile Include="Components\Storage\StorageDefaults.cs" />
     <Compile Include="Components\Storage\StorageKey.cs" />
     <Compile Include="Components\Storage\StorageManager.cs" />
+    <Compile Include="Components\TempHistory\TempHistoryItem.cs" />
+    <Compile Include="Components\TempHistory\TempHistoryManager.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
