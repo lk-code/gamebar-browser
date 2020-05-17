@@ -54,9 +54,19 @@ namespace browser.Components.History
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<HistoryItem> GetHistory()
+        public Dictionary<string, List<HistoryItem>> GetHistory()
         {
-            return new List<HistoryItem>();
+            List<string> historyIndex = this.GetHistoryIndex();
+            Dictionary<string, List<HistoryItem>> history = new Dictionary<string, List<HistoryItem>>();
+
+            foreach (string historyIndexEntry in historyIndex)
+            {
+                List<HistoryItem> historyItems = this.GetHistoryItemsForDay(historyIndexEntry);
+
+                history.Add(historyIndexEntry, historyItems);
+            }
+
+            return history;
         }
 
         /// <summary>
@@ -80,6 +90,38 @@ namespace browser.Components.History
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateValue"></param>
+        /// <returns></returns>
+        private List<HistoryItem> GetHistoryItemsForDay(string dateValue)
+        {
+            ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
+            ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values[HISTORY_STORAGE_KEY];
+
+            if (composite == null)
+            {
+                return new List<HistoryItem>();
+            }
+
+            string dateIndexKey = dateValue.Replace('-', '_');
+
+            string requestedKeyName = this.GetRequestedKeyName(HISTORY_STORAGE_ITEMS_COMPOSITE_KEY + "_" + dateIndexKey);
+            object compositeValue = composite[requestedKeyName];
+
+            if (compositeValue == null)
+            {
+                return new List<HistoryItem>();
+            }
+
+            string historyJsonContent = (compositeValue as string);
+
+            List<HistoryItem> history = JsonConvert.DeserializeObject<List<HistoryItem>>(historyJsonContent);
+
+            return history;
+        }
 
         /// <summary>
         /// 

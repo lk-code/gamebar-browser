@@ -5,7 +5,9 @@ using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using Microsoft.Gaming.XboxGameBar;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Controls;
@@ -458,11 +460,33 @@ namespace browser.ViewModels
 
             this.AdressBarSuggestValues.Clear();
 
-            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #0");
-            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #1");
-            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #2");
-            this.AdressBarSuggestValues.Add($"{currentAdressBarValue}");
-            this.AdressBarSuggestValues.Add($"{currentAdressBarValue} #3");
+            Dictionary<string, List<HistoryItem>> history = this._historyManager.GetHistory();
+
+            var foundedItems = history.Select(
+                x => x.Value.Where(
+                    y => (y.Title.ToLower().Contains(currentAdressBarValue.ToLower())
+                    || y.Uri.ToString().ToLower().Contains(currentAdressBarValue.ToLower()))
+                )
+            );
+
+            List<string> suggestEntries = new List<string>();
+
+            foreach(var foundItemList in foundedItems)
+            {
+                List<HistoryItem> items = foundItemList.ToList();
+
+                foreach (HistoryItem historyItem in items)
+                {
+                    suggestEntries.Add(historyItem.Uri.ToString());
+                }
+            }
+
+            suggestEntries = suggestEntries.Distinct().ToList();
+
+            foreach(string suggestEntry in suggestEntries)
+            {
+                this.AdressBarSuggestValues.Add(suggestEntry);
+            }
         }
 
         /// <summary>
