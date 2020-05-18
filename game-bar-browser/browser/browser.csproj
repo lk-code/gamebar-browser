@@ -206,9 +206,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <PRIResource Include="Localization\de-DE\Resources.resw" />
     <PRIResource Include="Localization\en-US\Resources.resw" />
-    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\logo.svg" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
