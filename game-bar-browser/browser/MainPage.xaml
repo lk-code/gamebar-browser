@@ -16,7 +16,7 @@
                 Margin="0,32,0,0"
                 FontSize="60"
                 HorizontalTextAlignment="Center"
-                Text="InGame Browser" />
+                Text="Windows Gamebar Browser" />
         </StackPanel>
 
     </Grid>
