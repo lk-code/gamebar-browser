@@ -440,9 +440,7 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void ProcessWebViewNavigationCompleted(WebViewNavigationCompletedEventArgs eventArgs)
         {
-            this._tempHistoryManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText));
             this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
-
             this.AddPageToTempHistory(this.WebViewCurrentTitle, this.AdressBarDisplayText);
 
             this.ProcessTempHistoryActionButtons();
