@@ -150,6 +150,7 @@
                                 <AppBarButton
                                     x:Name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
                                     x:Uid="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
+                                    Command="{Binding OpenFeedbackCommand}"
                                     Label="__BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton_Label__" />
                                 <AppBarButton
                                     x:Name="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton"

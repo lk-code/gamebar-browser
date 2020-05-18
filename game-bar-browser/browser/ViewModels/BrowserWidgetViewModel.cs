@@ -4,6 +4,7 @@ using browser.Components.Storage;
 using browser.Components.TempHistory;
 using browser.core.Components.WebUriProcessor;
 using browser.Core;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Gaming.XboxGameBar;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -83,6 +85,29 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         public ICommand ActionButtonHomeClickCommand { get; set; }
+
+        private ICommand _openFeedbackCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand OpenFeedbackCommand
+        {
+            get
+            {
+                if (_openFeedbackCommand == null)
+                {
+                    _openFeedbackCommand = new RelayCommand(
+                        async (eventArgs) =>
+                        {
+                            // This launcher is part of the Store Services SDK https://docs.microsoft.com/windows/uwp/monetize/microsoft-store-services-sdk
+                            var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
+                            await launcher.LaunchAsync();
+                        });
+                }
+
+                return _openFeedbackCommand;
+            }
+        }
 
         #endregion
 
@@ -274,8 +299,9 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public BrowserWidgetViewModel()
+        public BrowserWidgetViewModel() : base(Window.Current)
         {
+            this.RegisterEvents();
             this.InitializeStorageManager();
             this.InitializeHistoryManager();
             this.InitializeSearchEngineProcessor();
@@ -352,6 +378,27 @@ namespace browser.ViewModels
             {
                 this.ProcessActionButtonHomeClick((eventArgs as RoutedEventArgs));
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void RegisterEvents()
+        {
+            Messenger.Default.Register<MessagingEventTypes>(MessagingEventTypes.SETTING_SHOW_HOMEPAGE_BUTTON, (MessagingEventTypes type) =>
+            {
+                this.ProcessSettingShowHomepageButtonChanged(type);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="MessagingEventTypes"></typeparam>
+        /// <param name="notificationMessageAction"></param>
+        private void ProcessSettingShowHomepageButtonChanged<MessagingEventTypes>(MessagingEventTypes type)
+        {
+            this.LoadActionBarHomepageButton();
         }
 
         /// <summary>
@@ -495,6 +542,14 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         private void InitializeAdressBarButtons()
+        {
+            this.LoadActionBarHomepageButton();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadActionBarHomepageButton()
         {
             bool showHomepageButton = this._storageManager.GetValue<bool>(StorageKey.SHOW_HOMEPAGE_BUTTON, StorageDefaults.SHOW_HOMEPAGE_BUTTON);
 

@@ -1,9 +1,12 @@
 ﻿using browser.Components.SearchEngine;
 using browser.Components.Storage;
 using browser.Core;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Gaming.XboxGameBar;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -186,7 +189,7 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public BrowserSettingsViewModel()
+        public BrowserSettingsViewModel() : base(Window.Current)
         {
             this.InitializeStorageManager();
             this.InitializeSearchEngineProcessor();
@@ -259,6 +262,13 @@ namespace browser.ViewModels
         private void SaveShowHomepageButtonSettingValue(bool showHomepageButton)
         {
             this._storageManager.SetValue(StorageKey.SHOW_HOMEPAGE_BUTTON, showHomepageButton);
+
+            Task.Factory.StartNew((args) =>
+            {
+                Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_SHOW_HOMEPAGE_BUTTON);
+            },
+            CancellationToken.None,
+            TaskCreationOptions.None);
         }
 
         /// <summary>
@@ -278,6 +288,8 @@ namespace browser.ViewModels
         private void SaveHomepageUriSettingValue(string homepageUri)
         {
             this._storageManager.SetValue(StorageKey.HOMEPAGE_URI, homepageUri);
+
+            Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_HOMEPAGE_URI);
         }
 
         /// <summary>
@@ -297,6 +309,8 @@ namespace browser.ViewModels
         private void SaveSearchEngineSettingValue(SearchEngine selectedSearchEngine)
         {
             this._storageManager.SetValue(StorageKey.SEARCH_ENGINE, selectedSearchEngine.Key);
+
+            Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_SEARCH_ENGINE);
         }
 
         /// <summary>
