@@ -11,10 +11,14 @@
     <Grid Background="{ThemeResource CMapUwpAcrylicBrush}">
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image Width="200" Source="/Images/logo.png" />
             <TextBlock
-                Margin="16"
-                HorizontalAlignment="Center"
-                Text="Test" />
+                Margin="0,32,0,0"
+                FontSize="60"
+                HorizontalTextAlignment="Center"
+                Text="InGame Browser" />
         </StackPanel>
+
     </Grid>
+
 </Page>
