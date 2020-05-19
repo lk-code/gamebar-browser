@@ -10,7 +10,7 @@
   <Identity
     Name="45012KrimmerStudios.WindowsGamebarBrowser"
     Publisher="CN=685DD444-787C-4F01-AFD6-C59B21F062E1"
-    Version="1.0.2.0" />
+    Version="1.0.5.0" />
 
   <mp:PhoneIdentity PhoneProductId="4ffcb5e4-227d-48e6-bccb-f6996b6bbe38" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
