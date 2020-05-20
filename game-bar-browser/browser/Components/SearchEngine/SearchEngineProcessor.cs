@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace browser.Components.SearchEngine
 {
@@ -23,6 +21,9 @@ namespace browser.Components.SearchEngine
 
         #region # private properties #
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly List<SearchEngine> _availableSearchEngines = new List<SearchEngine>
         {
             new SearchEngine
@@ -36,6 +37,36 @@ namespace browser.Components.SearchEngine
                 Key = "google",
                 Title = "Google",
                 RequestScheme = "https://www.google.de/search?q={0}"
+            },
+            new SearchEngine
+            {
+                Key = "youtube",
+                Title = "YouTube",
+                RequestScheme = "https://www.youtube.com/results?search_query={0}"
+            },
+            new SearchEngine
+            {
+                Key = "ecosia",
+                Title = "Ecosia",
+                RequestScheme = "https://www.ecosia.org/search?q={0}"
+            },
+            new SearchEngine
+            {
+                Key = "minecraftwiki-de",
+                Title = "Minecraft-Wiki (Deutsch)",
+                RequestScheme = "https://minecraft-de.gamepedia.com/index.php?search={0}"
+            },
+            new SearchEngine
+            {
+                Key = "minecraftwiki-en",
+                Title = "Minecraft-Wiki (English)",
+                RequestScheme = "https://minecraft.gamepedia.com/index.php?search={0}"
+            },
+            new SearchEngine
+            {
+                Key = "duckduckgo",
+                Title = "DuckDuckGo",
+                RequestScheme = "https://duckduckgo.com/?q={0}"
             },
         };
 
