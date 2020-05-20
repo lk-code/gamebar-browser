@@ -159,4 +159,7 @@
   <data name="BrowserWidget_MoreMenuButton.Text" xml:space="preserve">
     <value>Menü</value>
   </data>
+  <data name="MainPage_AppTitle.Text" xml:space="preserve">
+    <value>Gamebar Browser</value>
+  </data>
 </root>
