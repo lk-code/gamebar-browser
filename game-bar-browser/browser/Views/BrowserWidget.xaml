@@ -3,25 +3,38 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-    xmlns:ctrl="using:browser.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:browser.Views"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:browser.Models"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
     <Grid>
 
         <controls:TabView
-            x:Name="Tabs"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Stretch"
+            TabItemsSource="{Binding CurrentTabUiItems}">
 
-            <controls:TabViewItem Header="__Web Title__">
+            <controls:TabView.TabItemTemplate>
+                <DataTemplate x:DataType="models:TabUiItem">
+                    <controls:TabViewItem
+                        Content="{x:Bind Content}"
+                        Header="{x:Bind DocumentTitle}"
+                        IconSource="{x:Bind DocumentIcon}" />
+                </DataTemplate>
+            </controls:TabView.TabItemTemplate>
 
-                <ctrl:Browser />
-
-            </controls:TabViewItem>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="AddTabButtonClick">
+                    <core:InvokeCommandAction Command="{Binding TabViewAddTabClickCommand}" />
+                </core:EventTriggerBehavior>
+                <core:EventTriggerBehavior EventName="TabCloseRequested">
+                    <core:InvokeCommandAction Command="{Binding TabViewTabCloseRequestedCommand}" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
 
         </controls:TabView>
 
