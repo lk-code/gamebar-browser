@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="44px" height="48px" viewBox="0 0 44 48" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <defs>
+    <linearGradient x1="0.5" y1="1.20713639" x2="0.5" y2="0.207113653" id="gradient_1">
+      <stop offset="0" stop-color="#155CDE" />
+      <stop offset="0.278" stop-color="#1F7FE5" />
+      <stop offset="0.569" stop-color="#279CEB" />
+      <stop offset="0.82" stop-color="#2CAFEF" />
+      <stop offset="1" stop-color="#2EB5F0" />
+    </linearGradient>
+  </defs>
+  <g id="svg">
+    <path d="M40 0L4 0C1.791 0 0 1.791 0 4L0 40C0 42.209 1.791 44 4 44L40 44C42.209 44 44 42.209 44 40L44 4C44 1.791 42.209 0 40 0L40 0Z" transform="translate(0 2.000122)" id="Shape" fill="url(#gradient_1)" stroke="none" />
+    <g id="G" fill="#EEEEEE" transform="translate(10.00012 0)">
+      <path d="M22.1484 34.8809Q18.3516 37.0254 13.7109 37.0254Q8.31445 37.0254 4.9834 33.5449Q1.65234 30.0645 1.65234 24.334Q1.65234 18.4805 5.35254 14.7275Q9.05273 10.9746 14.7305 10.9746Q18.8438 10.9746 21.6387 12.3105L21.6387 15.5801Q18.5801 13.6465 14.3965 13.6465Q10.1602 13.6465 7.45313 16.5645Q4.74609 19.4824 4.74609 24.123Q4.74609 28.9043 7.25977 31.6377Q9.77344 34.3711 14.0801 34.3711Q17.0332 34.3711 19.1953 33.1934L19.1953 26.127L13.6758 26.127L13.6758 23.4551L22.1484 23.4551L22.1484 34.8809Z" />
+    </g>
+  </g>
+</svg>

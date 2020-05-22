@@ -137,6 +137,9 @@
     <Compile Include="Components\TempHistory\TempHistoryInvalidNavigationException.cs" />
     <Compile Include="Components\TempHistory\TempHistoryItem.cs" />
     <Compile Include="Components\TempHistory\TempHistoryManager.cs" />
+    <Compile Include="Controls\Browser.xaml.cs">
+      <DependentUpon>Browser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\MessagingEventTypes.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -145,6 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BrowserSettingsViewModel.cs" />
+    <Compile Include="ViewModels\BrowserControlViewModel.cs" />
     <Compile Include="ViewModels\BrowserWidgetViewModel.cs" />
     <Compile Include="Views\BrowserSettings.xaml.cs">
       <DependentUpon>BrowserSettings.xaml</DependentUpon>
@@ -206,9 +210,12 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <PRIResource Include="Localization\de-DE\Resources.resw" />
     <PRIResource Include="Localization\en-US\Resources.resw" />
+    <Content Include="Images\key_g.png" />
+    <Content Include="Images\key_win.png" />
     <Content Include="Images\logo.png" />
-    <Content Include="Images\logo.svg" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Images\xbox_gamebar_widget_browser_entry.png" />
+    <Content Include="Images\xbox_gamebar_widget_menu.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -221,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Browser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
