@@ -35,8 +35,6 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <!--<ctrl:Browser Grid.Column="2" />-->
-
             <StackPanel
                 Grid.Column="0"
                 HorizontalAlignment="Left"
@@ -156,12 +154,11 @@
                                     x:Name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
                                     x:Uid="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
                                     Command="{Binding OpenFeedbackCommand}"
-                                    Label="__BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton_Label__" />
-                                <AppBarButton
-                                    x:Name="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton"
-                                    x:Uid="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton"
-                                    Command="{Binding OpenSettingsCommand}"
-                                    Label="__BrowserWidget_AppMenuCommandBarFlyout_SettingsButton_Label__" />
+                                    Label="__BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton_Label__">
+                                    <AppBarButton.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED15;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
                             </muxc:CommandBarFlyout.SecondaryCommands>
                         </muxc:CommandBarFlyout>
                     </Button.Flyout>
