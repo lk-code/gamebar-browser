@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
 
 namespace browser.ViewModels
 {
@@ -124,11 +125,60 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void OnTabViewAddTabClick(RoutedEventArgs eventArgs)
         {
-            this.CurrentTabUiItems.Add(new TabUiItem
+            Browser browserControl = new Browser();
+
+            browserControl.ViewModel.OnDocumentTitleChanged += ViewModel_OnDocumentTitleChanged;
+            browserControl.ViewModel.OnDocumentIconChanged += ViewModel_OnDocumentIconChanged;
+
+            TabUiItem tabUiItem = new TabUiItem
             {
                 DocumentTitle = " ",
-                Content = new Browser()
-            });
+                Content = browserControl
+            };
+
+            this.CurrentTabUiItems.Add(tabUiItem);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void ViewModel_OnDocumentIconChanged(object source, DocumentIconChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void ViewModel_OnDocumentTitleChanged(object source, DocumentTitleChangedEventArgs e)
+        {
+            this.ProcessDocumentTitleChanged(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessDocumentTitleChanged(DocumentTitleChangedEventArgs eventArgs)
+        {
+            Guid browserId = eventArgs.BrowserId;
+            string documentTitle = eventArgs.DocumentTitle;
+
+            /*
+
+            TabUiItem tabUiItem = this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId));
+            int index = this.CurrentTabUiItems.IndexOf(tabUiItem);
+            if (tabUiItem != null)
+            {
+                tabUiItem.DocumentTitle = documentTitle;
+            }
+
+            this.SendPropertyChanged("CurrentTabUiItems");
+            /* */
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
-﻿namespace browser.Models
+﻿using browser.ViewModels;
+
+namespace browser.Models
 {
-    public class TabUiItem
+    public class TabUiItem : BaseViewModel
     {
         /// <summary>
         /// 

@@ -145,6 +145,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\OnDocumentIconChangedEventArgs.cs" />
+    <Compile Include="Models\OnDocumentTitleChangedEventArgs.cs" />
     <Compile Include="Models\TabUiItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

@@ -1,7 +1,6 @@
 ﻿using browser.ViewModels;
-using Microsoft.Gaming.XboxGameBar;
+using System;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Benutzersteuerelement" wird unter https://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.
 
@@ -14,7 +13,7 @@ namespace browser.Controls
         /// <summary>
         /// 
         /// </summary>
-        BrowserControlViewModel ViewModel;
+        public BrowserControlViewModel ViewModel;
 
         #endregion
 

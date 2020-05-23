@@ -4,6 +4,7 @@ using browser.Components.Storage;
 using browser.Components.TempHistory;
 using browser.core.Components.WebUriProcessor;
 using browser.Core;
+using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Gaming.XboxGameBar;
 using System;
@@ -22,6 +23,28 @@ namespace browser.ViewModels
     public class BrowserControlViewModel : BaseViewModel
     {
         #region # events #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public delegate void OnDocumentTitleChangedEventHandler(object source, DocumentTitleChangedEventArgs e);
+        /// <summary>
+        /// 
+        /// </summary>
+        public event OnDocumentTitleChangedEventHandler OnDocumentTitleChanged;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public delegate void OnDocumentIconChangedEventHandler(object source, DocumentIconChangedEventArgs e);
+        /// <summary>
+        /// 
+        /// </summary>
+        public event OnDocumentIconChangedEventHandler OnDocumentIconChanged;
 
         #endregion
 
@@ -142,6 +165,11 @@ namespace browser.ViewModels
 
         #region # public properties #
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly Guid Id = Guid.NewGuid();
+
         string _adressBarDisplayText = string.Empty;
         /// <summary>
         /// 
@@ -257,6 +285,8 @@ namespace browser.ViewModels
             set
             {
                 SetProperty(ref _webViewCurrentTitle, value);
+
+                OnDocumentTitleChanged(this, new DocumentTitleChangedEventArgs(this.Id, _webViewCurrentTitle));
             }
         }
 
