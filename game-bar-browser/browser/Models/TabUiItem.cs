@@ -27,19 +27,54 @@ using browser.ViewModels;
 
 namespace browser.Models
 {
-    public class TabUiItem
+    public class TabUiItem : BaseViewModel
     {
+        string _documentTitle = " ";
         /// <summary>
         /// 
         /// </summary>
-        public string DocumentTitle { get; set; }
+        public string DocumentTitle
+        {
+            get
+            {
+                return _documentTitle;
+            }
+            set
+            {
+                SetProperty(ref _documentTitle, value);
+            }
+        }
+
+        Microsoft.UI.Xaml.Controls.IconSource _documentIcon = null;
         /// <summary>
         /// 
         /// </summary>
-        public Microsoft.UI.Xaml.Controls.IconSource DocumentIcon { get; set; }
+        public Microsoft.UI.Xaml.Controls.IconSource DocumentIcon
+        {
+            get
+            {
+                return _documentIcon;
+            }
+            set
+            {
+                SetProperty(ref _documentIcon, value);
+            }
+        }
+
+        object _content = null;
         /// <summary>
         /// 
         /// </summary>
-        public object Content { get; set; }
+        public object Content
+        {
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                SetProperty(ref _content, value);
+            }
+        }
     }
 }

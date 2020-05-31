@@ -45,7 +45,7 @@ using Windows.UI.Xaml.Input;
 
 namespace browser.ViewModels
 {
-    public class BrowserControlViewModel : BaseViewModel
+    public class BrowserControlViewModel : WindowViewModel
     {
         #region # events #
 

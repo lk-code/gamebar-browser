@@ -29,18 +29,13 @@ using browser.Models;
 using Microsoft.Gaming.XboxGameBar;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
 
 namespace browser.ViewModels
 {
-    public class BrowserWidgetViewModel : BaseViewModel
+    public class BrowserWidgetViewModel : WindowViewModel
     {
         #region # events #
 
@@ -108,11 +103,11 @@ namespace browser.ViewModels
             }
         }
 
-        ObservableCollection<TabUiItem> _currentTabUiItems = new ObservableCollection<TabUiItem>();
+        ItemsChangeObservableCollection<TabUiItem> _currentTabUiItems = new ItemsChangeObservableCollection<TabUiItem>();
         /// <summary>
         /// 
         /// </summary>
-        public ObservableCollection<TabUiItem> CurrentTabUiItems
+        public ItemsChangeObservableCollection<TabUiItem> CurrentTabUiItems
         {
             get
             {
@@ -133,7 +128,7 @@ namespace browser.ViewModels
         /// </summary>
         public BrowserWidgetViewModel() : base(Window.Current)
         {
-            this.CurrentTabUiItems = new ObservableCollection<TabUiItem>();
+            this.CurrentTabUiItems = new ItemsChangeObservableCollection<TabUiItem>();
         }
 
         #endregion
@@ -171,7 +166,24 @@ namespace browser.ViewModels
         /// <param name="e"></param>
         private void ViewModel_OnDocumentIconChanged(object source, DocumentIconChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            this.ProcessDocumentIconChanged(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessDocumentIconChanged(DocumentIconChangedEventArgs eventArgs)
+        {
+            /*
+            Guid browserId = eventArgs.BrowserId;
+            string documentTitle = eventArgs.DocumentIcon;
+
+            Microsoft.UI.Xaml.Controls.BitmapIconSource bitmapIconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource();
+            bitmapIconSource.UriSource = new Uri("https://www.google.de/favicon.ico");
+
+            this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId)).DocumentIcon = bitmapIconSource;
+            /* */
         }
 
         /// <summary>
@@ -193,16 +205,17 @@ namespace browser.ViewModels
             Guid browserId = eventArgs.BrowserId;
             string documentTitle = eventArgs.DocumentTitle;
 
+            this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId)).DocumentTitle = documentTitle;
+
+
+
+
+
             /*
+            Microsoft.UI.Xaml.Controls.BitmapIconSource bitmapIconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource();
+            bitmapIconSource.UriSource = new Uri("https://www.google.de/favicon.ico");
 
-            TabUiItem tabUiItem = this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId));
-            int index = this.CurrentTabUiItems.IndexOf(tabUiItem);
-            if (tabUiItem != null)
-            {
-                tabUiItem.DocumentTitle = documentTitle;
-            }
-
-            this.SendPropertyChanged("CurrentTabUiItems");
+            this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId)).DocumentIcon = bitmapIconSource;
             /* */
         }
 

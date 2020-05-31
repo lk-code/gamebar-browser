@@ -27,10 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace browser.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class WindowViewModel : INotifyPropertyChanged
     {
         #region # events #
 
@@ -48,6 +50,11 @@ namespace browser.ViewModels
 
         #region # private properties #
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private Window _currentWindow = null;
+
         #endregion
 
         #region # public properties #
@@ -59,9 +66,9 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public BaseViewModel()
+        public WindowViewModel(Window currentWindow)
         {
-
+            this._currentWindow = currentWindow;
         }
 
         #endregion
@@ -76,15 +83,18 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         /// <param name="propertyName"></param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        protected async void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
             if (changed == null)
             {
                 return;
             }
-            
-            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            await this._currentWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            });
         }
 
         /// <summary>

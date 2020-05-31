@@ -47,9 +47,9 @@
             <controls:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="models:TabUiItem">
                     <controls:TabViewItem
-                        Content="{x:Bind Content}"
-                        Header="{x:Bind DocumentTitle}"
-                        IconSource="{x:Bind DocumentIcon}" />
+                        Content="{Binding Content}"
+                        Header="{Binding DocumentTitle}"
+                        IconSource="{Binding DocumentIcon}" />
                 </DataTemplate>
             </controls:TabView.TabItemTemplate>
 

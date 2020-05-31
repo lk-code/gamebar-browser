@@ -38,7 +38,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace browser.ViewModels
 {
-    public class BrowserSettingsViewModel : BaseViewModel
+    public class BrowserSettingsViewModel : WindowViewModel
     {
         #region # events #
 
