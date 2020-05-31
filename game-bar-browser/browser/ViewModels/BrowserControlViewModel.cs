@@ -38,7 +38,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -211,11 +210,11 @@ namespace browser.ViewModels
             }
         }
 
-        string _webViewAdressSource = string.Empty;
+        Uri _webViewAdressSource = null;
         /// <summary>
         /// 
         /// </summary>
-        public string WebViewAdressSource
+        public Uri WebViewAdressSource
         {
             get
             {
@@ -521,10 +520,9 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void ProcessActionButtonRefreshClick(RoutedEventArgs eventArgs)
         {
-            string currentAdressUri = this.WebViewAdressSource;
+            string currentAdressUri = this.WebViewAdressSource.ToString();
 
-            this.WebViewAdressSource = string.Empty;
-            this.WebViewAdressSource = currentAdressUri;
+            this.WebViewAdressSource = new Uri(currentAdressUri);
         }
 
         /// <summary>
@@ -639,11 +637,11 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         /// <param name="webViewSource"></param>
-        private void ProcessChangingWebViewSource(string webViewSource)
+        private void ProcessChangingWebViewSource(Uri webViewSource)
         {
-            if(webViewSource != this._adressBarDisplayText)
+            if(webViewSource.ToString() != this._adressBarDisplayText)
             {
-                this.AdressBarDisplayText = webViewSource;
+                this.AdressBarDisplayText = webViewSource.ToString();
             }
         }
 
@@ -666,7 +664,7 @@ namespace browser.ViewModels
         private void GoToUri(Uri targetUri)
         {
             this.AdressBarDisplayText = targetUri.ToString();
-            this.WebViewAdressSource = this.AdressBarDisplayText;
+            this.WebViewAdressSource = targetUri;
 
             this.ProcessTempHistoryActionButtons();
         }
@@ -725,9 +723,9 @@ namespace browser.ViewModels
         /// </summary>
         private void ProcessWebViewNavigationStarting(WebViewNavigationStartingEventArgs eventArgs)
         {
-            string newUriValue = eventArgs.Uri.ToString();
+            Uri newUri = eventArgs.Uri;
 
-            this.ProcessChangingWebViewSource(newUriValue);
+            this.ProcessChangingWebViewSource(newUri);
         }
 
         /// <summary>
@@ -805,7 +803,7 @@ namespace browser.ViewModels
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
             string pageTitle = this.WebViewCurrentTitle;
-            string pageUri = this.AdressBarDisplayText;
+            string pageUri = this.WebViewAdressSource.ToString();
 
             DataRequest request = args.Request;
             request.Data.Properties.Title = pageTitle;
