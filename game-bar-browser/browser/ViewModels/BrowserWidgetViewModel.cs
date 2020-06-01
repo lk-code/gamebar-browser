@@ -32,6 +32,7 @@ using System;
 using System.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace browser.ViewModels
 {
@@ -147,8 +148,7 @@ namespace browser.ViewModels
         {
             Browser browserControl = new Browser();
 
-            browserControl.ViewModel.OnDocumentTitleChanged += ViewModel_OnDocumentTitleChanged;
-            browserControl.ViewModel.OnDocumentIconChanged += ViewModel_OnDocumentIconChanged;
+            browserControl.ViewModel.OnWebViewHeaderChanged += ViewModel_OnWebViewHeaderChanged;
 
             TabUiItem tabUiItem = new TabUiItem
             {
@@ -159,64 +159,36 @@ namespace browser.ViewModels
             this.CurrentTabUiItems.Add(tabUiItem);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        private void ViewModel_OnDocumentIconChanged(object source, DocumentIconChangedEventArgs e)
+        private void ViewModel_OnWebViewHeaderChanged(object source, WebViewHeaderChangedEventArgs e)
         {
-            this.ProcessDocumentIconChanged(e);
+            this.ProcessWebViewHeaderChanged(e);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="eventArgs"></param>
-        private void ProcessDocumentIconChanged(DocumentIconChangedEventArgs eventArgs)
-        {
-            /*
-            Guid browserId = eventArgs.BrowserId;
-            string documentTitle = eventArgs.DocumentIcon;
-
-            Microsoft.UI.Xaml.Controls.BitmapIconSource bitmapIconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource();
-            bitmapIconSource.UriSource = new Uri("https://www.google.de/favicon.ico");
-
-            this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId)).DocumentIcon = bitmapIconSource;
-            /* */
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        private void ViewModel_OnDocumentTitleChanged(object source, DocumentTitleChangedEventArgs e)
-        {
-            this.ProcessDocumentTitleChanged(e);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessDocumentTitleChanged(DocumentTitleChangedEventArgs eventArgs)
+        private void ProcessWebViewHeaderChanged(WebViewHeaderChangedEventArgs eventArgs)
         {
             Guid browserId = eventArgs.BrowserId;
-            string documentTitle = eventArgs.DocumentTitle;
 
             TabUiItem tabUiItem = this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId));
 
-            if(tabUiItem != null)
+            if (tabUiItem != null)
             {
+                string documentTitle = eventArgs.DocumentTitle;
                 tabUiItem.DocumentTitle = documentTitle;
+
+                string documentIcon = eventArgs.DocumentIcon;
+                tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon) };
             }
 
 
 
-
-
             /*
+            Guid browserId = eventArgs.BrowserId;
+            string documentTitle = eventArgs.DocumentIcon;
+
             Microsoft.UI.Xaml.Controls.BitmapIconSource bitmapIconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource();
             bitmapIconSource.UriSource = new Uri("https://www.google.de/favicon.ico");
 

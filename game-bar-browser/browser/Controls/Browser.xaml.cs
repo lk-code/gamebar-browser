@@ -66,6 +66,7 @@ namespace browser.Controls
         {
             this.LoadWebViewEnv();
 
+            this.ViewModel.WebViewNavigationCompletedCommand.Execute(args);
             this.ViewModel.WebViewDocumentTitleChangedCommand.Execute(this.BrowserWidget_MainContent_WebView.DocumentTitle);
         }
 

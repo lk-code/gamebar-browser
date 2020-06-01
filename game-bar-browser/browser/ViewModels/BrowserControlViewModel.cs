@@ -53,22 +53,11 @@ namespace browser.ViewModels
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public delegate void OnDocumentTitleChangedEventHandler(object source, DocumentTitleChangedEventArgs e);
+        public delegate void OnWebViewHeaderChangedEventHandler(object source, WebViewHeaderChangedEventArgs e);
         /// <summary>
         /// 
         /// </summary>
-        public event OnDocumentTitleChangedEventHandler OnDocumentTitleChanged;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        public delegate void OnDocumentIconChangedEventHandler(object source, DocumentIconChangedEventArgs e);
-        /// <summary>
-        /// 
-        /// </summary>
-        public event OnDocumentIconChangedEventHandler OnDocumentIconChanged;
+        public event OnWebViewHeaderChangedEventHandler OnWebViewHeaderChanged;
 
         #endregion
 
@@ -303,8 +292,22 @@ namespace browser.ViewModels
             set
             {
                 SetProperty(ref _webViewCurrentTitle, value);
+            }
+        }
 
-                OnDocumentTitleChanged(this, new DocumentTitleChangedEventArgs(this.Id, _webViewCurrentTitle));
+        string _webViewCurrentIcon = " ";
+        /// <summary>
+        /// 
+        /// </summary>
+        public string WebViewCurrentIcon
+        {
+            get
+            {
+                return _webViewCurrentIcon;
+            }
+            set
+            {
+                SetProperty(ref _webViewCurrentIcon, value);
             }
         }
 
@@ -484,6 +487,11 @@ namespace browser.ViewModels
         {
             this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
             this.AddPageToTempHistory(this.WebViewCurrentTitle, this.AdressBarDisplayText);
+
+            string currentWebUrl = this.WebViewAdressSource.ToString();
+            this.WebViewCurrentIcon = string.Format("https://www.google.com/s2/favicons?domain={0}", currentWebUrl);
+
+            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this.Id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
 
             this.ProcessTempHistoryActionButtons();
         }

@@ -27,7 +27,7 @@ using System;
 
 namespace browser.Models
 {
-    public class DocumentTitleChangedEventArgs : EventArgs
+    public class WebViewHeaderChangedEventArgs : EventArgs
     {
         #region # public properties #
 
@@ -41,6 +41,11 @@ namespace browser.Models
         /// </summary>
         public string DocumentTitle { get; set; } = " ";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DocumentIcon { get; set; } = " ";
+
         #endregion
 
         #region # constructor #
@@ -50,10 +55,12 @@ namespace browser.Models
         /// </summary>
         /// <param name="browserId"></param>
         /// <param name="documentTitle"></param>
-        public DocumentTitleChangedEventArgs(Guid browserId, string documentTitle)
+        /// <param name="documentIcon"></param>
+        public WebViewHeaderChangedEventArgs(Guid browserId, string documentTitle, string documentIcon)
         {
             this.BrowserId = browserId;
             this.DocumentTitle = documentTitle;
+            this.DocumentIcon = documentIcon;
         }
 
         #endregion
