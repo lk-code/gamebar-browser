@@ -50,25 +50,29 @@ namespace browser.ViewModels
 
         #region # commands #
 
+        private ICommand _searchEngineSelectionChangedCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand SearchEngineSelectionChangedCommand { get; set; }
+        public ICommand SearchEngineSelectionChangedCommand => _searchEngineSelectionChangedCommand ?? (_searchEngineSelectionChangedCommand = new RelayCommand((eventArgs) => { this.ProcessSearchEngineSelectionChanged(eventArgs as SelectionChangedEventArgs); }));
 
+        private ICommand _showHomepageButtonToggledCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ShowHomepageButtonToggledCommand { get; set; }
+        public ICommand ShowHomepageButtonToggledCommand => _showHomepageButtonToggledCommand ?? (_showHomepageButtonToggledCommand = new RelayCommand((eventArgs) => { this.ProcessShowHomepageButtonToggled(eventArgs as RoutedEventArgs); }));
 
+        private ICommand _homepageUriLostFocusCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand HomepageUriLostFocusCommand { get; set; }
+        public ICommand HomepageUriLostFocusCommand => _homepageUriLostFocusCommand ?? (_homepageUriLostFocusCommand = new RelayCommand((eventArgs) => { this.ProcessHomepageUriLostFocus(eventArgs as RoutedEventArgs); }));
 
+        private ICommand _saveSettingsButtonClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand SaveSettingsButtonClickCommand { get; set; }
+        public ICommand SaveSettingsButtonClickCommand => _saveSettingsButtonClickCommand ?? (_saveSettingsButtonClickCommand = new RelayCommand((eventArgs) => { this.ProcessSaveSettingsButtonClick(eventArgs as RoutedEventArgs); }));
 
         #endregion
 
@@ -219,7 +223,6 @@ namespace browser.ViewModels
             this.InitializeStorageManager();
             this.InitializeSearchEngineProcessor();
             this.LoadSettingValues();
-            this.InitializeCommands();
         }
 
         #endregion
@@ -229,32 +232,6 @@ namespace browser.ViewModels
         #endregion
 
         #region # private logic #
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void InitializeCommands()
-        {
-            this.SearchEngineSelectionChangedCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessSearchEngineSelectionChanged(eventArgs as SelectionChangedEventArgs);
-            });
-
-            this.ShowHomepageButtonToggledCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessShowHomepageButtonToggled(eventArgs as RoutedEventArgs);
-            });
-
-            this.HomepageUriLostFocusCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessHomepageUriLostFocus(eventArgs as RoutedEventArgs);
-            });
-
-            this.SaveSettingsButtonClickCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessSaveSettingsButtonClick(eventArgs as RoutedEventArgs);
-            });
-        }
 
         /// <summary>
         /// 

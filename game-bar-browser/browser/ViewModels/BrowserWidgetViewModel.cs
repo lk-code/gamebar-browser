@@ -205,7 +205,12 @@ namespace browser.ViewModels
             Guid browserId = eventArgs.BrowserId;
             string documentTitle = eventArgs.DocumentTitle;
 
-            this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId)).DocumentTitle = documentTitle;
+            TabUiItem tabUiItem = this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId));
+
+            if(tabUiItem != null)
+            {
+                tabUiItem.DocumentTitle = documentTitle;
+            }
 
 
 

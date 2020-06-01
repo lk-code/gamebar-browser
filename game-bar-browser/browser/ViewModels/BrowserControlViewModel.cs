@@ -78,83 +78,77 @@ namespace browser.ViewModels
 
         #region # commands #
 
+        private ICommand _openSettingsCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenSettingsCommand { get; set; }
+        public ICommand OpenSettingsCommand => _openSettingsCommand ?? (_openSettingsCommand = new RelayCommand((eventArgs) => { this.OpenXboxGameBarWidgetSettings(); }));
 
+        private ICommand _openShareMenuCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenShareMenuCommand { get; set; }
+        public ICommand OpenShareMenuCommand => _openShareMenuCommand ?? (_openShareMenuCommand = new RelayCommand((eventArgs) => { this.OpenShareMenu(); }));
 
+        private ICommand _adressBarKeyUpCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand AdressBarKeyUpCommand { get; set; }
+        public ICommand AdressBarKeyUpCommand => _adressBarKeyUpCommand ?? (_adressBarKeyUpCommand = new RelayCommand((eventArgs) => { this.ProcessAdressVarKeyUp(eventArgs as KeyRoutedEventArgs); }));
 
+        private ICommand _webViewNavigationStartingCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand WebViewNavigationStartingCommand { get; set; }
+        public ICommand WebViewNavigationStartingCommand => _webViewNavigationStartingCommand ?? (_webViewNavigationStartingCommand = new RelayCommand((eventArgs) => { this.ProcessWebViewNavigationStarting(eventArgs as WebViewNavigationStartingEventArgs); }));
 
+        private ICommand _adressBarSuggestionChosenCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand AdressBarSuggestionChosenCommand { get; set; }
+        public ICommand AdressBarSuggestionChosenCommand => _adressBarSuggestionChosenCommand ?? (_adressBarSuggestionChosenCommand = new RelayCommand((eventArgs) => { this.ProcessAdressBarSuggestionChosen((eventArgs as AutoSuggestBoxSuggestionChosenEventArgs)); }));
 
+        private ICommand _webViewDocumentTitleChangedCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand WebViewDocumentTitleChangedCommand { get; set; }
+        public ICommand WebViewDocumentTitleChangedCommand => _webViewDocumentTitleChangedCommand ?? (_webViewDocumentTitleChangedCommand = new RelayCommand((eventArgs) => { this.ProcessWebViewDocumentTitleChanged((eventArgs as string)); }));
 
+        private ICommand _webViewNavigationCompletedCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand WebViewNavigationCompletedCommand { get; set; }
+        public ICommand WebViewNavigationCompletedCommand => _webViewNavigationCompletedCommand ?? (_webViewNavigationCompletedCommand = new RelayCommand((eventArgs) => { this.ProcessWebViewNavigationCompleted((eventArgs as WebViewNavigationCompletedEventArgs)); }));
 
+        private ICommand _actionButtonBackClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonBackClickCommand { get; set; }
+        public ICommand ActionButtonBackClickCommand => _actionButtonBackClickCommand ?? (_actionButtonBackClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonBackClick((eventArgs as RoutedEventArgs)); }));
 
+        private ICommand _actionButtonForwardClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonForwardClickCommand { get; set; }
+        public ICommand ActionButtonForwardClickCommand => _actionButtonForwardClickCommand ?? (_actionButtonForwardClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonForwardClick((eventArgs as RoutedEventArgs)); }));
 
+        private ICommand _actionButtonRefreshClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonRefreshClickCommand { get; set; }
+        public ICommand ActionButtonRefreshClickCommand => _actionButtonRefreshClickCommand ?? (_actionButtonRefreshClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonRefreshClick((eventArgs as RoutedEventArgs)); }));
 
+        private ICommand _actionButtonHomeClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonHomeClickCommand { get; set; }
+        public ICommand ActionButtonHomeClickCommand => _actionButtonHomeClickCommand ?? (_actionButtonHomeClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonHomeClick((eventArgs as RoutedEventArgs)); }));
 
         private ICommand _openFeedbackCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenFeedbackCommand
-        {
-            get
-            {
-                if (_openFeedbackCommand == null)
-                {
-                    _openFeedbackCommand = new RelayCommand(
-                        async (eventArgs) =>
-                        {
-                            // This launcher is part of the Store Services SDK https://docs.microsoft.com/windows/uwp/monetize/microsoft-store-services-sdk
-                            var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
-                            await launcher.LaunchAsync();
-                        });
-                }
-
-                return _openFeedbackCommand;
-            }
-        }
+        public ICommand OpenFeedbackCommand => _openFeedbackCommand ?? (_openFeedbackCommand = new RelayCommand((eventArgs) => { this.LaunchFeedbackHub(); }));
 
         #endregion
 
@@ -361,7 +355,6 @@ namespace browser.ViewModels
             this.InitializeSearchEngineProcessor();
             this.InitializeTemporaryHistory();
             this.InitializeAdressBarButtons();
-            this.InitializeCommands();
             this.LoadHomepageToWebView();
         }
 
@@ -376,62 +369,11 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void InitializeCommands()
+        private async void LaunchFeedbackHub()
         {
-            this.OpenSettingsCommand = new RelayCommand((eventArgs) =>
-            {
-                this.OpenXboxGameBarWidgetSettings();
-            });
-
-            this.OpenShareMenuCommand = new RelayCommand((eventArgs) =>
-            {
-                this.OpenShareMenu();
-            });
-
-            this.AdressBarKeyUpCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessAdressVarKeyUp(eventArgs as KeyRoutedEventArgs);
-            });
-
-            this.WebViewNavigationStartingCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessWebViewNavigationStarting(eventArgs as WebViewNavigationStartingEventArgs);
-            });
-
-            this.AdressBarSuggestionChosenCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessAdressBarSuggestionChosen((eventArgs as AutoSuggestBoxSuggestionChosenEventArgs));
-            });
-
-            this.WebViewDocumentTitleChangedCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessWebViewDocumentTitleChanged((eventArgs as string));
-            });
-
-            this.WebViewNavigationCompletedCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessWebViewNavigationCompleted((eventArgs as WebViewNavigationCompletedEventArgs));
-            });
-
-            this.ActionButtonBackClickCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessActionButtonBackClick((eventArgs as RoutedEventArgs));
-            });
-
-            this.ActionButtonForwardClickCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessActionButtonForwardClick((eventArgs as RoutedEventArgs));
-            });
-
-            this.ActionButtonRefreshClickCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessActionButtonRefreshClick((eventArgs as RoutedEventArgs));
-            });
-
-            this.ActionButtonHomeClickCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessActionButtonHomeClick((eventArgs as RoutedEventArgs));
-            });
+            // This launcher is part of the Store Services SDK https://docs.microsoft.com/windows/uwp/monetize/microsoft-store-services-sdk
+            var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
+            await launcher.LaunchAsync();
         }
 
         /// <summary>

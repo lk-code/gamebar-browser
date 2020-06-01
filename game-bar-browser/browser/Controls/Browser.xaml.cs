@@ -79,16 +79,78 @@ namespace browser.Controls
             this.BrowserWidget_MainContent_WebView.InvokeScriptAsync("eval", new string[] { functionString });
         }
 
+        #endregion
+
+        #region # event to viewmodel commands #
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BrowserWidget_MainContent_WebView_ScriptNotify(object sender, NotifyEventArgs e)
+        private void BrowserWidget_HeaderUriAutoSuggestBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            string title = e.Value;
+            this.ViewModel.AdressBarKeyUpCommand.Execute(e);
+        }
 
-            this.ViewModel.WebViewDocumentTitleChangedCommand.Execute(title);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void BrowserWidget_HeaderUriAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            this.ViewModel.AdressBarSuggestionChosenCommand.Execute(args);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void BrowserWidget_MainContent_WebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        {
+            this.ViewModel.WebViewNavigationStartingCommand.Execute(args);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserWidget_HeaderHomeActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.ViewModel.ActionButtonHomeClickCommand.Execute(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserWidget_HeaderRefreshActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.ViewModel.ActionButtonRefreshClickCommand.Execute(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserWidget_HeaderForwardActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.ViewModel.ActionButtonForwardClickCommand.Execute(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserWidget_HeaderBackActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.ViewModel.ActionButtonBackClickCommand.Execute(e);
         }
 
         #endregion

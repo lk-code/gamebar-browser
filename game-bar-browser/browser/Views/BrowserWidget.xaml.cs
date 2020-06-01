@@ -68,5 +68,29 @@ namespace browser.Views
         }
 
         #endregion
+
+        #region #  event to viewmodel commands #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void BrowserWidget_MainTabView_AddTabButtonClick(Microsoft.UI.Xaml.Controls.TabView sender, object args)
+        {
+            this.ViewModel.TabViewAddTabClickCommand.Execute(args);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void BrowserWidget_MainTabView_TabCloseRequested(Microsoft.UI.Xaml.Controls.TabView sender, Microsoft.UI.Xaml.Controls.TabViewTabCloseRequestedEventArgs args)
+        {
+            this.ViewModel.TabViewTabCloseRequestedCommand.Execute(args);
+        }
+
+        #endregion
     }
 }

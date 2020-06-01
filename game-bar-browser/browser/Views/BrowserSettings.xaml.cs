@@ -54,7 +54,7 @@ namespace browser.Views
         /// <summary>
         /// 
         /// </summary>
-        BrowserSettingsViewModel viewModel;
+        BrowserSettingsViewModel ViewModel;
 
         #endregion
 
@@ -65,7 +65,7 @@ namespace browser.Views
         {
             this.InitializeComponent();
 
-            this.DataContext = viewModel = new BrowserSettingsViewModel();
+            this.DataContext = ViewModel = new BrowserSettingsViewModel();
         }
 
         #region # private properties #
@@ -76,7 +76,51 @@ namespace browser.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.viewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+            this.ViewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+        }
+
+        #endregion
+
+        #region #  event to viewmodel commands #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_SearchEngineComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.ViewModel.SearchEngineSelectionChangedCommand.Execute(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_HomepageUriTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.HomepageUriLostFocusCommand.Execute(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.ShowHomepageButtonToggledCommand.Execute(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_SaveSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.SaveSettingsButtonClickCommand.Execute(e);
         }
 
         #endregion
