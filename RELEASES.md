@@ -1,3 +1,7 @@
+# v1.1
+* The browser now offers useful tabs
+* a lot of BugFixes
+
 # v1.0
 * Saving pages in the history
 * Search in history

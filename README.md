@@ -7,6 +7,9 @@ Gamebar Browser is a Windows 10 app for the Xbox Gamebar (you can open it with t
 The Gamebar extension requires Windows 10 and the 2004 update (May 2020). You can check your version by searching for "winver" in the start menu and see which update is installed.
 
 ## Releases
+You can find the official app in the Microsoft Store: [Download via Microsoft Store](https://www.microsoft.com/store/productId/9P7X6CTWMSLG)
+
+List of Releases:
 [Latest Releases of Gamebar Browser](https://github.com/lk-code/gamebar-browser/blob/master/RELEASES.md) 
 
 # Development
