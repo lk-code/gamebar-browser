@@ -46,11 +46,11 @@ namespace browser.Models
             }
         }
 
-        Microsoft.UI.Xaml.Controls.IconSource _documentIcon = null;
+        IconSource _documentIcon = null;
         /// <summary>
         /// 
         /// </summary>
-        public Microsoft.UI.Xaml.Controls.IconSource DocumentIcon
+        public IconSource DocumentIcon
         {
             get
             {
@@ -58,7 +58,8 @@ namespace browser.Models
             }
             set
             {
-                SetProperty(ref _documentIcon, value);
+                _documentIcon = value;
+                // SetProperty(ref _documentIcon, value);
             }
         }
 
@@ -77,23 +78,5 @@ namespace browser.Models
                 SetProperty(ref _content, value);
             }
         }
-
-        #region # methods #
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="icon"></param>
-        public void Update(string title, IconSource icon)
-        {
-            this._documentTitle = title;
-            this._documentIcon = icon;
-
-            OnPropertyChanged("DocumentIcon");
-            OnPropertyChanged("DocumentTitle");
-        }
-
-        #endregion
     }
 }

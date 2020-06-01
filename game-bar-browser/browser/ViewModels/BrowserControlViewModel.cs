@@ -520,6 +520,8 @@ namespace browser.ViewModels
         private void ProcessWebViewDocumentTitleChanged(string eventArgs)
         {
             this.WebViewCurrentTitle = eventArgs;
+
+            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this.Id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
         }
 
         /// <summary>

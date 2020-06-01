@@ -8,6 +8,10 @@ namespace browser.Core
 {
     public class ItemsChangeObservableCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -27,12 +31,19 @@ namespace browser.Core
             base.OnCollectionChanged(e);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void ClearItems()
         {
             UnRegisterPropertyChanged(this);
             base.ClearItems();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="items"></param>
         private void RegisterPropertyChanged(IList items)
         {
             foreach (INotifyPropertyChanged item in items)
@@ -44,6 +55,10 @@ namespace browser.Core
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="items"></param>
         private void UnRegisterPropertyChanged(IList items)
         {
             foreach (INotifyPropertyChanged item in items)
@@ -55,6 +70,11 @@ namespace browser.Core
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));

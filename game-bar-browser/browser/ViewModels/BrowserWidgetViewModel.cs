@@ -182,28 +182,11 @@ namespace browser.ViewModels
             if (tabUiItem != null)
             {
                 string documentTitle = eventArgs.DocumentTitle;
-                // tabUiItem.DocumentTitle = documentTitle;
+                tabUiItem.DocumentTitle = documentTitle;
 
                 string documentIcon = eventArgs.DocumentIcon;
-                // tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon) };
-
-                tabUiItem.Update(documentTitle, new Microsoft.UI.Xaml.Controls.BitmapIconSource() {
-                    UriSource = new Uri(documentIcon),
-                    ShowAsMonochrome = false
-                });
+                tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon), ShowAsMonochrome = false };
             }
-
-
-
-            /*
-            Guid browserId = eventArgs.BrowserId;
-            string documentTitle = eventArgs.DocumentIcon;
-
-            Microsoft.UI.Xaml.Controls.BitmapIconSource bitmapIconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource();
-            bitmapIconSource.UriSource = new Uri("https://www.google.de/favicon.ico");
-
-            this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId)).DocumentIcon = bitmapIconSource;
-            /* */
         }
 
         /// <summary>
