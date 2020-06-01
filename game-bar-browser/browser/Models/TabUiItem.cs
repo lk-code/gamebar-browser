@@ -24,6 +24,7 @@
  */
 
 using browser.ViewModels;
+using Microsoft.UI.Xaml.Controls;
 
 namespace browser.Models
 {
@@ -76,5 +77,23 @@ namespace browser.Models
                 SetProperty(ref _content, value);
             }
         }
+
+        #region # methods #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="icon"></param>
+        public void Update(string title, IconSource icon)
+        {
+            this._documentTitle = title;
+            this._documentIcon = icon;
+
+            OnPropertyChanged("DocumentIcon");
+            OnPropertyChanged("DocumentTitle");
+        }
+
+        #endregion
     }
 }

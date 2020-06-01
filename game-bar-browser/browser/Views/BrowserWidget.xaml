@@ -51,7 +51,7 @@
                     <controls:TabViewItem
                         Content="{Binding Content}"
                         Header="{Binding DocumentTitle}"
-                        IconSource="{Binding DocumentIcon}" />
+                        IconSource="{Binding DocumentIcon}"/>
                 </DataTemplate>
             </controls:TabView.TabItemTemplate>
 

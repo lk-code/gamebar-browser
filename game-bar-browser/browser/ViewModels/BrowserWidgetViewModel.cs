@@ -159,6 +159,11 @@ namespace browser.ViewModels
             this.CurrentTabUiItems.Add(tabUiItem);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void ViewModel_OnWebViewHeaderChanged(object source, WebViewHeaderChangedEventArgs e)
         {
             this.ProcessWebViewHeaderChanged(e);
@@ -177,10 +182,15 @@ namespace browser.ViewModels
             if (tabUiItem != null)
             {
                 string documentTitle = eventArgs.DocumentTitle;
-                tabUiItem.DocumentTitle = documentTitle;
+                // tabUiItem.DocumentTitle = documentTitle;
 
                 string documentIcon = eventArgs.DocumentIcon;
-                tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon) };
+                // tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon) };
+
+                tabUiItem.Update(documentTitle, new Microsoft.UI.Xaml.Controls.BitmapIconSource() {
+                    UriSource = new Uri(documentIcon),
+                    ShowAsMonochrome = false
+                });
             }
 
 
