@@ -23,15 +23,22 @@
  * SOFTWARE.
  */
 
+using browser.AppViews;
 using browser.Controls;
 using browser.Core;
 using browser.Models;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Gaming.XboxGameBar;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
+using System.Resources;
 using System.Windows.Input;
+using Windows.ApplicationModel.Resources;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace browser.ViewModels
 {
@@ -135,6 +142,7 @@ namespace browser.ViewModels
         public BrowserWidgetViewModel() : base(Window.Current)
         {
             this.CurrentTabUiItems = new ItemsChangeObservableCollection<TabUiItem>();
+            this.RegisterEvents();
         }
 
         #endregion
@@ -144,6 +152,48 @@ namespace browser.ViewModels
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void RegisterEvents()
+        {
+            Messenger.Default.Register<MessagingEventTypes>(MessagingEventTypes.OPEN_VIEW_ABOUT_THIS_APP, async (MessagingEventTypes type) =>
+            {
+                if(type != MessagingEventTypes.OPEN_VIEW_ABOUT_THIS_APP)
+                {
+                    return;
+                }
+                
+                await this._currentWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
+                    string viewTitleAboutThisApp = resources.GetString("ViewTitleAboutThisApp");
+                    Microsoft.UI.Xaml.Controls.IconSource icon = new Microsoft.UI.Xaml.Controls.FontIconSource() { Glyph = "\uE946", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+
+                    this.ProcessOpenContentInBrowserContentView(new AboutView(), viewTitleAboutThisApp, icon);
+                });
+
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="title"></param>
+        /// <param name="icon"></param>
+        private void ProcessOpenContentInBrowserContentView(object content, string title, Microsoft.UI.Xaml.Controls.IconSource icon)
+        {
+            TabUiItem tabUiItem = new TabUiItem
+            {
+                DocumentTitle = title,
+                Content = content,
+                DocumentIcon = icon
+            };
+
+            this.CurrentTabUiItems.Add(tabUiItem);
+        }
 
         /// <summary>
         /// 

@@ -53,7 +53,7 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private Window _currentWindow = null;
+        protected Window _currentWindow = null;
 
         #endregion
 

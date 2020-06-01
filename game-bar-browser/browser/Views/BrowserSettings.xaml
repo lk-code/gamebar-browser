@@ -84,11 +84,17 @@
                 OnContent="__Yes__"
                 Toggled="BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled" />
 
+            <HyperlinkButton
+                x:Name="BrowserSettings_AboutThisAppHyperlinkButton"
+                x:Uid="BrowserSettings_AboutThisAppHyperlinkButton"
+                Command="{Binding AboutThisAppButtonClickCommand}"
+                Content="__about_this_app__" />
+
             <Button
                 x:Name="BrowserSettings_SaveSettingsButton"
                 x:Uid="BrowserSettings_SaveSettingsButton"
                 Margin="0,8,0,0"
-                Click="BrowserSettings_SaveSettingsButton_Click"
+                Command="{Binding SaveSettingsButtonClickCommand}"
                 Content="__Save_Settings__"
                 Visibility="{Binding IsSettingsFormSaveButtonVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
 
