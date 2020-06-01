@@ -1,12 +1,35 @@
-﻿<Page
+﻿<!--
+    /**
+    * MIT License
+    *
+    * Copyright (c) 2020 lk-code
+    * see more at https://github.com/lk-code/gamebar-browser
+    *
+    * Permission is hereby granted, free of charge, to any person obtaining a copy
+    * of this software and associated documentation files (the "Software"), to deal
+    * in the Software without restriction, including without limitation the rights
+    * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    * copies of the Software, and to permit persons to whom the Software is
+    * furnished to do so, subject to the following conditions:
+    *
+    * The above copyright notice and this permission notice shall be included in all
+    * copies or substantial portions of the Software.
+    *
+    * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    * SOFTWARE.
+    */
+-->
+<Page
     x:Class="browser.Views.BrowserSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:browser.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
@@ -31,7 +54,8 @@
                 Header="__Search_Engine__"
                 ItemsSource="{Binding AvailableSearchEngines}"
                 PlaceholderText="__Pick_a_search_engine__"
-                SelectedItem="{Binding SearchEngineSelectedItem, Mode=TwoWay}">
+                SelectedItem="{Binding SearchEngineSelectedItem, Mode=TwoWay}"
+                SelectionChanged="BrowserSettings_SearchEngineComboBox_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
@@ -39,11 +63,6 @@
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                        <core:InvokeCommandAction Command="{Binding SearchEngineSelectionChangedCommand}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
             </ComboBox>
 
             <TextBox
@@ -51,14 +70,9 @@
                 x:Uid="BrowserSettings_HomepageUriTextBox"
                 Margin="0,8,0,0"
                 Header="__Homepage_Uri__"
+                LostFocus="BrowserSettings_HomepageUriTextBox_LostFocus"
                 PlaceholderText="__Homepage_Uri_Placeholder__"
-                Text="{Binding HomepageUriSettingValue, Mode=TwoWay}">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="LostFocus">
-                        <core:InvokeCommandAction Command="{Binding HomepageUriLostFocusCommand}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </TextBox>
+                Text="{Binding HomepageUriSettingValue, Mode=TwoWay}" />
 
             <ToggleSwitch
                 x:Name="BrowserSettings_ShowHomepageButtonToggleSwitch"
@@ -67,26 +81,16 @@
                 Header="__Show_Homepage_Button__"
                 IsOn="{Binding ShowHomepageButtonSettingValue, Mode=TwoWay}"
                 OffContent="__No__"
-                OnContent="__Yes__">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Toggled">
-                        <core:InvokeCommandAction Command="{Binding ShowHomepageButtonToggledCommand}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </ToggleSwitch>
+                OnContent="__Yes__"
+                Toggled="BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled" />
 
             <Button
                 x:Name="BrowserSettings_SaveSettingsButton"
                 x:Uid="BrowserSettings_SaveSettingsButton"
                 Margin="0,8,0,0"
+                Click="BrowserSettings_SaveSettingsButton_Click"
                 Content="__Save_Settings__"
-                Visibility="{Binding IsSettingsFormSaveButtonVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding SaveSettingsButtonClickCommand}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </Button>
+                Visibility="{Binding IsSettingsFormSaveButtonVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
 
         </StackPanel>
 

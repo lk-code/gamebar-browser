@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="44px" height="48px" viewBox="0 0 44 48" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <defs>
+    <linearGradient x1="0.5" y1="1.20713639" x2="0.5" y2="0.207113653" id="gradient_1">
+      <stop offset="0" stop-color="#155CDE" />
+      <stop offset="0.278" stop-color="#1F7FE5" />
+      <stop offset="0.569" stop-color="#279CEB" />
+      <stop offset="0.82" stop-color="#2CAFEF" />
+      <stop offset="1" stop-color="#2EB5F0" />
+    </linearGradient>
+  </defs>
+  <g id="svg">
+    <path d="M40 0L4 0C1.791 0 0 1.791 0 4L0 40C0 42.209 1.791 44 4 44L40 44C42.209 44 44 42.209 44 40L44 4C44 1.791 42.209 0 40 0L40 0Z" transform="translate(0 2.000122)" id="Shape" fill="url(#gradient_1)" stroke="none" />
+    <g id="windows" transform="translate(8.312439 11.00006)">
+      <path d="M0 0L27.6875 0L27.6875 26.0588L0 26.0588L0 0Z" id="Background" fill="none" stroke="none" />
+      <g id="svg">
+        <path d="M2.17157 12.7567L12.4865 12.7567C13.6858 12.7567 14.6581 11.7816 14.6581 10.5786L14.6581 2.17839C14.6581 0.859703 13.4996 -0.156051 12.1966 0.0198458L1.88166 1.41236C0.804023 1.55786 0 2.48024 0 3.57091L0 10.5786C0 11.7816 0.97232 12.7567 2.17157 12.7567L2.17157 12.7567L2.17157 12.7567Z" transform="translate(13.02941 0)" id="Shape" fill="#EEEEEE" stroke="none" />
+        <path d="M11.9436 8.37932L11.9436 2.17839C11.9436 0.859702 10.7851 -0.156051 9.48215 0.0198458L1.88166 1.04591C0.804023 1.19141 0 2.11378 0 3.20445L0 8.37932C0 9.58237 0.97232 10.5574 2.17157 10.5574L9.77206 10.5574C10.9713 10.5574 11.9436 9.58237 11.9436 8.37932L11.9436 8.37932L11.9436 8.37932Z" transform="translate(0 2.199256)" id="Shape" fill="#EEEEEE" stroke="none" />
+        <path d="M0 2.17808L0 8.64067C0 9.73134 0.804023 10.6537 1.88166 10.7992L12.1966 12.1923C13.4996 12.3682 14.6581 11.3519 14.6581 10.0337L14.6581 2.17808C14.6581 0.975034 13.6858 0 12.4865 0L2.17157 0C0.97232 4.14194e-06 0 0.97504 0 2.17808L0 2.17808L0 2.17808Z" transform="translate(13.02941 13.84622)" id="Shape" fill="#EEEEEE" stroke="none" />
+        <path d="M9.77206 0L2.17157 0C0.97232 0 0 0.975034 0 2.17808L0 6.80841C0 7.89908 0.804023 8.82146 1.88166 8.96695L9.48215 9.99302C10.7851 10.1689 11.9436 9.15262 11.9436 7.83448L11.9436 2.17808C11.9436 0.975034 10.9713 0 9.77206 0L9.77206 0L9.77206 0Z" transform="translate(0 13.84622)" id="Shape" fill="#EEEEEE" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

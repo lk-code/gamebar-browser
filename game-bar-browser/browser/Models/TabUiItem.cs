@@ -23,23 +23,60 @@
  * SOFTWARE.
  */
 
-namespace browser.Components.Storage
+using browser.ViewModels;
+using Microsoft.UI.Xaml.Controls;
+
+namespace browser.Models
 {
-    public class StorageDefaults
+    public class TabUiItem : BaseViewModel
     {
+        string _documentTitle = " ";
         /// <summary>
         /// 
         /// </summary>
-        public const string SEARCH_ENGINE = "bing";
+        public string DocumentTitle
+        {
+            get
+            {
+                return _documentTitle;
+            }
+            set
+            {
+                SetProperty(ref _documentTitle, value);
+            }
+        }
 
+        IconSource _documentIcon = null;
         /// <summary>
         /// 
         /// </summary>
-        public const bool SHOW_HOMEPAGE_BUTTON = false;
+        public IconSource DocumentIcon
+        {
+            get
+            {
+                return _documentIcon;
+            }
+            set
+            {
+                _documentIcon = value;
+                // SetProperty(ref _documentIcon, value);
+            }
+        }
 
+        object _content = null;
         /// <summary>
         /// 
         /// </summary>
-        public const string HOMEPAGE_URI = "";
+        public object Content
+        {
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                SetProperty(ref _content, value);
+            }
+        }
     }
 }

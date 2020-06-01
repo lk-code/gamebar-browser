@@ -1,4 +1,29 @@
-﻿using browser.Components.SearchEngine;
+﻿/**
+ * MIT License
+ * 
+ * Copyright (c) 2020 lk-code
+ * see more at https://github.com/lk-code/gamebar-browser
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+using browser.Components.SearchEngine;
 using browser.Components.Storage;
 using browser.Core;
 using GalaSoft.MvvmLight.Messaging;
@@ -13,7 +38,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace browser.ViewModels
 {
-    public class BrowserSettingsViewModel : BaseViewModel
+    public class BrowserSettingsViewModel : WindowViewModel
     {
         #region # events #
 
@@ -25,25 +50,29 @@ namespace browser.ViewModels
 
         #region # commands #
 
+        private ICommand _searchEngineSelectionChangedCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand SearchEngineSelectionChangedCommand { get; set; }
+        public ICommand SearchEngineSelectionChangedCommand => _searchEngineSelectionChangedCommand ?? (_searchEngineSelectionChangedCommand = new RelayCommand((eventArgs) => { this.ProcessSearchEngineSelectionChanged(eventArgs as SelectionChangedEventArgs); }));
 
+        private ICommand _showHomepageButtonToggledCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ShowHomepageButtonToggledCommand { get; set; }
+        public ICommand ShowHomepageButtonToggledCommand => _showHomepageButtonToggledCommand ?? (_showHomepageButtonToggledCommand = new RelayCommand((eventArgs) => { this.ProcessShowHomepageButtonToggled(eventArgs as RoutedEventArgs); }));
 
+        private ICommand _homepageUriLostFocusCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand HomepageUriLostFocusCommand { get; set; }
+        public ICommand HomepageUriLostFocusCommand => _homepageUriLostFocusCommand ?? (_homepageUriLostFocusCommand = new RelayCommand((eventArgs) => { this.ProcessHomepageUriLostFocus(eventArgs as RoutedEventArgs); }));
 
+        private ICommand _saveSettingsButtonClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand SaveSettingsButtonClickCommand { get; set; }
+        public ICommand SaveSettingsButtonClickCommand => _saveSettingsButtonClickCommand ?? (_saveSettingsButtonClickCommand = new RelayCommand((eventArgs) => { this.ProcessSaveSettingsButtonClick(eventArgs as RoutedEventArgs); }));
 
         #endregion
 
@@ -194,7 +223,6 @@ namespace browser.ViewModels
             this.InitializeStorageManager();
             this.InitializeSearchEngineProcessor();
             this.LoadSettingValues();
-            this.InitializeCommands();
         }
 
         #endregion
@@ -204,32 +232,6 @@ namespace browser.ViewModels
         #endregion
 
         #region # private logic #
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void InitializeCommands()
-        {
-            this.SearchEngineSelectionChangedCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessSearchEngineSelectionChanged(eventArgs as SelectionChangedEventArgs);
-            });
-
-            this.ShowHomepageButtonToggledCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessShowHomepageButtonToggled(eventArgs as RoutedEventArgs);
-            });
-
-            this.HomepageUriLostFocusCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessHomepageUriLostFocus(eventArgs as RoutedEventArgs);
-            });
-
-            this.SaveSettingsButtonClickCommand = new RelayCommand((eventArgs) =>
-            {
-                this.ProcessSaveSettingsButtonClick(eventArgs as RoutedEventArgs);
-            });
-        }
 
         /// <summary>
         /// 

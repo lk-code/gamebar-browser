@@ -23,23 +23,46 @@
  * SOFTWARE.
  */
 
-namespace browser.Components.Storage
+using System;
+
+namespace browser.Models
 {
-    public class StorageDefaults
+    public class WebViewHeaderChangedEventArgs : EventArgs
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string SEARCH_ENGINE = "bing";
+        #region # public properties #
 
         /// <summary>
         /// 
         /// </summary>
-        public const bool SHOW_HOMEPAGE_BUTTON = false;
+        public Guid BrowserId { get; set; } = Guid.Empty;
 
         /// <summary>
         /// 
         /// </summary>
-        public const string HOMEPAGE_URI = "";
+        public string DocumentTitle { get; set; } = " ";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DocumentIcon { get; set; } = " ";
+
+        #endregion
+
+        #region # constructor #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="browserId"></param>
+        /// <param name="documentTitle"></param>
+        /// <param name="documentIcon"></param>
+        public WebViewHeaderChangedEventArgs(Guid browserId, string documentTitle, string documentIcon)
+        {
+            this.BrowserId = browserId;
+            this.DocumentTitle = documentTitle;
+            this.DocumentIcon = documentIcon;
+        }
+
+        #endregion
     }
 }
