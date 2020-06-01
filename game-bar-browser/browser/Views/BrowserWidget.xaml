@@ -46,6 +46,19 @@
             TabCloseRequested="BrowserWidget_MainTabView_TabCloseRequested"
             TabItemsSource="{Binding CurrentTabUiItems}">
 
+            <controls:TabView.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush x:Key="TabViewBackground" Color="{ThemeResource SystemAccentColorLight2}" />
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush x:Key="TabViewBackground" Color="{ThemeResource SystemAccentColorDark2}" />
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </controls:TabView.Resources>
+
             <controls:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="models:TabUiItem">
                     <controls:TabViewItem
@@ -54,6 +67,19 @@
                         IconSource="{Binding DocumentIcon}" />
                 </DataTemplate>
             </controls:TabView.TabItemTemplate>
+
+            <controls:TabView.TabStripFooter>
+                <Button
+                    HorizontalAlignment="Right"
+                    Command="{Binding TabViewActionSettingButtonClickCommand}"
+                    Style="{StaticResource TabViewButton}">
+                    <Button.Content>
+                        <Viewbox MaxWidth="32" MaxHeight="32">
+                            <SymbolIcon Symbol="Setting" />
+                        </Viewbox>
+                    </Button.Content>
+                </Button>
+            </controls:TabView.TabStripFooter>
 
         </controls:TabView>
 

@@ -7,6 +7,7 @@
 * Search in history
 * Setting a homepage
 * ActionBar button "Home"
+* ActionBar button "Refresh"
 * Other search engines
   * Ecosia
   * YouTube

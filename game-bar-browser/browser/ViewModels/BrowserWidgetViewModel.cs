@@ -32,7 +32,6 @@ using System;
 using System.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace browser.ViewModels
 {
@@ -59,6 +58,12 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         public ICommand TabViewTabCloseRequestedCommand => _tabViewTabCloseRequestedCommand ?? (_tabViewTabCloseRequestedCommand = new RelayCommand((eventArgs) => { OnTabViewTabCloseRequested(eventArgs as TabViewTabCloseRequestedEventArgs); }));
+
+        private ICommand _tabViewActionSettingButtonClickCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand TabViewActionSettingButtonClickCommand => _tabViewActionSettingButtonClickCommand ?? (_tabViewActionSettingButtonClickCommand = new RelayCommand((eventArgs) => { OnTabViewActionSettingButtonClick(eventArgs as RoutedEventArgs); }));
 
         #endregion
 
@@ -139,6 +144,15 @@ namespace browser.ViewModels
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="routedEventArgs"></param>
+        private void OnTabViewActionSettingButtonClick(RoutedEventArgs routedEventArgs)
+        {
+            this.OpenXboxGameBarWidgetSettings();
+        }
 
         /// <summary>
         /// 

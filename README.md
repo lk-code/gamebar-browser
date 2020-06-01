@@ -16,9 +16,7 @@ List of Releases:
 
 ## Planed Features
 Here you will find a list of planned features:
-* Tabbed Browsing
 * "Open In"-Button (opens the current website in de system default browsers)
-* "Refresh"-Button (refreshes the current website)
 * an "about this app"-page
 * a better auto-suggest view
 * more options for the tabs
