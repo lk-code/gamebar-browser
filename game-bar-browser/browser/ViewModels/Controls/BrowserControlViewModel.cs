@@ -38,6 +38,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -138,6 +139,12 @@ namespace browser.ViewModels.Controls
         /// 
         /// </summary>
         public ICommand OpenFeedbackCommand => _openFeedbackCommand ?? (_openFeedbackCommand = new RelayCommand((eventArgs) => { this.LaunchFeedbackHub(); }));
+
+        private ICommand _openInSystemDefaultMenuCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand OpenInSystemDefaultMenuCommand => _openInSystemDefaultMenuCommand ?? (_openInSystemDefaultMenuCommand = new RelayCommand((eventArgs) => { this.OnOpenInSystemDefaultClick(); }));
 
         #endregion
 
@@ -368,6 +375,16 @@ namespace browser.ViewModels.Controls
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private async void OnOpenInSystemDefaultClick()
+        {
+            string currentPageUri = this.WebViewAdressSource.ToString();
+
+            await Launcher.LaunchUriAsync(new Uri(currentPageUri));
+        }
 
         /// <summary>
         /// 

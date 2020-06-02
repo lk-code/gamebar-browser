@@ -140,6 +140,32 @@
                 Orientation="Horizontal">
 
                 <Button
+                    x:Name="BrowserWidget_HeaderOpenInSystemDefaultActionButton"
+                    x:Uid="BrowserWidget_HeaderOpenInSystemDefaultActionButton"
+                    Width="32"
+                    Height="32"
+                    Margin="2"
+                    Command="{Binding OpenInSystemDefaultMenuCommand}"
+                    CornerRadius="16">
+                    <Viewbox MaxWidth="32" MaxHeight="32">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A7;" />
+                    </Viewbox>
+                </Button>
+
+                <Button
+                    x:Name="BrowserWidget_HeaderShareActionButton"
+                    x:Uid="BrowserWidget_HeaderShareActionButton"
+                    Width="32"
+                    Height="32"
+                    Margin="2"
+                    Command="{Binding OpenShareMenuCommand}"
+                    CornerRadius="16">
+                    <Viewbox MaxWidth="32" MaxHeight="32">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                    </Viewbox>
+                </Button>
+
+                <Button
                     Width="32"
                     Height="32"
                     Margin="2">
@@ -149,6 +175,7 @@
 
                     <Button.Flyout>
                         <muxc:CommandBarFlyout x:Name="AppMenuCommandBarFlyout" Placement="RightEdgeAlignedBottom">
+                            <!--
                             <AppBarButton
                                 x:Name="BrowserWidget_AppMenuCommandBarFlyout_ShareButton"
                                 x:Uid="BrowserWidget_AppMenuCommandBarFlyout_ShareButton"
@@ -156,7 +183,31 @@
                                 Icon="Share"
                                 Label="__BrowserWidget_AppMenuCommandBarFlyout_ShareButton_Label__"
                                 ToolTipService.ToolTip="__BrowserWidget_AppMenuCommandBarFlyout_ShareButton_ToolTipService_ToolTip__" />
+                            -->
                             <muxc:CommandBarFlyout.SecondaryCommands>
+
+                                <AppBarButton
+                                    x:Name="BrowserWidget_AppMenuCommandBarFlyout_OpenInSystemDefaultButton"
+                                    x:Uid="BrowserWidget_AppMenuCommandBarFlyout_OpenInSystemDefaultButton"
+                                    Command="{Binding OpenInSystemDefaultMenuCommand}"
+                                    Label="__BrowserWidget_AppMenuCommandBarFlyout_OpenInSystemDefaultButton_Label__">
+                                    <AppBarButton.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A7;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+
+                                <AppBarButton
+                                    x:Name="BrowserWidget_AppMenuCommandBarFlyout_ShareButton"
+                                    x:Uid="BrowserWidget_AppMenuCommandBarFlyout_ShareButton"
+                                    Command="{Binding OpenShareMenuCommand}"
+                                    Label="__BrowserWidget_AppMenuCommandBarFlyout_ShareButton_Label__">
+                                    <AppBarButton.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+
+                                <AppBarSeparator />
+
                                 <AppBarButton
                                     x:Name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
                                     x:Uid="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton"
@@ -166,8 +217,11 @@
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED15;" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
+
                             </muxc:CommandBarFlyout.SecondaryCommands>
+
                         </muxc:CommandBarFlyout>
+
                     </Button.Flyout>
 
                 </Button>
