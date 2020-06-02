@@ -1,5 +1,6 @@
 # v1.1
 * The browser now offers useful tabs
+* "about this app"-page added
 * a lot of BugFixes
 
 # v1.0
