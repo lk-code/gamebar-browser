@@ -16,10 +16,12 @@ List of Releases:
 
 ## Planed Features
 Here you will find a list of planned features:
-* a better auto-suggest view
-* more options for the tabs
-* pinned websites
-* favorites bar
+* [An improved view for the auto-suggest view](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/188/)
+* [More options for the tabs](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/192/)
+* [Possibility to pin websites](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/193/)
+* [Possibility to save and manage favorites](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/194/)
+* [Possibility to define own search engines](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/196)
+* [Informations about the website](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/195/)
 
 ## License
 This project is run under the [MIT license](https://github.com/lk-code/gamebar-browser/blob/master/LICENSE.md). This means that anyone can work on the project as long as a reference to the original developer (lk-code) is given.
