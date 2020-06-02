@@ -15,7 +15,7 @@ List of Releases:
 # Development
 
 ## Planed Features
-Here you will find a list of planned features:
+Here you will find a list of planned features (Management via [Azure DevOps](https://dev.azure.com/lk-code/gamebar-browser)):
 * [An improved view for the auto-suggest view](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/188/)
 * [More options for the tabs](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/192/)
 * [Possibility to pin websites](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/193/)
