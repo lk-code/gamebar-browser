@@ -42,7 +42,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace browser.ViewModels
+namespace browser.ViewModels.Controls
 {
     public class BrowserControlViewModel : WindowViewModel
     {

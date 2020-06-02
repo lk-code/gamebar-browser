@@ -23,8 +23,7 @@
  * SOFTWARE.
  */
 
-using browser.ViewModels;
-using System;
+using browser.ViewModels.Controls;
 using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Benutzersteuerelement" wird unter https://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.

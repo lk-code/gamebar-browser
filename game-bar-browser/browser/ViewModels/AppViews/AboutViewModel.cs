@@ -23,41 +23,66 @@
  * SOFTWARE.
  */
 
-using browser.ViewModels.AppViews;
+using browser.Core;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Windows.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
-// Die Elementvorlage "Benutzersteuerelement" wird unter https://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.
-
-namespace browser.AppViews
+namespace browser.ViewModels.AppViews
 {
-    public sealed partial class AboutView : UserControl
+    public class AboutViewModel : WindowViewModel
     {
+        #region # events #
+
+        #endregion
+
+        #region # dependencies #
+
+        #endregion
+
+        #region # commands #
+
+        private ICommand _openProjectPageCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand OpenProjectPageCommand => _openProjectPageCommand ?? (_openProjectPageCommand = new RelayCommand((eventArgs) => { this.OnOpenProjectPageClick(); }));
+
+        #endregion
+
+        #region # private properties #
+
+        #endregion
+
         #region # public properties #
+
+        #endregion
+
+        #region # constructors #
 
         /// <summary>
         /// 
         /// </summary>
-        public AboutViewModel ViewModel;
+        public AboutViewModel() : base(Window.Current)
+        {
+        }
 
         #endregion
-        public AboutView()
-        {
-            this.InitializeComponent();
 
-            this.DataContext = ViewModel = new AboutViewModel();
+        #region # public methods #
+
+        #endregion
+
+        #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OnOpenProjectPageClick()
+        {
+            Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/lk-code/gamebar-browser"));
         }
+
+        #endregion
     }
 }

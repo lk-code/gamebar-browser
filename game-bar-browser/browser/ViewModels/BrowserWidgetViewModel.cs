@@ -143,6 +143,8 @@ namespace browser.ViewModels
         {
             this.CurrentTabUiItems = new ItemsChangeObservableCollection<TabUiItem>();
             this.RegisterEvents();
+
+            this.CheckTabItemsEmptyTabs();
         }
 
         #endregion
@@ -210,6 +212,14 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void OnTabViewAddTabClick(RoutedEventArgs eventArgs)
         {
+            this.OpenNewDefaultWebViewTab();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OpenNewDefaultWebViewTab()
+        {
             Browser browserControl = new Browser();
 
             browserControl.ViewModel.OnWebViewHeaderChanged += ViewModel_OnWebViewHeaderChanged;
@@ -263,6 +273,19 @@ namespace browser.ViewModels
             TabViewItem tabViewItem = (eventArgs.Tab as TabViewItem);
 
             this.CurrentTabUiItems.Remove(tabUiItem);
+
+            this.CheckTabItemsEmptyTabs();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void CheckTabItemsEmptyTabs()
+        {
+            if(this.CurrentTabUiItems.Count() <= 0)
+            {
+                this.OpenNewDefaultWebViewTab();
+            }
         }
 
         /// <summary>
