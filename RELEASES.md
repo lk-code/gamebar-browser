@@ -1,6 +1,8 @@
 # v1.1
 * The browser now offers useful tabs
-* "about this app"-page added
+* "about this app"-Page added
+* "Open In"-Button (opens the current website in de system default browsers)
+* a few optimizations for the ActionBar
 * a lot of BugFixes
 
 # v1.0

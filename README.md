@@ -16,7 +16,6 @@ List of Releases:
 
 ## Planed Features
 Here you will find a list of planned features:
-* "Open In"-Button (opens the current website in de system default browsers)
 * a better auto-suggest view
 * more options for the tabs
 * pinned websites
