@@ -70,6 +70,8 @@
 
             <controls:TabView.TabStripFooter>
                 <Button
+                    x:Name="BrowserWidget_MainTabViewTabStripFooter_SettingButton"
+                    x:Uid="BrowserWidget_MainTabViewTabStripFooter_SettingButton"
                     HorizontalAlignment="Right"
                     Command="{Binding TabViewActionSettingButtonClickCommand}"
                     Style="{StaticResource TabViewButton}">

@@ -159,6 +159,15 @@
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Feedback</value>
   </data>
+  <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Geben Sie Verbesserungsvorschläge zu dieser App</value>
+  </data>
+  <data name="BrowserWidget_AppMenuCommandBarFlyout_OpenInSystemDefaultButton.Label" xml:space="preserve">
+    <value>Öffnen im Standard-Browser</value>
+  </data>
+  <data name="BrowserWidget_AppMenuCommandBarFlyout_OpenInSystemDefaultButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Öffnen Sie die aktuelle Website im Standard-Browser Ihres Computers</value>
+  </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_SettingsButton.Label" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
@@ -166,10 +175,31 @@
     <value>Teilen</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_ShareButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Teilen</value>
+    <value>Teilen Sie die aktuelle Website mit Freunden</value>
+  </data>
+  <data name="BrowserWidget_HeaderBackActionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Wechseln Sie eine Seite zurück</value>
+  </data>
+  <data name="BrowserWidget_HeaderForwardActionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Wechseln Sie eine Seite vor</value>
+  </data>
+  <data name="BrowserWidget_HeaderHomeActionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Wechseln Sie zur Startseite</value>
+  </data>
+  <data name="BrowserWidget_HeaderOpenInSystemDefaultActionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Öffnen Sie die aktuelle Website im Standard-Browser Ihres Computers</value>
+  </data>
+  <data name="BrowserWidget_HeaderRefreshActionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Aktualisieren Sie die Seite</value>
+  </data>
+  <data name="BrowserWidget_HeaderShareActionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Teilen Sie die aktuelle Website mit Freunden</value>
   </data>
   <data name="BrowserWidget_HeaderUriAutoSuggestBox.PlaceholderText" xml:space="preserve">
     <value>Webadresse suchen oder eingeben</value>
+  </data>
+  <data name="BrowserWidget_MainTabViewTabStripFooter_SettingButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Öffnen Sie Einstellungen der App</value>
   </data>
   <data name="BrowserWidget_MoreMenuButton.Text" xml:space="preserve">
     <value>Menü</value>

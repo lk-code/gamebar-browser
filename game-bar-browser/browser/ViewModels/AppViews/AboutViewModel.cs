@@ -26,6 +26,7 @@
 using browser.Core;
 using System;
 using System.Windows.Input;
+using Windows.System;
 using Windows.UI.Xaml;
 
 namespace browser.ViewModels.AppViews
@@ -78,9 +79,9 @@ namespace browser.ViewModels.AppViews
         /// <summary>
         /// 
         /// </summary>
-        private void OnOpenProjectPageClick()
+        private async void OnOpenProjectPageClick()
         {
-            Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/lk-code/gamebar-browser"));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/lk-code/gamebar-browser"));
         }
 
         #endregion
