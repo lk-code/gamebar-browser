@@ -43,12 +43,17 @@
                     Height="140"
                     Source="/Images/logo.png" />
             </StackPanel>
-            <StackPanel Margin="20" Orientation="Horizontal">
+            <StackPanel Margin="20" Orientation="Vertical">
                 <TextBlock
                     x:Name="AboutThisAppHeaderText"
                     x:Uid="AboutThisAppHeaderText"
-                    Style="{ThemeResource SubheaderTextBlockStyle}"
+                    Style="{ThemeResource HeaderTextBlockStyle}"
                     Text="__About_This_App_Header_Text__" />
+                <TextBlock
+                    x:Name="AboutThisAppVersionText"
+                    x:Uid="AboutThisAppVersionText"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="{Binding AppVersionText}" />
             </StackPanel>
             <StackPanel Margin="20" Orientation="Vertical">
                 <TextBlock

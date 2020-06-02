@@ -26,6 +26,7 @@
 using browser.Core;
 using System;
 using System.Windows.Input;
+using Windows.ApplicationModel;
 using Windows.System;
 using Windows.UI.Xaml;
 
@@ -56,6 +57,21 @@ namespace browser.ViewModels.AppViews
         #endregion
 
         #region # public properties #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string AppVersionText
+        {
+            get
+            {
+                Package package = Package.Current;
+                PackageId packageId = package.Id;
+                PackageVersion version = packageId.Version;
+
+                return string.Format("v{0}.{1} (Build {2})", version.Major, version.Minor, version.Build, version.Revision);
+            }
+        }
 
         #endregion
 
