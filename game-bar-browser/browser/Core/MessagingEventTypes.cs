@@ -29,6 +29,7 @@ namespace browser.Core
     {
         SETTING_SEARCH_ENGINE,
         SETTING_HOMEPAGE_URI,
-        SETTING_SHOW_HOMEPAGE_BUTTON
+        SETTING_SHOW_HOMEPAGE_BUTTON,
+        OPEN_VIEW_ABOUT_THIS_APP
     }
 }

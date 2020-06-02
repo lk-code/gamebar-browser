@@ -74,6 +74,12 @@ namespace browser.ViewModels
         /// </summary>
         public ICommand SaveSettingsButtonClickCommand => _saveSettingsButtonClickCommand ?? (_saveSettingsButtonClickCommand = new RelayCommand((eventArgs) => { this.ProcessSaveSettingsButtonClick(eventArgs as RoutedEventArgs); }));
 
+        private ICommand _aboutThisAppButtonClickCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AboutThisAppButtonClickCommand => _aboutThisAppButtonClickCommand ?? (_aboutThisAppButtonClickCommand = new RelayCommand((eventArgs) => { this.OnAboutThisAppButtonClick(eventArgs as RoutedEventArgs); }));
+
         #endregion
 
         #region # private properties #
@@ -232,6 +238,20 @@ namespace browser.ViewModels
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="routedEventArgs"></param>
+        private void OnAboutThisAppButtonClick(RoutedEventArgs routedEventArgs)
+        {
+            Task.Factory.StartNew((args) =>
+            {
+                Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.OPEN_VIEW_ABOUT_THIS_APP);
+            },
+            CancellationToken.None,
+            TaskCreationOptions.None);
+        }
 
         /// <summary>
         /// 

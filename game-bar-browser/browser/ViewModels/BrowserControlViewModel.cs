@@ -386,6 +386,11 @@ namespace browser.ViewModels
         {
             Messenger.Default.Register<MessagingEventTypes>(MessagingEventTypes.SETTING_SHOW_HOMEPAGE_BUTTON, (MessagingEventTypes type) =>
             {
+                if(type != MessagingEventTypes.SETTING_SHOW_HOMEPAGE_BUTTON)
+                {
+                    return;
+                }
+
                 this.ProcessSettingShowHomepageButtonChanged(type);
             });
         }

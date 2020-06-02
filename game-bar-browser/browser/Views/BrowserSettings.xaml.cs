@@ -25,19 +25,8 @@
 
 using browser.ViewModels;
 using Microsoft.Gaming.XboxGameBar;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
@@ -111,16 +100,6 @@ namespace browser.Views
         private void BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             this.ViewModel.ShowHomepageButtonToggledCommand.Execute(e);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BrowserSettings_SaveSettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.ViewModel.SaveSettingsButtonClickCommand.Execute(e);
         }
 
         #endregion
