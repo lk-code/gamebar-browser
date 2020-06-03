@@ -25,21 +25,21 @@
 
 namespace browser.Components.Storage
 {
-    public class StorageDefaults
+    public static class StorageDefaults
     {
         /// <summary>
         /// 
         /// </summary>
-        public const string SEARCH_ENGINE = "bing";
+        public static readonly string SEARCH_ENGINE = "bing";
 
         /// <summary>
         /// 
         /// </summary>
-        public const bool SHOW_HOMEPAGE_BUTTON = false;
+        public static readonly bool SHOW_HOMEPAGE_BUTTON = false;
 
         /// <summary>
         /// 
         /// </summary>
-        public const string HOMEPAGE_URI = "";
+        public static readonly string HOMEPAGE_URI = "";
     }
 }

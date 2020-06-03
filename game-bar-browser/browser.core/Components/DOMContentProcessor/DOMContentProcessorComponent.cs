@@ -26,13 +26,7 @@
 using browser.core.Components.DOMContentProcessor.Exceptions;
 using HtmlAgilityPack;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Xml;
 
 namespace browser.core.Components.DOMContentProcessor
 {
@@ -70,11 +64,6 @@ namespace browser.core.Components.DOMContentProcessor
         #region # public properties #
 
         #endregion
-
-        public DOMContentProcessorComponent()
-        {
-
-        }
 
         #region # public methods #
 
@@ -158,7 +147,7 @@ namespace browser.core.Components.DOMContentProcessor
                     }
                 } catch(Exception err)
                 {
-
+                    // this exception is thrown if the favicon url is broken.
                 }
             }
 
