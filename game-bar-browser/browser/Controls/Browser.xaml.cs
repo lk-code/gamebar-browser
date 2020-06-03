@@ -24,6 +24,7 @@
  */
 
 using browser.ViewModels.Controls;
+using System;
 using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Benutzersteuerelement" wird unter https://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.
@@ -46,8 +47,6 @@ namespace browser.Controls
             this.InitializeComponent();
 
             this.DataContext = ViewModel = new BrowserControlViewModel();
-
-            this.LoadWebViewEnv();
         }
 
         #region # public methods #
@@ -63,20 +62,7 @@ namespace browser.Controls
         /// <param name="args"></param>
         private void BrowserWidget_MainContent_WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
-            this.LoadWebViewEnv();
-
             this.ViewModel.WebViewNavigationCompletedCommand.Execute(args);
-            this.ViewModel.WebViewDocumentTitleChangedCommand.Execute(this.BrowserWidget_MainContent_WebView.DocumentTitle);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void LoadWebViewEnv()
-        {
-            string functionString = " new MutationObserver(function () { window.external.notify(document.title); }).observe(document.querySelector('title'), { childList: true })";
-
-            this.BrowserWidget_MainContent_WebView.InvokeScriptAsync("eval", new string[] { functionString });
         }
 
         #endregion
@@ -154,5 +140,17 @@ namespace browser.Controls
         }
 
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private async void BrowserWidget_MainContent_WebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
+        {
+            string html = await this.BrowserWidget_MainContent_WebView.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
+
+            this.ViewModel.WebViewDOMContentLoadedCommand.Execute(html);
+        }
     }
 }

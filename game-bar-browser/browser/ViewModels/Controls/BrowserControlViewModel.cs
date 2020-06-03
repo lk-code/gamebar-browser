@@ -27,11 +27,13 @@ using browser.Components.History;
 using browser.Components.SearchEngine;
 using browser.Components.Storage;
 using browser.Components.TempHistory;
+using browser.core.Components.DOMContentProcessor;
 using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Gaming.XboxGameBar;
+using Microsoft.Toolkit.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -59,10 +61,6 @@ namespace browser.ViewModels.Controls
         /// 
         /// </summary>
         public event OnWebViewHeaderChangedEventHandler OnWebViewHeaderChanged;
-
-        #endregion
-
-        #region # dependencies #
 
         #endregion
 
@@ -96,43 +94,37 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        public ICommand AdressBarSuggestionChosenCommand => _adressBarSuggestionChosenCommand ?? (_adressBarSuggestionChosenCommand = new RelayCommand((eventArgs) => { this.ProcessAdressBarSuggestionChosen((eventArgs as AutoSuggestBoxSuggestionChosenEventArgs)); }));
-
-        private ICommand _webViewDocumentTitleChangedCommand;
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand WebViewDocumentTitleChangedCommand => _webViewDocumentTitleChangedCommand ?? (_webViewDocumentTitleChangedCommand = new RelayCommand((eventArgs) => { this.ProcessWebViewDocumentTitleChanged((eventArgs as string)); }));
+        public ICommand AdressBarSuggestionChosenCommand => _adressBarSuggestionChosenCommand ?? (_adressBarSuggestionChosenCommand = new RelayCommand((eventArgs) => { this.ProcessAdressBarSuggestionChosen(eventArgs as AutoSuggestBoxSuggestionChosenEventArgs); }));
 
         private ICommand _webViewNavigationCompletedCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand WebViewNavigationCompletedCommand => _webViewNavigationCompletedCommand ?? (_webViewNavigationCompletedCommand = new RelayCommand((eventArgs) => { this.ProcessWebViewNavigationCompleted((eventArgs as WebViewNavigationCompletedEventArgs)); }));
+        public ICommand WebViewNavigationCompletedCommand => _webViewNavigationCompletedCommand ?? (_webViewNavigationCompletedCommand = new RelayCommand((eventArgs) => { this.ProcessWebViewNavigationCompleted(eventArgs as WebViewNavigationCompletedEventArgs); }));
 
         private ICommand _actionButtonBackClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonBackClickCommand => _actionButtonBackClickCommand ?? (_actionButtonBackClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonBackClick((eventArgs as RoutedEventArgs)); }));
+        public ICommand ActionButtonBackClickCommand => _actionButtonBackClickCommand ?? (_actionButtonBackClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonBackClick(eventArgs as RoutedEventArgs); }));
 
         private ICommand _actionButtonForwardClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonForwardClickCommand => _actionButtonForwardClickCommand ?? (_actionButtonForwardClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonForwardClick((eventArgs as RoutedEventArgs)); }));
+        public ICommand ActionButtonForwardClickCommand => _actionButtonForwardClickCommand ?? (_actionButtonForwardClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonForwardClick(eventArgs as RoutedEventArgs); }));
 
         private ICommand _actionButtonRefreshClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonRefreshClickCommand => _actionButtonRefreshClickCommand ?? (_actionButtonRefreshClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonRefreshClick((eventArgs as RoutedEventArgs)); }));
+        public ICommand ActionButtonRefreshClickCommand => _actionButtonRefreshClickCommand ?? (_actionButtonRefreshClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonRefreshClick(eventArgs as RoutedEventArgs); }));
 
         private ICommand _actionButtonHomeClickCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand ActionButtonHomeClickCommand => _actionButtonHomeClickCommand ?? (_actionButtonHomeClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonHomeClick((eventArgs as RoutedEventArgs)); }));
+        public ICommand ActionButtonHomeClickCommand => _actionButtonHomeClickCommand ?? (_actionButtonHomeClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonHomeClick(eventArgs as RoutedEventArgs); }));
 
         private ICommand _openFeedbackCommand;
         /// <summary>
@@ -145,6 +137,12 @@ namespace browser.ViewModels.Controls
         /// 
         /// </summary>
         public ICommand OpenInSystemDefaultMenuCommand => _openInSystemDefaultMenuCommand ?? (_openInSystemDefaultMenuCommand = new RelayCommand((eventArgs) => { this.OnOpenInSystemDefaultClick(); }));
+
+        private ICommand _webViewDOMContentLoadedCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand WebViewDOMContentLoadedCommand => _webViewDOMContentLoadedCommand ?? (_webViewDOMContentLoadedCommand = new RelayCommand((eventArgs) => { this.OnWebViewDOMContentLoaded(eventArgs as string); }));
 
         #endregion
 
@@ -169,6 +167,11 @@ namespace browser.ViewModels.Controls
         /// 
         /// </summary>
         private TempHistoryManager _tempHistoryManager { get; set; } = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private DOMContentProcessorComponent _domContentProcessorComponent = null;
 
         /// <summary>
         /// 
@@ -360,6 +363,7 @@ namespace browser.ViewModels.Controls
         public BrowserControlViewModel() : base(Window.Current)
         {
             this.RegisterEvents();
+            this.InitializeDOMContentProcessorComponent();
             this.InitializeStorageManager();
             this.InitializeHistoryManager();
             this.InitializeSearchEngineProcessor();
@@ -375,6 +379,72 @@ namespace browser.ViewModels.Controls
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domContent"></param>
+        private void OnWebViewDOMContentLoaded(string domContent)
+        {
+            this._domContentProcessorComponent.LoadDOMContent(domContent);
+
+            string title = this._domContentProcessorComponent.GetDocumentTitle();
+            this.WebViewCurrentTitle = title;
+
+            string currentDomain = string.Format("{0}://{1}", this.WebViewAdressSource.Scheme, this.WebViewAdressSource.Host);
+            string icon = this._domContentProcessorComponent.GetFaviconPath();
+            icon = this.EnsureFaviconUri(currentDomain, icon);
+            this.WebViewCurrentIcon = icon;
+
+            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this.Id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentDomain">like https://www.google.de</param>
+        /// <param name="iconUri">like /path/to/favicon.ico</param>
+        /// <returns></returns>
+        private string EnsureFaviconUri(string currentDomain, string iconUri)
+        {
+            WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
+
+            if(string.IsNullOrEmpty(iconUri)
+                || string.IsNullOrWhiteSpace(iconUri))
+            {
+                return null;
+            }
+
+            // is valid url
+            if (!webUriProcessorComponent.IsValidUri(iconUri))
+            {
+                if (string.IsNullOrEmpty(currentDomain)
+                    || string.IsNullOrWhiteSpace(currentDomain))
+                {
+                    return null;
+                }
+
+                string domain = currentDomain;
+                domain = domain.TrimEnd();
+                if (domain[domain.Length - 1] == '/')
+                {
+                    domain = domain.Remove((domain.Length - 1), 1);
+                }
+
+                string icon = iconUri;
+                icon = icon.TrimStart();
+                if (icon[0] == '/')
+                {
+                    icon = icon.Remove(0, 1);
+                }
+
+                iconUri = string.Format("{0}/{1}", domain, icon);
+
+                return this.EnsureFaviconUri(currentDomain, iconUri);
+            }
+
+            return iconUri;
+        }
 
         /// <summary>
         /// 
@@ -510,11 +580,6 @@ namespace browser.ViewModels.Controls
             this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
             this.AddPageToTempHistory(this.WebViewCurrentTitle, this.AdressBarDisplayText);
 
-            string currentWebUrl = this.WebViewAdressSource.ToString();
-            this.WebViewCurrentIcon = string.Format("https://www.google.com/s2/favicons?domain={0}", currentWebUrl);
-
-            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this.Id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
-
             this.ProcessTempHistoryActionButtons();
         }
 
@@ -533,17 +598,6 @@ namespace browser.ViewModels.Controls
             }
 
             this._tempHistoryManager.Add(webViewCurrentTitle, new Uri(adressBarDisplayText));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessWebViewDocumentTitleChanged(string eventArgs)
-        {
-            this.WebViewCurrentTitle = eventArgs;
-
-            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this.Id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
         }
 
         /// <summary>
@@ -589,6 +643,14 @@ namespace browser.ViewModels.Controls
         private void InitializeSearchEngineProcessor()
         {
             this._searchEngineProcessor = new SearchEngineProcessor();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeDOMContentProcessorComponent()
+        {
+            this._domContentProcessorComponent = new DOMContentProcessorComponent();
         }
 
         /// <summary>
