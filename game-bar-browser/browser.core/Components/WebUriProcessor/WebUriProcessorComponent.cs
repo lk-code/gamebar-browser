@@ -59,7 +59,7 @@ namespace browser.core.Components.WebUriProcessor
         /// </summary>
         /// <param name="uriValue"></param>
         /// <returns></returns>
-        public bool IsValidUri(string uriValue)
+        public static bool IsValidUri(string uriValue)
         {
             Uri uriResult = null;
             bool isValidUri = Uri.TryCreate(uriValue, UriKind.Absolute, out uriResult);

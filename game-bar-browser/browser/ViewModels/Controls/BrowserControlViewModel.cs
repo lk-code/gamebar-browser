@@ -33,11 +33,11 @@ using browser.Core;
 using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Gaming.XboxGameBar;
-using Microsoft.Toolkit.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
@@ -70,7 +70,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenSettingsCommand => _openSettingsCommand ?? (_openSettingsCommand = new RelayCommand((eventArgs) => { this.OpenXboxGameBarWidgetSettings(); }));
+        public ICommand OpenSettingsCommand => _openSettingsCommand ?? (_openSettingsCommand = new RelayCommand((eventArgs) => { this.OpenXboxGameBarWidgetSettingsAsync(); }));
 
         private ICommand _openShareMenuCommand;
         /// <summary>
@@ -130,13 +130,13 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenFeedbackCommand => _openFeedbackCommand ?? (_openFeedbackCommand = new RelayCommand((eventArgs) => { this.LaunchFeedbackHub(); }));
+        public ICommand OpenFeedbackCommand => _openFeedbackCommand ?? (_openFeedbackCommand = new RelayCommand((eventArgs) => { this.LaunchFeedbackHubAsync(); }));
 
         private ICommand _openInSystemDefaultMenuCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenInSystemDefaultMenuCommand => _openInSystemDefaultMenuCommand ?? (_openInSystemDefaultMenuCommand = new RelayCommand((eventArgs) => { this.OnOpenInSystemDefaultClick(); }));
+        public ICommand OpenInSystemDefaultMenuCommand => _openInSystemDefaultMenuCommand ?? (_openInSystemDefaultMenuCommand = new RelayCommand((eventArgs) => { this.OnOpenInSystemDefaultClickAsync(); }));
 
         private ICommand _webViewDOMContentLoadedCommand;
         /// <summary>
@@ -178,14 +178,14 @@ namespace browser.ViewModels.Controls
         /// </summary>
         private bool _navigateInTempHistory { get; set; } = false;
 
-        #endregion
-
-        #region # public properties #
-
         /// <summary>
         /// 
         /// </summary>
-        public readonly Guid Id = Guid.NewGuid();
+        private readonly Guid _id = Guid.NewGuid();
+
+        #endregion
+
+        #region # public properties #
 
         string _adressBarDisplayText = string.Empty;
         /// <summary>
@@ -396,7 +396,7 @@ namespace browser.ViewModels.Controls
             icon = this.EnsureFaviconUri(currentDomain, icon);
             this.WebViewCurrentIcon = icon;
 
-            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this.Id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
+            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this._id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
         }
 
         /// <summary>
@@ -407,8 +407,6 @@ namespace browser.ViewModels.Controls
         /// <returns></returns>
         private string EnsureFaviconUri(string currentDomain, string iconUri)
         {
-            WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
-
             if(string.IsNullOrEmpty(iconUri)
                 || string.IsNullOrWhiteSpace(iconUri))
             {
@@ -416,7 +414,7 @@ namespace browser.ViewModels.Controls
             }
 
             // is valid url
-            if (!webUriProcessorComponent.IsValidUri(iconUri))
+            if (!WebUriProcessorComponent.IsValidUri(iconUri))
             {
                 if (string.IsNullOrEmpty(currentDomain)
                     || string.IsNullOrWhiteSpace(currentDomain))
@@ -449,7 +447,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        private async void OnOpenInSystemDefaultClick()
+        private async Task OnOpenInSystemDefaultClickAsync()
         {
             string currentPageUri = this.WebViewAdressSource.ToString();
 
@@ -459,7 +457,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        private async void LaunchFeedbackHub()
+        private async Task LaunchFeedbackHubAsync()
         {
             // This launcher is part of the Store Services SDK https://docs.microsoft.com/windows/uwp/monetize/microsoft-store-services-sdk
             var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
@@ -688,7 +686,7 @@ namespace browser.ViewModels.Controls
         private void ProcessAdressBarValue(string requestedUriValue)
         {
             string sourceUriValue = requestedUriValue;
-            Uri targetUri = this.GetProcessedUriFromRequestValue(requestedUriValue);
+            Uri targetUri = this.GetProcessedUriFromRequestValue(sourceUriValue);
 
             this.GoToUri(targetUri);
         }
@@ -716,7 +714,7 @@ namespace browser.ViewModels.Controls
             WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
 
             // is valid url
-            if (webUriProcessorComponent.IsValidUri(sourceUriValue))
+            if (WebUriProcessorComponent.IsValidUri(sourceUriValue))
             {
                 targetUri = new Uri(sourceUriValue);
             }
@@ -741,7 +739,7 @@ namespace browser.ViewModels.Controls
         /// <param name="args"></param>
         private void XboxGameBarWidgetInstance_SettingsClicked(XboxGameBarWidget sender, object args)
         {
-            this.OpenXboxGameBarWidgetSettings();
+            this.OpenXboxGameBarWidgetSettingsAsync();
         }
 
         /// <summary>
@@ -779,13 +777,13 @@ namespace browser.ViewModels.Controls
                 return;
             }
 
-            this.ProcessAutoSuggestValues();
+            this.ProcessAutoSuggestValuesAsync();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private async void ProcessAutoSuggestValues()
+        private async Task ProcessAutoSuggestValuesAsync()
         {
             string currentAdressBarValue = this.AdressBarDisplayText;
 
@@ -795,8 +793,8 @@ namespace browser.ViewModels.Controls
 
             var foundedItems = history.Select(
                 x => x.Value.Where(
-                    y => (y.Title.ToLower().Contains(currentAdressBarValue.ToLower())
-                    || y.Uri.ToString().ToLower().Contains(currentAdressBarValue.ToLower()))
+                    y => (y.Title.ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant())
+                    || y.Uri.ToString().ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant()))
                 )
             );
 
@@ -850,7 +848,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        private async void OpenXboxGameBarWidgetSettings()
+        private async Task OpenXboxGameBarWidgetSettingsAsync()
         {
             await this.XboxGameBarWidgetInstance.ActivateSettingsAsync();
         }

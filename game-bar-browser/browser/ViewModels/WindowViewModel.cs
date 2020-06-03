@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
@@ -37,10 +38,6 @@ namespace browser.ViewModels
         #region # events #
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region # dependencies #
 
         #endregion
 
@@ -83,7 +80,7 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         /// <param name="propertyName"></param>
-        protected async void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        protected async Task OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
             if (changed == null)
@@ -95,6 +92,34 @@ namespace browser.ViewModels
             {
                 changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingStore"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected bool SetProperty<T>(ref T backingStore,
+            T value)
+        {
+            return this.SetProperty<T>(ref backingStore, value, "", null);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingStore"></param>
+        /// <param name="value"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        protected bool SetProperty<T>(ref T backingStore,
+            T value,
+            [CallerMemberName] string propertyName = "")
+        {
+            return this.SetProperty<T>(ref backingStore, value, propertyName, null);
         }
 
         /// <summary>

@@ -25,6 +25,7 @@
 
 using browser.Core;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.System;
@@ -48,7 +49,7 @@ namespace browser.ViewModels.AppViews
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenProjectPageCommand => _openProjectPageCommand ?? (_openProjectPageCommand = new RelayCommand((eventArgs) => { this.OnOpenProjectPageClick(); }));
+        public ICommand OpenProjectPageCommand => _openProjectPageCommand ?? (_openProjectPageCommand = new RelayCommand((eventArgs) => { this.OnOpenProjectPageClickAsync(); }));
 
         #endregion
 
@@ -95,7 +96,7 @@ namespace browser.ViewModels.AppViews
         /// <summary>
         /// 
         /// </summary>
-        private async void OnOpenProjectPageClick()
+        private async Task OnOpenProjectPageClickAsync()
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/lk-code/gamebar-browser"));
         }

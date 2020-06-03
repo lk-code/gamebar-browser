@@ -23,26 +23,17 @@
  * SOFTWARE.
  */
 
+using browser.Exceptions;
 using browser.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Gaming.XboxGameBar;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace browser
@@ -64,15 +55,15 @@ namespace browser
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            this.initializeAppCenter();
+            this.InitializeAppCenter("2abc16d4-e957-4e05-a5da-2a12492e7bca");
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void initializeAppCenter()
+        private void InitializeAppCenter(string appCenterProjectId)
         {
-            AppCenter.Start("2abc16d4-e957-4e05-a5da-2a12492e7bca",
+            AppCenter.Start(appCenterProjectId,
                    typeof(Analytics),
                    typeof(Crashes));
         }
@@ -229,7 +220,7 @@ namespace browser
         /// <param name="e">Details über den Navigationsfehler</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            throw new NavigationFailedException("Failed to load Page " + e.SourcePageType.FullName);
         }
 
         /// <summary>

@@ -38,12 +38,12 @@ namespace browser.Views
     /// </summary>
     public sealed partial class BrowserSettings : Page
     {
-        #region # public properties #
+        #region # private properties #
 
         /// <summary>
         /// 
         /// </summary>
-        BrowserSettingsViewModel ViewModel;
+        private readonly BrowserSettingsViewModel _viewModel;
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace browser.Views
         {
             this.InitializeComponent();
 
-            this.DataContext = ViewModel = new BrowserSettingsViewModel();
+            this.DataContext = _viewModel = new BrowserSettingsViewModel();
         }
 
         #region # private properties #
@@ -65,7 +65,7 @@ namespace browser.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.ViewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+            this._viewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
         }
 
         #endregion
@@ -79,7 +79,7 @@ namespace browser.Views
         /// <param name="e"></param>
         private void BrowserSettings_SearchEngineComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.ViewModel.SearchEngineSelectionChangedCommand.Execute(e);
+            this._viewModel.SearchEngineSelectionChangedCommand.Execute(e);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace browser.Views
         /// <param name="e"></param>
         private void BrowserSettings_HomepageUriTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            this.ViewModel.HomepageUriLostFocusCommand.Execute(e);
+            this._viewModel.HomepageUriLostFocusCommand.Execute(e);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace browser.Views
         /// <param name="e"></param>
         private void BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            this.ViewModel.ShowHomepageButtonToggledCommand.Execute(e);
+            this._viewModel.ShowHomepageButtonToggledCommand.Execute(e);
         }
 
         #endregion
