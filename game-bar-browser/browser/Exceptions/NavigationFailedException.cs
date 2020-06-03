@@ -23,27 +23,21 @@
  * SOFTWARE.
  */
 
-using browser.ViewModels.AppViews;
-using Windows.UI.Xaml.Controls;
+using System;
 
-namespace browser.AppViews
+namespace browser.Exceptions
 {
-    public sealed partial class AboutView : UserControl
+    public class NavigationFailedException : Exception
     {
-        #region # private properties #
+        public NavigationFailedException()
+        { }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private AboutViewModel _viewModel;
+        public NavigationFailedException(string message)
+            : base(message)
+        { }
 
-        #endregion
-
-        public AboutView()
-        {
-            this.InitializeComponent();
-
-            this.DataContext = _viewModel = new AboutViewModel();
-        }
+        public NavigationFailedException(string message, Exception innerException)
+            : base(message, innerException)
+        { }
     }
 }

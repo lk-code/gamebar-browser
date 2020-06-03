@@ -37,12 +37,12 @@ namespace browser.Views
     /// </summary>
     public sealed partial class BrowserWidget : Page
     {
-        #region # public properties #
+        #region # private properties #
 
         /// <summary>
         /// 
         /// </summary>
-        BrowserWidgetViewModel ViewModel;
+        private BrowserWidgetViewModel _viewModel;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace browser.Views
         {
             this.InitializeComponent();
 
-            this.DataContext = ViewModel = new BrowserWidgetViewModel();
+            this.DataContext = _viewModel = new BrowserWidgetViewModel();
         }
 
         #region # private properties #
@@ -64,7 +64,7 @@ namespace browser.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.ViewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+            this._viewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
         }
 
         #endregion
@@ -78,7 +78,7 @@ namespace browser.Views
         /// <param name="args"></param>
         private void BrowserWidget_MainTabView_AddTabButtonClick(Microsoft.UI.Xaml.Controls.TabView sender, object args)
         {
-            this.ViewModel.TabViewAddTabClickCommand.Execute(args);
+            this._viewModel.TabViewAddTabClickCommand.Execute(args);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace browser.Views
         /// <param name="args"></param>
         private void BrowserWidget_MainTabView_TabCloseRequested(Microsoft.UI.Xaml.Controls.TabView sender, Microsoft.UI.Xaml.Controls.TabViewTabCloseRequestedEventArgs args)
         {
-            this.ViewModel.TabViewTabCloseRequestedCommand.Execute(args);
+            this._viewModel.TabViewTabCloseRequestedCommand.Execute(args);
         }
 
         #endregion

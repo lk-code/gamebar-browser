@@ -38,7 +38,7 @@ namespace browser.Controls
         /// <summary>
         /// 
         /// </summary>
-        public BrowserControlViewModel ViewModel;
+        private BrowserControlViewModel _viewModel;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace browser.Controls
         {
             this.InitializeComponent();
 
-            this.DataContext = ViewModel = new BrowserControlViewModel();
+            this.DataContext = _viewModel = new BrowserControlViewModel();
         }
 
         #region # public methods #
@@ -62,7 +62,7 @@ namespace browser.Controls
         /// <param name="args"></param>
         private void BrowserWidget_MainContent_WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
-            this.ViewModel.WebViewNavigationCompletedCommand.Execute(args);
+            this._viewModel.WebViewNavigationCompletedCommand.Execute(args);
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace browser.Controls
         /// <param name="e"></param>
         private void BrowserWidget_HeaderUriAutoSuggestBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            this.ViewModel.AdressBarKeyUpCommand.Execute(e);
+            this._viewModel.AdressBarKeyUpCommand.Execute(e);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace browser.Controls
         /// <param name="args"></param>
         private void BrowserWidget_HeaderUriAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            this.ViewModel.AdressBarSuggestionChosenCommand.Execute(args);
+            this._viewModel.AdressBarSuggestionChosenCommand.Execute(args);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace browser.Controls
         /// <param name="args"></param>
         private void BrowserWidget_MainContent_WebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
-            this.ViewModel.WebViewNavigationStartingCommand.Execute(args);
+            this._viewModel.WebViewNavigationStartingCommand.Execute(args);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace browser.Controls
         /// <param name="e"></param>
         private void BrowserWidget_HeaderHomeActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.ViewModel.ActionButtonHomeClickCommand.Execute(e);
+            this._viewModel.ActionButtonHomeClickCommand.Execute(e);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace browser.Controls
         /// <param name="e"></param>
         private void BrowserWidget_HeaderRefreshActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.ViewModel.ActionButtonRefreshClickCommand.Execute(e);
+            this._viewModel.ActionButtonRefreshClickCommand.Execute(e);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace browser.Controls
         /// <param name="e"></param>
         private void BrowserWidget_HeaderForwardActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.ViewModel.ActionButtonForwardClickCommand.Execute(e);
+            this._viewModel.ActionButtonForwardClickCommand.Execute(e);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace browser.Controls
         /// <param name="e"></param>
         private void BrowserWidget_HeaderBackActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.ViewModel.ActionButtonBackClickCommand.Execute(e);
+            this._viewModel.ActionButtonBackClickCommand.Execute(e);
         }
 
         #endregion
@@ -150,7 +150,7 @@ namespace browser.Controls
         {
             string html = await this.BrowserWidget_MainContent_WebView.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
 
-            this.ViewModel.WebViewDOMContentLoadedCommand.Execute(html);
+            this._viewModel.WebViewDOMContentLoadedCommand.Execute(html);
         }
     }
 }

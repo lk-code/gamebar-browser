@@ -146,6 +146,7 @@
     <Compile Include="Core\ItemsChangeObservableCollection.cs" />
     <Compile Include="Core\MessagingEventTypes.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Exceptions\NavigationFailedException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
