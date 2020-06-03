@@ -170,7 +170,7 @@ namespace browser.ViewModels
                 {
                     ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
                     string viewTitleAboutThisApp = resources.GetString("ViewTitleAboutThisApp");
-                    Microsoft.UI.Xaml.Controls.IconSource icon = new Microsoft.UI.Xaml.Controls.FontIconSource() { Glyph = "\uE946", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+                    IconSource icon = new FontIconSource { Glyph = "\uE946", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
 
                     this.ProcessOpenContentInBrowserContentView(new AboutView(), viewTitleAboutThisApp, icon);
                 });
@@ -184,7 +184,7 @@ namespace browser.ViewModels
         /// <param name="content"></param>
         /// <param name="title"></param>
         /// <param name="icon"></param>
-        private void ProcessOpenContentInBrowserContentView(object content, string title, Microsoft.UI.Xaml.Controls.IconSource icon)
+        private void ProcessOpenContentInBrowserContentView(object content, string title, IconSource icon)
         {
             TabUiItem tabUiItem = new TabUiItem
             {
@@ -263,7 +263,7 @@ namespace browser.ViewModels
                     tabUiItem.DocumentIcon = null;
                 } else
                 {
-                    tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon), ShowAsMonochrome = false };
+                    tabUiItem.DocumentIcon = new BitmapIconSource { UriSource = new Uri(documentIcon), ShowAsMonochrome = false };
                 }
             }
         }

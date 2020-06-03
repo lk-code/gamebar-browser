@@ -688,7 +688,7 @@ namespace browser.ViewModels.Controls
         private void ProcessAdressBarValue(string requestedUriValue)
         {
             string sourceUriValue = requestedUriValue;
-            Uri targetUri = this.GetProcessedUriFromRequestValue(requestedUriValue);
+            Uri targetUri = this.GetProcessedUriFromRequestValue(sourceUriValue);
 
             this.GoToUri(targetUri);
         }
