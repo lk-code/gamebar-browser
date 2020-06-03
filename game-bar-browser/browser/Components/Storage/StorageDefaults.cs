@@ -25,7 +25,7 @@
 
 namespace browser.Components.Storage
 {
-    public class StorageDefaults
+    public static class StorageDefaults
     {
         /// <summary>
         /// 

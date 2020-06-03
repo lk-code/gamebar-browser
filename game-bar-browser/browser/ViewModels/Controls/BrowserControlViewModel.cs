@@ -376,6 +376,15 @@ namespace browser.ViewModels.Controls
 
         #region # public methods #
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Guid GetId()
+        {
+            return this._id;
+        }
+
         #endregion
 
         #region # private logic #
@@ -575,6 +584,11 @@ namespace browser.ViewModels.Controls
         /// <param name="eventArgs"></param>
         private void ProcessWebViewNavigationCompleted(WebViewNavigationCompletedEventArgs eventArgs)
         {
+            if(string.IsNullOrEmpty(this.AdressBarDisplayText) || string.IsNullOrWhiteSpace(this.AdressBarDisplayText))
+            {
+                return;
+            }
+
             this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
             this.AddPageToTempHistory(this.WebViewCurrentTitle, this.AdressBarDisplayText);
 
@@ -793,8 +807,9 @@ namespace browser.ViewModels.Controls
 
             var foundedItems = history.Select(
                 x => x.Value.Where(
-                    y => (y.Title.ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant())
-                    || y.Uri.ToString().ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant()))
+                    y => (!string.IsNullOrEmpty(y.Title) && !string.IsNullOrWhiteSpace(y.Title)
+                    && (y.Title.ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant())
+                    || y.Uri.ToString().ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant())))
                 )
             );
 

@@ -65,14 +65,6 @@ namespace browser.core.Components.DOMContentProcessor
 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public DOMContentProcessorComponent()
-        {
-
-        }
-
         #region # public methods #
 
         /// <summary>

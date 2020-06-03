@@ -75,6 +75,7 @@ namespace browser.Controls
         private void BrowserWidget_MainContent_WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
             this.ViewModel.WebViewNavigationCompletedCommand.Execute(args);
+            LoadDocumentTitleToViewModel();
         }
 
         #endregion
@@ -151,15 +152,17 @@ namespace browser.Controls
             this.ViewModel.ActionButtonBackClickCommand.Execute(e);
         }
 
+        #endregion
+
+        #region # private logic #
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private async Task BrowserWidget_MainContent_WebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
+        /// <returns></returns>
+        private async Task LoadDocumentTitleToViewModel()
         {
             string html = await this.BrowserWidget_MainContent_WebView.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
-
             this.ViewModel.WebViewDOMContentLoadedCommand.Execute(html);
         }
 

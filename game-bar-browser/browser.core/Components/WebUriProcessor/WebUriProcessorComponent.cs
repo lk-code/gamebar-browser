@@ -47,11 +47,6 @@ namespace browser.core.Components.WebUriProcessor
 
         #endregion
 
-        public WebUriProcessorComponent()
-        {
-
-        }
-
         #region # public methods #
 
         /// <summary>

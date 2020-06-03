@@ -234,7 +234,6 @@
             x:Name="BrowserWidget_MainContent_WebView"
             x:Uid="BrowserWidget_MainContent_WebView"
             Grid.Row="1"
-            DOMContentLoaded="BrowserWidget_MainContent_WebView_DOMContentLoaded"
             NavigationCompleted="BrowserWidget_MainContent_WebView_NavigationCompleted"
             NavigationStarting="BrowserWidget_MainContent_WebView_NavigationStarting"
             Source="{Binding WebViewAdressSource, Mode=TwoWay}" />

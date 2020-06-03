@@ -250,7 +250,7 @@ namespace browser.ViewModels
         {
             Guid browserId = eventArgs.BrowserId;
 
-            TabUiItem tabUiItem = this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.Id.Equals(browserId));
+            TabUiItem tabUiItem = this.CurrentTabUiItems.FirstOrDefault(x => x.Content.GetType() == typeof(Browser) && (x.Content as Browser).ViewModel.GetId().Equals(browserId));
 
             if (tabUiItem != null)
             {
