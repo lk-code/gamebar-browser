@@ -259,7 +259,13 @@ namespace browser.ViewModels
                 tabUiItem.DocumentTitle = documentTitle;
 
                 string documentIcon = eventArgs.DocumentIcon;
-                tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon), ShowAsMonochrome = false };
+                if(documentIcon == null)
+                {
+                    tabUiItem.DocumentIcon = null;
+                } else
+                {
+                    tabUiItem.DocumentIcon = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = new Uri(documentIcon), ShowAsMonochrome = false };
+                }
             }
         }
 
