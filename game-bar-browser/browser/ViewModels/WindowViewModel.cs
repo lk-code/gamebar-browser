@@ -41,10 +41,6 @@ namespace browser.ViewModels
 
         #endregion
 
-        #region # dependencies #
-
-        #endregion
-
         #region # commands #
 
         #endregion
@@ -96,6 +92,34 @@ namespace browser.ViewModels
             {
                 changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingStore"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected bool SetProperty<T>(ref T backingStore,
+            T value)
+        {
+            return this.SetProperty<T>(ref backingStore, value, "", null);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingStore"></param>
+        /// <param name="value"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        protected bool SetProperty<T>(ref T backingStore,
+            T value,
+            [CallerMemberName] string propertyName = "")
+        {
+            return this.SetProperty<T>(ref backingStore, value, propertyName, null);
         }
 
         /// <summary>

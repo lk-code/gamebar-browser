@@ -64,11 +64,6 @@ namespace browser.Components.SearchEngine
 
         #region # constructors #
 
-        public SearchEngine()
-        {
-
-        }
-
         #endregion
 
         #region # public methods #

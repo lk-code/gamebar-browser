@@ -103,11 +103,6 @@ namespace browser.Components.SearchEngine
 
         #region # constructors #
 
-        public SearchEngineProcessor()
-        {
-
-        }
-
         #endregion
 
         #region # public methods #
@@ -130,7 +125,7 @@ namespace browser.Components.SearchEngine
         /// <returns></returns>
         public SearchEngine GetSearchEngineByKey(string selectedSearchEngineKey)
         {
-            var searchEngines = this.GetAvailableSearchEngines().Where(x => x.Key.ToLower() == selectedSearchEngineKey.ToLower());
+            var searchEngines = this.GetAvailableSearchEngines().Where(x => x.Key.ToLowerInvariant() == selectedSearchEngineKey.ToLowerInvariant());
 
             if (searchEngines.Count() > 0)
             {

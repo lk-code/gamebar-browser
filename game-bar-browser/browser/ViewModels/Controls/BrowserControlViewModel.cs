@@ -178,14 +178,14 @@ namespace browser.ViewModels.Controls
         /// </summary>
         private bool _navigateInTempHistory { get; set; } = false;
 
-        #endregion
-
-        #region # public properties #
-
         /// <summary>
         /// 
         /// </summary>
-        public readonly Guid Id = Guid.NewGuid();
+        private readonly Guid _id = Guid.NewGuid();
+
+        #endregion
+
+        #region # public properties #
 
         string _adressBarDisplayText = string.Empty;
         /// <summary>
@@ -396,7 +396,7 @@ namespace browser.ViewModels.Controls
             icon = this.EnsureFaviconUri(currentDomain, icon);
             this.WebViewCurrentIcon = icon;
 
-            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this.Id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
+            this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this._id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
         }
 
         /// <summary>
@@ -407,8 +407,6 @@ namespace browser.ViewModels.Controls
         /// <returns></returns>
         private string EnsureFaviconUri(string currentDomain, string iconUri)
         {
-            WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
-
             if(string.IsNullOrEmpty(iconUri)
                 || string.IsNullOrWhiteSpace(iconUri))
             {
@@ -416,7 +414,7 @@ namespace browser.ViewModels.Controls
             }
 
             // is valid url
-            if (!webUriProcessorComponent.IsValidUri(iconUri))
+            if (!WebUriProcessorComponent.IsValidUri(iconUri))
             {
                 if (string.IsNullOrEmpty(currentDomain)
                     || string.IsNullOrWhiteSpace(currentDomain))
@@ -716,7 +714,7 @@ namespace browser.ViewModels.Controls
             WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
 
             // is valid url
-            if (webUriProcessorComponent.IsValidUri(sourceUriValue))
+            if (WebUriProcessorComponent.IsValidUri(sourceUriValue))
             {
                 targetUri = new Uri(sourceUriValue);
             }
@@ -795,8 +793,8 @@ namespace browser.ViewModels.Controls
 
             var foundedItems = history.Select(
                 x => x.Value.Where(
-                    y => (y.Title.ToLower().Contains(currentAdressBarValue.ToLower())
-                    || y.Uri.ToString().ToLower().Contains(currentAdressBarValue.ToLower()))
+                    y => (y.Title.ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant())
+                    || y.Uri.ToString().ToLowerInvariant().Contains(currentAdressBarValue.ToLowerInvariant()))
                 )
             );
 

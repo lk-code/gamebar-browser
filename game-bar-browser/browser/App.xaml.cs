@@ -55,15 +55,15 @@ namespace browser
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            this.initializeAppCenter();
+            this.InitializeAppCenter("2abc16d4-e957-4e05-a5da-2a12492e7bca");
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void initializeAppCenter()
+        private void InitializeAppCenter(string appCenterProjectId)
         {
-            AppCenter.Start("2abc16d4-e957-4e05-a5da-2a12492e7bca",
+            AppCenter.Start(appCenterProjectId,
                    typeof(Analytics),
                    typeof(Crashes));
         }

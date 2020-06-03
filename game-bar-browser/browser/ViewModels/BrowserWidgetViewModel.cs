@@ -221,7 +221,7 @@ namespace browser.ViewModels
         {
             Browser browserControl = new Browser();
 
-            browserControl.OnWebViewHeaderChanged += ViewModel_OnWebViewHeaderChanged;
+            browserControl.ViewModel.OnWebViewHeaderChanged += ViewModel_OnWebViewHeaderChanged;
 
             TabUiItem tabUiItem = new TabUiItem
             {

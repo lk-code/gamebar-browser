@@ -42,7 +42,7 @@ namespace browser.Views
         /// <summary>
         /// 
         /// </summary>
-        private BrowserWidgetViewModel _viewModel;
+        private readonly BrowserWidgetViewModel _viewModel;
 
         #endregion
 

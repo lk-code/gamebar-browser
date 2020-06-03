@@ -43,7 +43,7 @@ namespace browser.Views
         /// <summary>
         /// 
         /// </summary>
-        private BrowserSettingsViewModel _viewModel;
+        private readonly BrowserSettingsViewModel _viewModel;
 
         #endregion
 
