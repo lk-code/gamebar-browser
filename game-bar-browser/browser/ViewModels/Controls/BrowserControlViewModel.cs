@@ -863,7 +863,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        private async Task OpenXboxGameBarWidgetSettingsAsync()
+        private async void OpenXboxGameBarWidgetSettingsAsync()
         {
             await this.XboxGameBarWidgetInstance.ActivateSettingsAsync();
         }

@@ -75,6 +75,15 @@ namespace browser.Controls
         private void BrowserWidget_MainContent_WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
             this.ViewModel.WebViewNavigationCompletedCommand.Execute(args);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void BrowserWidget_MainContent_WebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
+        {
             LoadDocumentTitleToViewModel();
         }
 

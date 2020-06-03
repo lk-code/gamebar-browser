@@ -53,14 +53,6 @@ namespace browser.Components.Storage
 
         #region # constructors #
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public StorageManager()
-        {
-
-        }
-
         #endregion
 
         #region # public methods #

@@ -12,11 +12,11 @@ You can find the official app in the Microsoft Store: [Download via Microsoft St
 List of Releases:
 [Latest Releases of Gamebar Browser](https://github.com/lk-code/gamebar-browser/blob/master/RELEASES.md) 
 
-# Development
+## Development
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d59c78baa4f24337b8dc7ac5a72aeda1)](https://www.codacy.com/manual/lk-code/gamebar-browser?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lk-code/gamebar-browser&amp;utm_campaign=Badge_Grade)![GitHub](https://img.shields.io/github/license/lk-code/gamebar-browser?style=flat-square)
 
-## Planed Features
+### Planed Features
 Here you will find a list of planned features (Management via [Azure DevOps](https://dev.azure.com/lk-code/gamebar-browser)):
 * [An improved view for the auto-suggest view](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/188/)
 * [More options for the tabs](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/192/)
