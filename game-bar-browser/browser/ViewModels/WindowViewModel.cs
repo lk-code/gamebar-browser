@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
@@ -83,7 +84,7 @@ namespace browser.ViewModels
         /// 
         /// </summary>
         /// <param name="propertyName"></param>
-        protected async void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        protected async Task OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
             if (changed == null)

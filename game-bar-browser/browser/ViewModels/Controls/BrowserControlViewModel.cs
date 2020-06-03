@@ -33,11 +33,11 @@ using browser.Core;
 using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Gaming.XboxGameBar;
-using Microsoft.Toolkit.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
@@ -70,7 +70,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenSettingsCommand => _openSettingsCommand ?? (_openSettingsCommand = new RelayCommand((eventArgs) => { this.OpenXboxGameBarWidgetSettings(); }));
+        public ICommand OpenSettingsCommand => _openSettingsCommand ?? (_openSettingsCommand = new RelayCommand((eventArgs) => { this.OpenXboxGameBarWidgetSettingsAsync(); }));
 
         private ICommand _openShareMenuCommand;
         /// <summary>
@@ -130,13 +130,13 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenFeedbackCommand => _openFeedbackCommand ?? (_openFeedbackCommand = new RelayCommand((eventArgs) => { this.LaunchFeedbackHub(); }));
+        public ICommand OpenFeedbackCommand => _openFeedbackCommand ?? (_openFeedbackCommand = new RelayCommand((eventArgs) => { this.LaunchFeedbackHubAsync(); }));
 
         private ICommand _openInSystemDefaultMenuCommand;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenInSystemDefaultMenuCommand => _openInSystemDefaultMenuCommand ?? (_openInSystemDefaultMenuCommand = new RelayCommand((eventArgs) => { this.OnOpenInSystemDefaultClick(); }));
+        public ICommand OpenInSystemDefaultMenuCommand => _openInSystemDefaultMenuCommand ?? (_openInSystemDefaultMenuCommand = new RelayCommand((eventArgs) => { this.OnOpenInSystemDefaultClickAsync(); }));
 
         private ICommand _webViewDOMContentLoadedCommand;
         /// <summary>
@@ -449,7 +449,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        private async void OnOpenInSystemDefaultClick()
+        private async Task OnOpenInSystemDefaultClickAsync()
         {
             string currentPageUri = this.WebViewAdressSource.ToString();
 
@@ -459,7 +459,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        private async void LaunchFeedbackHub()
+        private async Task LaunchFeedbackHubAsync()
         {
             // This launcher is part of the Store Services SDK https://docs.microsoft.com/windows/uwp/monetize/microsoft-store-services-sdk
             var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
@@ -741,7 +741,7 @@ namespace browser.ViewModels.Controls
         /// <param name="args"></param>
         private void XboxGameBarWidgetInstance_SettingsClicked(XboxGameBarWidget sender, object args)
         {
-            this.OpenXboxGameBarWidgetSettings();
+            this.OpenXboxGameBarWidgetSettingsAsync();
         }
 
         /// <summary>
@@ -779,13 +779,13 @@ namespace browser.ViewModels.Controls
                 return;
             }
 
-            this.ProcessAutoSuggestValues();
+            this.ProcessAutoSuggestValuesAsync();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private async void ProcessAutoSuggestValues()
+        private async Task ProcessAutoSuggestValuesAsync()
         {
             string currentAdressBarValue = this.AdressBarDisplayText;
 
@@ -850,7 +850,7 @@ namespace browser.ViewModels.Controls
         /// <summary>
         /// 
         /// </summary>
-        private async void OpenXboxGameBarWidgetSettings()
+        private async Task OpenXboxGameBarWidgetSettingsAsync()
         {
             await this.XboxGameBarWidgetInstance.ActivateSettingsAsync();
         }

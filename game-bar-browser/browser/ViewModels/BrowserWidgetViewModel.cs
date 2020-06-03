@@ -32,12 +32,11 @@ using Microsoft.Gaming.XboxGameBar;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
-using System.Resources;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace browser.ViewModels
@@ -203,7 +202,7 @@ namespace browser.ViewModels
         /// <param name="routedEventArgs"></param>
         private void OnTabViewActionSettingButtonClick(RoutedEventArgs routedEventArgs)
         {
-            this.OpenXboxGameBarWidgetSettings();
+            this.OpenXboxGameBarWidgetSettingsAsync();
         }
 
         /// <summary>
@@ -301,13 +300,13 @@ namespace browser.ViewModels
         /// <param name="args"></param>
         private void XboxGameBarWidgetInstance_SettingsClicked(XboxGameBarWidget sender, object args)
         {
-            this.OpenXboxGameBarWidgetSettings();
+            this.OpenXboxGameBarWidgetSettingsAsync();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private async void OpenXboxGameBarWidgetSettings()
+        private async Task OpenXboxGameBarWidgetSettingsAsync()
         {
             await this.XboxGameBarWidgetInstance.ActivateSettingsAsync();
         }
