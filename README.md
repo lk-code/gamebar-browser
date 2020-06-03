@@ -3,6 +3,8 @@
 ## What is Gamebar Browser?
 Gamebar Browser is a Windows 10 app for the Xbox Gamebar (you can open it with the shortcut [Win] + [G] or on the Xbox controller with the Xbox-Guide button). As the name suggests, this app adds a simple browser to the Gamebar. You can get the app from the [Microsoft Store]([https://www.microsoft.com/store/productId/9P7X6CTWMSLG).
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d59c78baa4f24337b8dc7ac5a72aeda1)](https://www.codacy.com/manual/lk-code/gamebar-browser?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lk-code/gamebar-browser&amp;utm_campaign=Badge_Grade)![GitHub](https://img.shields.io/github/license/lk-code/gamebar-browser?style=flat-square)
+
 ## Requirements
 The Gamebar extension requires Windows 10 and the 2004 update (May 2020). You can check your version by searching for "winver" in the start menu and see which update is installed.
 
