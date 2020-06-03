@@ -25,6 +25,7 @@
 
 using browser.ViewModels.Controls;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Benutzersteuerelement" wird unter https://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.
@@ -35,10 +36,21 @@ namespace browser.Controls
     {
         #region # public properties #
 
+        private BrowserControlViewModel _viewModel = null;
         /// <summary>
         /// 
         /// </summary>
-        public BrowserControlViewModel ViewModel;
+        public BrowserControlViewModel ViewModel
+        {
+            get
+            {
+                return _viewModel;
+            }
+            set
+            {
+                _viewModel = value;
+            }
+        }
 
         #endregion
 
@@ -139,18 +151,18 @@ namespace browser.Controls
             this.ViewModel.ActionButtonBackClickCommand.Execute(e);
         }
 
-        #endregion
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private async void BrowserWidget_MainContent_WebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
+        private async Task BrowserWidget_MainContent_WebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
         {
             string html = await this.BrowserWidget_MainContent_WebView.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
 
             this.ViewModel.WebViewDOMContentLoadedCommand.Execute(html);
         }
+
+        #endregion
     }
 }

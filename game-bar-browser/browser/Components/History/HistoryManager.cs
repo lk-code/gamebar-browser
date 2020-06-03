@@ -179,7 +179,7 @@ namespace browser.Components.History
         /// <param name="historyItem"></param>
         private async Task SaveHistoryItemAsync(HistoryItem historyItem)
         {
-            await this.EnsureIndexForDateAsync(historyItem.Visited);
+            await this.EnsureIndexForDateAsync(historyItem.Visited).ConfigureAwait(false);
 
             string historyFileName = this.GetFileNameForHistoryItems(historyItem.Visited);
             StorageFolder roamingStorageFolder = ApplicationData.Current.RoamingFolder;
@@ -211,7 +211,7 @@ namespace browser.Components.History
         /// <param name="historyItem"></param>
         private async Task EnsureIndexForDateAsync(DateTime historyItemDate)
         {
-            List<string> historyIndex = await this.GetHistoryIndexAsync();
+            List<string> historyIndex = await this.GetHistoryIndexAsync().ConfigureAwait(false);
             string todayIndexKey = historyItemDate.ToString(HISTORY_INDEX_DATE_SCHEME);
 
             if (!historyIndex.Contains(todayIndexKey))
@@ -221,7 +221,7 @@ namespace browser.Components.History
 
             historyIndex = historyIndex.Distinct().ToList();
 
-            await this.SaveHistoryIndexAsync(historyIndex);
+            await this.SaveHistoryIndexAsync(historyIndex).ConfigureAwait(false);
         }
 
         /// <summary>
