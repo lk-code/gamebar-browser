@@ -22,6 +22,7 @@ Here you will find a list of planned features (Management via [Azure DevOps](htt
 * [Possibility to save and manage favorites](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/194/)
 * [Possibility to define own search engines](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/196)
 * [Informations about the website](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/195/)
+* [Additional UI Languages](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/198/)
 
 ## License
 This project is run under the [MIT license](https://github.com/lk-code/gamebar-browser/blob/master/LICENSE.md). This means that anyone can work on the project as long as a reference to the original developer (lk-code) is given.
