@@ -104,13 +104,15 @@ namespace browser.Components.History
         /// 
         /// </summary>
         /// <param name="title"></param>
+        /// <param name="icon"></param>
         /// <param name="uri"></param>
         /// <param name="visited"></param>
-        public void Add(string title, Uri uri, DateTime visited)
+        public void Add(string title, string icon, Uri uri, DateTime visited)
         {
             HistoryItem historyItem = new HistoryItem
             {
                 Title = title,
+                Icon = icon,
                 Uri = uri,
                 Visited = visited
             };

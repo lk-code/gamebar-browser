@@ -257,11 +257,11 @@ namespace browser.ViewModels.Controls
             }
         }
 
-        ObservableCollection<string> _adressBarSuggestValues = new ObservableCollection<string>();
+        ItemsChangeObservableCollection<AutoSuggestItem> _adressBarSuggestValues = new ItemsChangeObservableCollection<AutoSuggestItem>();
         /// <summary>
         /// 
         /// </summary>
-        public ObservableCollection<string> AdressBarSuggestValues
+        public ItemsChangeObservableCollection<AutoSuggestItem> AdressBarSuggestValues
         {
             get
             {
@@ -404,6 +404,8 @@ namespace browser.ViewModels.Controls
             string icon = this._domContentProcessorComponent.GetFaviconPath();
             icon = this.EnsureFaviconUri(currentDomain, icon);
             this.WebViewCurrentIcon = icon;
+
+            this.ProcessNavigationAction();
 
             this.OnWebViewHeaderChanged(this, new WebViewHeaderChangedEventArgs(this._id, this.WebViewCurrentTitle, this.WebViewCurrentIcon));
         }
@@ -584,12 +586,20 @@ namespace browser.ViewModels.Controls
         /// <param name="eventArgs"></param>
         private void ProcessWebViewNavigationCompleted(WebViewNavigationCompletedEventArgs eventArgs)
         {
-            if(string.IsNullOrEmpty(this.AdressBarDisplayText) || string.IsNullOrWhiteSpace(this.AdressBarDisplayText))
+            // this.ProcessNavigationAction();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ProcessNavigationAction()
+        {
+            if (string.IsNullOrEmpty(this.AdressBarDisplayText) || string.IsNullOrWhiteSpace(this.AdressBarDisplayText))
             {
                 return;
             }
 
-            this._historyManager.Add(this.WebViewCurrentTitle, new Uri(this.AdressBarDisplayText), DateTime.Now);
+            this._historyManager.Add(this.WebViewCurrentTitle, this.WebViewCurrentIcon, new Uri(this.AdressBarDisplayText), DateTime.Now);
             this.AddPageToTempHistory(this.WebViewCurrentTitle, this.AdressBarDisplayText);
 
             this.ProcessTempHistoryActionButtons();
@@ -690,6 +700,8 @@ namespace browser.ViewModels.Controls
             if(webViewSource.ToString() != this._adressBarDisplayText)
             {
                 this.AdressBarDisplayText = webViewSource.ToString();
+
+                // this.ProcessNavigationAction();
             }
         }
 
@@ -761,9 +773,9 @@ namespace browser.ViewModels.Controls
         /// </summary>
         private void ProcessAdressBarSuggestionChosen(AutoSuggestBoxSuggestionChosenEventArgs eventArgs)
         {
-            string chosenSuggestValue = (eventArgs.SelectedItem as string);
+            AutoSuggestItem chosenSuggestValue = (eventArgs.SelectedItem as AutoSuggestItem);
 
-            this.ProcessAdressBarValue(chosenSuggestValue);
+            this.ProcessAdressBarValue(chosenSuggestValue.WebsiteUri);
         }
 
         /// <summary>
@@ -813,7 +825,7 @@ namespace browser.ViewModels.Controls
                 )
             );
 
-            List<string> suggestEntries = new List<string>();
+            List<HistoryItem> suggestEntries = new List<HistoryItem>();
 
             foreach(var foundItemList in foundedItems)
             {
@@ -821,15 +833,26 @@ namespace browser.ViewModels.Controls
 
                 foreach (HistoryItem historyItem in items)
                 {
-                    suggestEntries.Add(historyItem.Uri.ToString());
+                    suggestEntries.Add(historyItem);
                 }
             }
 
-            suggestEntries = suggestEntries.Distinct().ToList();
+            suggestEntries = suggestEntries.GroupBy(x => x.Uri).Select(g => g.First()).ToList();
 
-            foreach(string suggestEntry in suggestEntries)
+            foreach(HistoryItem suggestEntry in suggestEntries)
             {
-                this.AdressBarSuggestValues.Add(suggestEntry);
+                AutoSuggestItem autoSuggestItem = new AutoSuggestItem
+                {
+                    WebsiteUri = suggestEntry.Uri.ToString(),
+                    WebsiteTitle = suggestEntry.Title
+                };
+
+                if(!string.IsNullOrEmpty(suggestEntry.Icon.Trim()) && !string.IsNullOrWhiteSpace(suggestEntry.Icon.Trim()))
+                {
+                    autoSuggestItem.WebsiteIcon = new Uri(suggestEntry.Icon);
+                }
+
+                this.AdressBarSuggestValues.Add(autoSuggestItem);
             }
         }
 
