@@ -27,6 +27,7 @@ Here you will find a list of planned features (Management via [Azure DevOps](htt
 * [Additional UI Languages](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/198/)
 * [Settings as a Tab](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/200/)
 * [Delete Browser Data](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/201/)
+* [Non-UI Mode](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/202/)
 
 ## License
 This project is run under the [MIT license](https://github.com/lk-code/gamebar-browser/blob/master/LICENSE.md). This means that anyone can work on the project as long as a reference to the original developer (lk-code) is given.
