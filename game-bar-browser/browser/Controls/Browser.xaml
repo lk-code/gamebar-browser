@@ -31,6 +31,7 @@
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:browser.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     d:DesignHeight="768"
     d:DesignWidth="1024"
@@ -132,7 +133,47 @@
                 KeyUp="BrowserWidget_HeaderUriAutoSuggestBox_KeyUp"
                 PlaceholderText="__BrowserWidget_HeaderUriAutoSuggestBox_PlaceholderText__"
                 SuggestionChosen="BrowserWidget_HeaderUriAutoSuggestBox_SuggestionChosen"
-                Text="{Binding AdressBarDisplayText, Mode=TwoWay}" />
+                Text="{Binding AdressBarDisplayText, Mode=TwoWay}">
+                <AutoSuggestBox.ItemTemplate>
+
+                    <DataTemplate x:DataType="models:AutoSuggestItem">
+
+                        <Grid Height="48">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <BitmapIcon
+                                Grid.Column="0"
+                                Width="16"
+                                Margin="4"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ShowAsMonochrome="False"
+                                UriSource="{Binding WebsiteIcon}" />
+
+                            <StackPanel
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    Margin="4"
+                                    FontSize="16"
+                                    Text="{Binding WebsiteTitle}" />
+                                <TextBlock
+                                    Margin="4,0,4,4"
+                                    FontSize="12"
+                                    Text="{Binding WebsiteUri}" />
+                            </StackPanel>
+
+                        </Grid>
+
+                    </DataTemplate>
+
+                </AutoSuggestBox.ItemTemplate>
+            </AutoSuggestBox>
 
             <StackPanel
                 Grid.Column="2"

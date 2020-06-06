@@ -23,30 +23,59 @@
  * SOFTWARE.
  */
 
+using browser.ViewModels;
 using System;
 
-namespace browser.Components.History
+namespace browser.Models
 {
-    public class HistoryItem
+    public class AutoSuggestItem : BaseViewModel
     {
+        string _websiteUri = " ";
         /// <summary>
         /// 
         /// </summary>
-        public string Title { get; set; } = string.Empty;
+        public string WebsiteUri
+        {
+            get
+            {
+                return _websiteUri;
+            }
+            set
+            {
+                _websiteUri = value;
+            }
+        }
 
+        string _websiteTitle = " ";
         /// <summary>
         /// 
         /// </summary>
-        public string Icon { get; set; } = string.Empty;
+        public string WebsiteTitle
+        {
+            get
+            {
+                return _websiteTitle;
+            }
+            set
+            {
+                _websiteTitle = value;
+            }
+        }
 
+        Uri _websiteIcon = null;
         /// <summary>
         /// 
         /// </summary>
-        public DateTime Visited { get; set; } = DateTime.Now;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Uri Uri { get; set; } = null;
+        public Uri WebsiteIcon
+        {
+            get
+            {
+                return _websiteIcon;
+            }
+            set
+            {
+                _websiteIcon = value;
+            }
+        }
     }
 }
