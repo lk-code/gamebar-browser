@@ -45,6 +45,17 @@ namespace browser.ViewModels
     {
         #region # events #
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public delegate void OnTabIndexChangedEventHandler(object source, TabIndexChangedEventArgs e);
+        /// <summary>
+        /// 
+        /// </summary>
+        public event OnTabIndexChangedEventHandler OnTabIndexChanged;
+
         #endregion
 
         #region # dependencies #
@@ -168,14 +179,34 @@ namespace browser.ViewModels
                 
                 await this._currentWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
-                    string viewTitleAboutThisApp = resources.GetString("ViewTitleAboutThisApp");
-                    IconSource icon = new FontIconSource { Glyph = "\uE946", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
-
-                    this.ProcessOpenContentInBrowserContentView(new AboutView(), viewTitleAboutThisApp, icon);
+                    this.OpenAboutPage();
                 });
 
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OpenAboutPage()
+        {
+            ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
+            string viewTitleAboutThisApp = resources.GetString("ViewTitleAboutThisApp");
+            IconSource icon = new FontIconSource { Glyph = "\uE946", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+
+            this.ProcessOpenContentInBrowserContentView(new AboutView(), viewTitleAboutThisApp, icon);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OpenSettingsPage()
+        {
+            ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
+            string viewTitleSettings = resources.GetString("ViewTitleSettings");
+            IconSource icon = new FontIconSource { Glyph = "\uE713", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+
+            this.ProcessOpenContentInBrowserContentView(new SettingsView(), viewTitleSettings, icon);
         }
 
         /// <summary>
@@ -193,7 +224,7 @@ namespace browser.ViewModels
                 DocumentIcon = icon
             };
 
-            this.CurrentTabUiItems.Add(tabUiItem);
+            this.AddTab(tabUiItem);
         }
 
         /// <summary>
@@ -202,7 +233,8 @@ namespace browser.ViewModels
         /// <param name="routedEventArgs"></param>
         private void OnTabViewActionSettingButtonClick(RoutedEventArgs routedEventArgs)
         {
-            this.OpenXboxGameBarWidgetSettingsAsync();
+            // this.OpenXboxGameBarWidgetSettingsAsync();
+            this.OpenSettingsPage();
         }
 
         /// <summary>
@@ -229,7 +261,22 @@ namespace browser.ViewModels
                 Content = browserControl
             };
 
+            this.AddTab(tabUiItem);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tabUiItem"></param>
+        private void AddTab(TabUiItem tabUiItem)
+        {
             this.CurrentTabUiItems.Add(tabUiItem);
+            int index = this.CurrentTabUiItems.IndexOf(tabUiItem);
+
+            if(this.OnTabIndexChanged != null)
+            {
+                this.OnTabIndexChanged(this, new TabIndexChangedEventArgs(index));
+            }
         }
 
         /// <summary>

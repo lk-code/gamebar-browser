@@ -50,9 +50,9 @@
                              PublicFolder="GameBar">
             <uap3:Properties>
               <GameBarWidget Type="Standard">
-                <HomeMenuVisible>true</HomeMenuVisible>
+                <HomeMenuVisible>false</HomeMenuVisible>
                 <PinningSupported>true</PinningSupported>
-                <SettingsSupported AppExtensionId="WidgetBrowserSettings" />
+                <!-- <SettingsSupported AppExtensionId="WidgetBrowserSettings" /> -->
                 <ActivateAfterInstall>true</ActivateAfterInstall>
                 <Window>
                   <Size>
@@ -74,7 +74,7 @@
         </uap3:Extension>
 
         <!-- Extension 1 Settings (Also an extension of separate type) -->
-        <uap3:Extension Category="windows.appExtension">
+        <!-- <uap3:Extension Category="windows.appExtension">
           <uap3:AppExtension Name="microsoft.gameBarUIExtension"
                              Id="WidgetBrowserSettings"
                              DisplayName="Settings"
@@ -95,7 +95,7 @@
               </GameBarWidget>
             </uap3:Properties>
           </uap3:AppExtension>
-        </uap3:Extension>
+        </uap3:Extension> -->
       </Extensions>
     </Application>
   </Applications>

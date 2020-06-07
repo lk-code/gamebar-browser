@@ -129,6 +129,9 @@
   <data name="AboutThisAppLicenseText.Text" xml:space="preserve">
     <value>このアプリはオープンソースプロジェクトとしてMITライセンスで提供されています。</value>
   </data>
+  <data name="A_AppLanguage" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>アプリについて</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="ViewTitleAboutThisApp" xml:space="preserve">
     <value>このアプリについて</value>
+  </data>
+  <data name="ViewTitleSettings" xml:space="preserve">
+    <value>設定</value>
   </data>
 </root>

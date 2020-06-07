@@ -130,6 +130,9 @@
     <Compile Include="AppViews\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppViews\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\History\HistoryItem.cs" />
     <Compile Include="Components\History\HistoryManager.cs" />
     <Compile Include="Components\SearchEngine\SearchEngine.cs" />
@@ -151,10 +154,12 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoSuggestItem.cs" />
+    <Compile Include="Models\TabIndexChangedEventArgs.cs" />
     <Compile Include="Models\WebViewHeaderChangedEventArgs.cs" />
     <Compile Include="Models\TabUiItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AppViews\AboutViewModel.cs" />
+    <Compile Include="ViewModels\AppViews\SettingsViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Controls\BrowserControlViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
@@ -252,6 +257,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AppViews\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppViews\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

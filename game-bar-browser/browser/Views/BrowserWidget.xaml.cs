@@ -54,9 +54,29 @@ namespace browser.Views
             this.InitializeComponent();
 
             this.DataContext = _viewModel = new BrowserWidgetViewModel();
+
+            this.RegisterEvents();
         }
 
-        #region # private properties #
+        #region # private logic #
+
+        private void RegisterEvents()
+        {
+            this._viewModel.OnTabIndexChanged += _viewModel_OnTabIndexChanged;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void _viewModel_OnTabIndexChanged(object source, Models.TabIndexChangedEventArgs e)
+        {
+            if(e.Index >= 0)
+            {
+                this.BrowserWidget_MainTabView.SelectedIndex = e.Index;
+            }
+        }
 
         /// <summary>
         /// 

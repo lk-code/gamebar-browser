@@ -129,6 +129,9 @@
   <data name="AboutThisAppLicenseText.Text" xml:space="preserve">
     <value>这个应用是在MIT许可下作为一个开源项目提供的。</value>
   </data>
+  <data name="A_AppLanguage" xml:space="preserve">
+    <value>Chinese</value>
+  </data>
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>关于应用程序</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="ViewTitleAboutThisApp" xml:space="preserve">
     <value>关于这个应用程序</value>
+  </data>
+  <data name="ViewTitleSettings" xml:space="preserve">
+    <value>设置</value>
   </data>
 </root>

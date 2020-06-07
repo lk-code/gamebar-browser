@@ -137,22 +137,6 @@ namespace browser.ViewModels
             }
         }
 
-        bool _isSettingsFormSaveButtonVisible = SAVE_VIA_BUTTON;
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsSettingsFormSaveButtonVisible
-        {
-            get
-            {
-                return _isSettingsFormSaveButtonVisible;
-            }
-            set
-            {
-                SetProperty(ref _isSettingsFormSaveButtonVisible, value);
-            }
-        }
-
         ObservableCollection<SearchEngine> _availableSearchEngines = new ObservableCollection<SearchEngine>();
         /// <summary>
         /// 

@@ -129,6 +129,9 @@
   <data name="AboutThisAppLicenseText.Text" xml:space="preserve">
     <value>Tato aplikace je k dispozici pod licencí MIT jako open source projekt.</value>
   </data>
+  <data name="A_AppLanguage" xml:space="preserve">
+    <value>Czech</value>
+  </data>
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>O aplikaci</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="ViewTitleAboutThisApp" xml:space="preserve">
     <value>O této aplikaci</value>
+  </data>
+  <data name="ViewTitleSettings" xml:space="preserve">
+    <value>Nastavení</value>
   </data>
 </root>
