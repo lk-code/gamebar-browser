@@ -23,6 +23,7 @@
  * SOFTWARE.
  */
 
+using browser.Models;
 using browser.ViewModels;
 using Microsoft.Gaming.XboxGameBar;
 using Windows.UI.Xaml.Controls;
@@ -62,7 +63,7 @@ namespace browser.Views
 
         private void RegisterEvents()
         {
-            this._viewModel.OnTabIndexChanged += _viewModel_OnTabIndexChanged;
+            // this._viewModel.OnTabIndexChanged += _viewModel_OnTabIndexChanged;
         }
 
         /// <summary>
@@ -70,12 +71,19 @@ namespace browser.Views
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private void _viewModel_OnTabIndexChanged(object source, Models.TabIndexChangedEventArgs e)
+        private void _viewModel_OnTabIndexChanged(object source, TabIndexChangedEventArgs e)
         {
+            if(e.SelectedItem != null)
+            {
+                this.BrowserWidget_MainTabView.SelectedItem = e.SelectedItem;
+            }
+
+            /*
             if(e.Index >= 0)
             {
                 this.BrowserWidget_MainTabView.SelectedIndex = e.Index;
             }
+            /* */
         }
 
         /// <summary>

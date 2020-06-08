@@ -78,5 +78,21 @@ namespace browser.Models
                 SetProperty(ref _content, value);
             }
         }
+
+        bool _isSelected = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                SetProperty(ref _isSelected, value);
+            }
+        }
     }
 }

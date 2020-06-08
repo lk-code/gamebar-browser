@@ -30,6 +30,10 @@ namespace browser.Models
     /// </summary>
     public class TabIndexChangedEventArgs
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index"></param>
         public TabIndexChangedEventArgs(int index)
         {
             Index = index;
@@ -38,6 +42,20 @@ namespace browser.Models
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="selectedItem"></param>
+        public TabIndexChangedEventArgs(TabUiItem selectedItem)
+        {
+            SelectedItem = selectedItem;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Index { get; set; } = 0;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TabUiItem SelectedItem { get; set; } = null;
     }
 }
