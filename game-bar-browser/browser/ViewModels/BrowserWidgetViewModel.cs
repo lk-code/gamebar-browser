@@ -270,19 +270,16 @@ namespace browser.ViewModels
         /// <param name="tabUiItem"></param>
         private void AddTab(TabUiItem tabUiItem)
         {
-            this.CurrentTabUiItems = this.CurrentTabUiItems.Select(c => { c.IsSelected = false; return c; });
+            /*
+            foreach(TabUiItem tab in this.CurrentTabUiItems)
+            {
+                tab.IsSelected = false;
+            }
 
             tabUiItem.IsSelected = true;
+            /* */
 
             this.CurrentTabUiItems.Add(tabUiItem);
-            // int index = this.CurrentTabUiItems.IndexOf(tabUiItem);
-            int index = (this.CurrentTabUiItems.Count() - 1);
-
-            if (this.OnTabIndexChanged != null)
-            {
-                // this.OnTabIndexChanged(this, new TabIndexChangedEventArgs(index));
-                // this.OnTabIndexChanged(this, new TabIndexChangedEventArgs(tabUiItem));
-            }
         }
 
         /// <summary>

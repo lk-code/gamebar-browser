@@ -63,27 +63,7 @@ namespace browser.Views
 
         private void RegisterEvents()
         {
-            // this._viewModel.OnTabIndexChanged += _viewModel_OnTabIndexChanged;
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        private void _viewModel_OnTabIndexChanged(object source, TabIndexChangedEventArgs e)
-        {
-            if(e.SelectedItem != null)
-            {
-                this.BrowserWidget_MainTabView.SelectedItem = e.SelectedItem;
-            }
-
-            /*
-            if(e.Index >= 0)
-            {
-                this.BrowserWidget_MainTabView.SelectedIndex = e.Index;
-            }
-            /* */
         }
 
         /// <summary>
