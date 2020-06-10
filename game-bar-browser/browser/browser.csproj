@@ -293,7 +293,7 @@
       <Version>3.2.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Gaming.XboxGameBar">
-      <Version>5.1.200402003</Version>
+      <Version>5.3.200605002</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.10</Version>
