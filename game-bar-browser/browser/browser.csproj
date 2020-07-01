@@ -146,6 +146,8 @@
     <Compile Include="Controls\Browser.xaml.cs">
       <DependentUpon>Browser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\BrowserReservedPages.cs" />
+    <Compile Include="Core\IBrowserContentElement.cs" />
     <Compile Include="Core\ItemsChangeObservableCollection.cs" />
     <Compile Include="Core\MessagingEventTypes.cs" />
     <Compile Include="Core\RelayCommand.cs" />
@@ -154,6 +156,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoSuggestItem.cs" />
+    <Compile Include="Models\OpenTabEventArgs.cs" />
     <Compile Include="Models\TabIndexChangedEventArgs.cs" />
     <Compile Include="Models\WebViewHeaderChangedEventArgs.cs" />
     <Compile Include="Models\TabUiItem.cs" />
@@ -302,10 +305,10 @@
       <Version>10.1901.28001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit">
-      <Version>6.0.0</Version>
+      <Version>6.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
-      <Version>6.0.0</Version>
+      <Version>6.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.4.2</Version>

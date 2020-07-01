@@ -23,6 +23,8 @@
  * SOFTWARE.
  */
 
+using browser.Core;
+using browser.Models;
 using browser.ViewModels.Controls;
 using System;
 using System.Threading.Tasks;
@@ -37,6 +39,7 @@ namespace browser.Controls
         #region # public properties #
 
         private BrowserControlViewModel _viewModel = null;
+
         /// <summary>
         /// 
         /// </summary>

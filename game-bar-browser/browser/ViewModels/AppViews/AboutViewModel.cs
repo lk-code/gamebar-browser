@@ -24,6 +24,7 @@
  */
 
 using browser.Core;
+using browser.Models;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -33,9 +34,14 @@ using Windows.UI.Xaml;
 
 namespace browser.ViewModels.AppViews
 {
-    public class AboutViewModel : WindowViewModel
+    public class AboutViewModel : WindowViewModel, IBrowserContentElement
     {
         #region # events #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler OnOpenTabRequested;
 
         #endregion
 
@@ -88,6 +94,14 @@ namespace browser.ViewModels.AppViews
         #endregion
 
         #region # public methods #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void OpenTab(OpenTabEventArgs eventArgs)
+        {
+            if (OnOpenTabRequested != null) OnOpenTabRequested(this, eventArgs);
+        }
 
         #endregion
 

@@ -25,6 +25,7 @@
 
 using browser.AppViews;
 using browser.Controls;
+using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
@@ -170,7 +171,7 @@ namespace browser.ViewModels
         /// </summary>
         private void RegisterEvents()
         {
-            Messenger.Default.Register<MessagingEventTypes>(MessagingEventTypes.OPEN_VIEW_ABOUT_THIS_APP, async (MessagingEventTypes type) =>
+            Messenger.Default.Register(MessagingEventTypes.OPEN_VIEW_ABOUT_THIS_APP, async (MessagingEventTypes type) =>
             {
                 if(type != MessagingEventTypes.OPEN_VIEW_ABOUT_THIS_APP)
                 {
@@ -188,13 +189,45 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void OpenAboutPage()
+        private TabUiItem GenerateAboutPage()
         {
             ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
-            string viewTitleAboutThisApp = resources.GetString("ViewTitleAboutThisApp");
+            string title = resources.GetString("ViewTitleAboutThisApp");
             IconSource icon = new FontIconSource { Glyph = "\uE946", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+            AboutView view = new AboutView();
 
-            this.ProcessOpenContentInBrowserContentView(new AboutView(), viewTitleAboutThisApp, icon);
+            view.ViewModel.OnOpenTabRequested += ViewModel_OnOpenTabRequested;
+
+            TabUiItem tabUiItem = this.GenerateTabUiItem(view, title, icon);
+
+            return tabUiItem;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OpenAboutPage()
+        {
+            TabUiItem tabUiItem = this.GenerateAboutPage();
+
+            this.AddTab(tabUiItem);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private TabUiItem GenerateSettingsPage()
+        {
+            ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
+            string title = resources.GetString("ViewTitleSettings");
+            IconSource icon = new FontIconSource { Glyph = "\uE713", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+            SettingsView view = new SettingsView();
+
+            view.ViewModel.OnOpenTabRequested += ViewModel_OnOpenTabRequested;
+
+            TabUiItem tabUiItem = this.GenerateTabUiItem(view, title, icon);
+
+            return tabUiItem;
         }
 
         /// <summary>
@@ -202,11 +235,9 @@ namespace browser.ViewModels
         /// </summary>
         private void OpenSettingsPage()
         {
-            ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
-            string viewTitleSettings = resources.GetString("ViewTitleSettings");
-            IconSource icon = new FontIconSource { Glyph = "\uE713", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+            TabUiItem tabUiItem = this.GenerateSettingsPage();
 
-            this.ProcessOpenContentInBrowserContentView(new SettingsView(), viewTitleSettings, icon);
+            this.AddTab(tabUiItem);
         }
 
         /// <summary>
@@ -215,7 +246,7 @@ namespace browser.ViewModels
         /// <param name="content"></param>
         /// <param name="title"></param>
         /// <param name="icon"></param>
-        private void ProcessOpenContentInBrowserContentView(object content, string title, IconSource icon)
+        private TabUiItem GenerateTabUiItem(object content, string title, IconSource icon)
         {
             TabUiItem tabUiItem = new TabUiItem
             {
@@ -224,7 +255,7 @@ namespace browser.ViewModels
                 DocumentIcon = icon
             };
 
-            this.AddTab(tabUiItem);
+            return tabUiItem;
         }
 
         /// <summary>
@@ -254,6 +285,7 @@ namespace browser.ViewModels
             Browser browserControl = new Browser();
 
             browserControl.ViewModel.OnWebViewHeaderChanged += ViewModel_OnWebViewHeaderChanged;
+            browserControl.ViewModel.OnOpenTabRequested += ViewModel_OnOpenTabRequested;
 
             TabUiItem tabUiItem = new TabUiItem
             {
@@ -262,6 +294,58 @@ namespace browser.ViewModels
             };
 
             this.AddTab(tabUiItem);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ViewModel_OnOpenTabRequested(object sender, EventArgs e)
+        {
+            OpenTabEventArgs eventArgs = (e as OpenTabEventArgs);
+
+            TabUiItem requestedTab = this.GetRequestedTabFromOpenTabEventArgs(eventArgs);
+
+            this.AddTab(requestedTab);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
+        private TabUiItem GetRequestedTabFromOpenTabEventArgs(OpenTabEventArgs eventArgs)
+        {
+            bool isValidUrl = WebUriProcessorComponent.IsValidUri(eventArgs.RequestedUrl);
+
+            if (isValidUrl)
+            {
+                Uri uri = new Uri(eventArgs.RequestedUrl);
+
+                if(uri.Scheme.ToLowerInvariant() == App.BROWSER_RESERVED_SCHEME)
+                {
+                    switch(uri.Host)
+                    {
+                        case BrowserReservedPages.ABOUT:
+                            {
+                                TabUiItem aboutTabUiItem = this.GenerateAboutPage();
+
+                                return aboutTabUiItem;
+                            }
+                            break;
+                        case BrowserReservedPages.SETTINGS:
+                            {
+                                TabUiItem aboutTabUiItem = this.GenerateSettingsPage();
+
+                                return aboutTabUiItem;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            return new TabUiItem();
         }
 
         /// <summary>

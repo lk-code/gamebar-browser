@@ -46,7 +46,7 @@ using Windows.UI.Xaml.Input;
 
 namespace browser.ViewModels.Controls
 {
-    public class BrowserControlViewModel : WindowViewModel
+    public class BrowserControlViewModel : WindowViewModel, IBrowserContentElement
     {
         #region # events #
 
@@ -60,6 +60,10 @@ namespace browser.ViewModels.Controls
         /// 
         /// </summary>
         public event OnWebViewHeaderChangedEventHandler OnWebViewHeaderChanged;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler OnOpenTabRequested;
 
         #endregion
 
@@ -382,6 +386,14 @@ namespace browser.ViewModels.Controls
         public Guid GetId()
         {
             return this._id;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void OpenTab(OpenTabEventArgs eventArgs)
+        {
+            if (OnOpenTabRequested != null) OnOpenTabRequested(this, eventArgs);
         }
 
         #endregion

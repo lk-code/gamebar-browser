@@ -33,12 +33,27 @@ namespace browser.AppViews
 {
     public sealed partial class SettingsView : UserControl
     {
-        #region # private properties #
+        #region # public properties #
 
         /// <summary>
         /// 
         /// </summary>
         private SettingsViewModel _viewModel;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public SettingsViewModel ViewModel
+        {
+            get
+            {
+                return _viewModel;
+            }
+            set
+            {
+                _viewModel = value;
+            }
+        }
 
         #endregion
 
