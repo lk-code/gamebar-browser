@@ -23,76 +23,79 @@
  * SOFTWARE.
  */
 
-using browser.ViewModels;
-using Microsoft.UI.Xaml.Controls;
+using browser.ViewModels.AppViews;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
-namespace browser.Models
+// Die Elementvorlage "Benutzersteuerelement" wird unter https://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.
+
+namespace browser.AppViews
 {
-    public class TabUiItem : BaseViewModel
+    public sealed partial class SettingsView : UserControl
     {
-        string _documentTitle = " ";
+        #region # public properties #
+
         /// <summary>
         /// 
         /// </summary>
-        public string DocumentTitle
+        private SettingsViewModel _viewModel;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public SettingsViewModel ViewModel
         {
             get
             {
-                return _documentTitle;
+                return _viewModel;
             }
             set
             {
-                SetProperty(ref _documentTitle, value);
+                _viewModel = value;
             }
         }
 
-        IconSource _documentIcon = null;
-        /// <summary>
-        /// 
-        /// </summary>
-        public IconSource DocumentIcon
+        #endregion
+
+        public SettingsView()
         {
-            get
-            {
-                return _documentIcon;
-            }
-            set
-            {
-                _documentIcon = value;
-                // SetProperty(ref _documentIcon, value);
-            }
+            this.InitializeComponent();
+
+            this.DataContext = _viewModel = new SettingsViewModel();
         }
 
-        object _content = null;
+        #region #  event to viewmodel commands #
+
         /// <summary>
         /// 
         /// </summary>
-        public object Content
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_SearchEngineComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            get
-            {
-                return _content;
-            }
-            set
-            {
-                SetProperty(ref _content, value);
-            }
+            this._viewModel.SearchEngineSelectionChangedCommand.Execute(e);
         }
 
-        bool _isSelected = false;
         /// <summary>
         /// 
         /// </summary>
-        public bool IsSelected
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_HomepageUriTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                SetProperty(ref _isSelected, value);
-            }
+            this._viewModel.HomepageUriLostFocusCommand.Execute(e);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            this._viewModel.ShowHomepageButtonToggledCommand.Execute(e);
+        }
+
+        #endregion
     }
 }

@@ -23,42 +23,17 @@
  * SOFTWARE.
  */
 
-using browser.ViewModels.AppViews;
-using Windows.UI.Xaml.Controls;
-
-namespace browser.AppViews
+namespace browser.Core
 {
-    public sealed partial class AboutView : UserControl
+    public class BrowserReservedPages
     {
-        #region # public properties #
-
         /// <summary>
         /// 
         /// </summary>
-        private AboutViewModel _viewModel;
-
+        public const string ABOUT = "about";
         /// <summary>
         /// 
         /// </summary>
-        public AboutViewModel ViewModel
-        {
-            get
-            {
-                return _viewModel;
-            }
-            set
-            {
-                _viewModel = value;
-            }
-        }
-
-        #endregion
-
-        public AboutView()
-        {
-            this.InitializeComponent();
-
-            this.DataContext = _viewModel = new AboutViewModel();
-        }
+        public const string SETTINGS = "settings";
     }
 }

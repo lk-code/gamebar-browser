@@ -129,6 +129,9 @@
   <data name="AboutThisAppLicenseText.Text" xml:space="preserve">
     <value>Ez az alkalmazás az MIT licenc alatt nyílt forráskódú projektként érhető el.</value>
   </data>
+  <data name="A_AppLanguage" xml:space="preserve">
+    <value>Hungary</value>
+  </data>
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>Az alkalmazásról</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="ViewTitleAboutThisApp" xml:space="preserve">
     <value>Az alkalmazás ról</value>
+  </data>
+  <data name="ViewTitleSettings" xml:space="preserve">
+    <value>Beállítások</value>
   </data>
 </root>

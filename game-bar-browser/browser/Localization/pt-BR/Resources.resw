@@ -129,6 +129,9 @@
   <data name="AboutThisAppLicenseText.Text" xml:space="preserve">
     <value>Este aplicativo está disponível sob a licença do MIT como um projeto de código aberto.</value>
   </data>
+  <data name="A_AppLanguage" xml:space="preserve">
+    <value>Portuguese (Brazil)</value>
+  </data>
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>Sobre o aplicativo</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="ViewTitleAboutThisApp" xml:space="preserve">
     <value>Sobre este aplicativo</value>
+  </data>
+  <data name="ViewTitleSettings" xml:space="preserve">
+    <value>Configurações</value>
   </data>
 </root>

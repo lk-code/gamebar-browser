@@ -23,6 +23,7 @@
  * SOFTWARE.
  */
 
+using browser.Models;
 using browser.ViewModels;
 using Microsoft.Gaming.XboxGameBar;
 using Windows.UI.Xaml.Controls;
@@ -54,9 +55,16 @@ namespace browser.Views
             this.InitializeComponent();
 
             this.DataContext = _viewModel = new BrowserWidgetViewModel();
+
+            this.RegisterEvents();
         }
 
-        #region # private properties #
+        #region # private logic #
+
+        private void RegisterEvents()
+        {
+
+        }
 
         /// <summary>
         /// 

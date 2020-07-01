@@ -129,6 +129,9 @@
   <data name="AboutThisAppLicenseText.Text" xml:space="preserve">
     <value>Это приложение доступно под лицензией MIT как проект с открытым исходным кодом.</value>
   </data>
+  <data name="A_AppLanguage" xml:space="preserve">
+    <value>Russia</value>
+  </data>
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>О приложении</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="ViewTitleAboutThisApp" xml:space="preserve">
     <value>Об этом приложении</value>
+  </data>
+  <data name="ViewTitleSettings" xml:space="preserve">
+    <value>Настройки</value>
   </data>
 </root>

@@ -23,7 +23,6 @@ Here you will find a list of planned features (Management via [Azure DevOps](htt
 * [Possibility to save and manage favorites](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/194/)
 * [Possibility to define own search engines](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/196)
 * [Informations about the website](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/195/)
-* [Settings as a Tab](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/200/)
 * [Delete Browser Data](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/201/)
 * [Non-UI Mode](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/202/)
 * [Gamers Startpage](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/203)

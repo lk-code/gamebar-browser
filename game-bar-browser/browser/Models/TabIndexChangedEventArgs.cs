@@ -23,76 +23,39 @@
  * SOFTWARE.
  */
 
-using browser.ViewModels;
-using Microsoft.UI.Xaml.Controls;
-
 namespace browser.Models
 {
-    public class TabUiItem : BaseViewModel
+    /// <summary>
+    /// 
+    /// </summary>
+    public class TabIndexChangedEventArgs
     {
-        string _documentTitle = " ";
         /// <summary>
         /// 
         /// </summary>
-        public string DocumentTitle
+        /// <param name="index"></param>
+        public TabIndexChangedEventArgs(int index)
         {
-            get
-            {
-                return _documentTitle;
-            }
-            set
-            {
-                SetProperty(ref _documentTitle, value);
-            }
+            Index = index;
         }
 
-        IconSource _documentIcon = null;
         /// <summary>
         /// 
         /// </summary>
-        public IconSource DocumentIcon
+        /// <param name="selectedItem"></param>
+        public TabIndexChangedEventArgs(TabUiItem selectedItem)
         {
-            get
-            {
-                return _documentIcon;
-            }
-            set
-            {
-                _documentIcon = value;
-                // SetProperty(ref _documentIcon, value);
-            }
+            SelectedItem = selectedItem;
         }
 
-        object _content = null;
         /// <summary>
         /// 
         /// </summary>
-        public object Content
-        {
-            get
-            {
-                return _content;
-            }
-            set
-            {
-                SetProperty(ref _content, value);
-            }
-        }
+        public int Index { get; set; } = 0;
 
-        bool _isSelected = false;
         /// <summary>
         /// 
         /// </summary>
-        public bool IsSelected
-        {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                SetProperty(ref _isSelected, value);
-            }
-        }
+        public TabUiItem SelectedItem { get; set; } = null;
     }
 }

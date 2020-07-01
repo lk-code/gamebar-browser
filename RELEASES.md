@@ -4,6 +4,7 @@
 * a lot of code optimizations
 * [An improved view for the auto-suggest view](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/188/)
 * [Additional UI Languages](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/198/)
+* [Settings as a Tab](https://dev.azure.com/lk-code/gamebar-browser/_workitems/edit/200/)
 
 ## v1.1
 * The browser now offers useful tabs

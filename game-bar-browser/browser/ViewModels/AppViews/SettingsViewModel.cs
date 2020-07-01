@@ -26,8 +26,9 @@
 using browser.Components.SearchEngine;
 using browser.Components.Storage;
 using browser.Core;
+using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
-using Microsoft.Gaming.XboxGameBar;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
@@ -36,11 +37,16 @@ using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace browser.ViewModels
+namespace browser.ViewModels.AppViews
 {
-    public class BrowserSettingsViewModel : WindowViewModel
+    public class SettingsViewModel : WindowViewModel, IBrowserContentElement
     {
         #region # events #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler OnOpenTabRequested;
 
         #endregion
 
@@ -102,40 +108,6 @@ namespace browser.ViewModels
         #endregion
 
         #region # public properties #
-
-        XboxGameBarWidget _xboxGameBarWidgetInstance = null;
-        /// <summary>
-        /// 
-        /// </summary>
-        public XboxGameBarWidget XboxGameBarWidgetInstance
-        {
-            get
-            {
-                return _xboxGameBarWidgetInstance;
-            }
-            set
-            {
-                _xboxGameBarWidgetInstance = value;
-
-                this.XboxGameBarWidgetControlInstance = new XboxGameBarWidgetControl(this._xboxGameBarWidgetInstance);
-            }
-        }
-
-        XboxGameBarWidgetControl _xboxGameBarWidgetControlInstance = null;
-        /// <summary>
-        /// 
-        /// </summary>
-        public XboxGameBarWidgetControl XboxGameBarWidgetControlInstance
-        {
-            get
-            {
-                return _xboxGameBarWidgetControlInstance;
-            }
-            set
-            {
-                _xboxGameBarWidgetControlInstance = value;
-            }
-        }
 
         ObservableCollection<SearchEngine> _availableSearchEngines = new ObservableCollection<SearchEngine>();
         /// <summary>
@@ -208,7 +180,7 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public BrowserSettingsViewModel() : base(Window.Current)
+        public SettingsViewModel() : base(Window.Current)
         {
             this.InitializeStorageManager();
             this.InitializeSearchEngineProcessor();
@@ -219,105 +191,17 @@ namespace browser.ViewModels
 
         #region # public methods #
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void OpenTab(OpenTabEventArgs eventArgs)
+        {
+            if (OnOpenTabRequested != null) OnOpenTabRequested(this, eventArgs);
+        }
+
         #endregion
 
         #region # private logic #
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="routedEventArgs"></param>
-        private void OnAboutThisAppButtonClick(RoutedEventArgs routedEventArgs)
-        {
-            Task.Factory.StartNew((args) =>
-            {
-                Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.OPEN_VIEW_ABOUT_THIS_APP);
-            },
-            CancellationToken.None,
-            TaskCreationOptions.None);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessSaveSettingsButtonClick(RoutedEventArgs eventArgs)
-        {
-            if (SAVE_VIA_BUTTON == true)
-            {
-                this.SaveSearchEngineSetting();
-                this.SaveHomepageUriSetting();
-                this.SaveShowHomepageButtonSetting();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void SaveShowHomepageButtonSetting()
-        {
-            bool showHomepageButton = this.ShowHomepageButtonSettingValue;
-
-            this.SaveShowHomepageButtonSettingValue(showHomepageButton);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="showHomepageButton"></param>
-        private void SaveShowHomepageButtonSettingValue(bool showHomepageButton)
-        {
-            this._storageManager.SetValue(StorageKey.SHOW_HOMEPAGE_BUTTON, showHomepageButton);
-
-            Task.Factory.StartNew((args) =>
-            {
-                Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_SHOW_HOMEPAGE_BUTTON);
-            },
-            CancellationToken.None,
-            TaskCreationOptions.None);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void SaveHomepageUriSetting()
-        {
-            string homepageUri = this.HomepageUriSettingValue;
-
-            this.SaveHomepageUriSettingValue(homepageUri);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="homepageUri"></param>
-        private void SaveHomepageUriSettingValue(string homepageUri)
-        {
-            this._storageManager.SetValue(StorageKey.HOMEPAGE_URI, homepageUri);
-
-            Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_HOMEPAGE_URI);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void SaveSearchEngineSetting()
-        {
-            SearchEngine selectedSearchEngine = this.SearchEngineSelectedItem;
-
-            this.SaveSearchEngineSettingValue(selectedSearchEngine);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="selectedSearchEngine"></param>
-        private void SaveSearchEngineSettingValue(SearchEngine selectedSearchEngine)
-        {
-            this._storageManager.SetValue(StorageKey.SEARCH_ENGINE, selectedSearchEngine.Key);
-
-            Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_SEARCH_ENGINE);
-        }
 
         /// <summary>
         /// 
@@ -350,42 +234,14 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessHomepageUriLostFocus(RoutedEventArgs eventArgs)
+        private void LoadSearchEngineSetting()
         {
-            if (SAVE_VIA_BUTTON == false)
+            string selectedSearchEngineKey = this._storageManager.GetValue<string>(StorageKey.SEARCH_ENGINE, StorageDefaults.SEARCH_ENGINE);
+
+            SearchEngine selectedSearchEngine = this._searchEngineProcessor.GetSearchEngineByKey(selectedSearchEngineKey);
+            if (selectedSearchEngine != null)
             {
-                string homepageUri = (eventArgs.OriginalSource as TextBox).Text;
-
-                this.SaveHomepageUriSettingValue(homepageUri);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessShowHomepageButtonToggled(RoutedEventArgs eventArgs)
-        {
-            if (SAVE_VIA_BUTTON == false)
-            {
-                bool showHomepageButton = (eventArgs.OriginalSource as ToggleSwitch).IsOn;
-
-                this.SaveShowHomepageButtonSettingValue(showHomepageButton);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessSearchEngineSelectionChanged(SelectionChangedEventArgs eventArgs)
-        {
-            if(SAVE_VIA_BUTTON == false)
-            {
-                SearchEngine selectedSearchEngine = (eventArgs.AddedItems[0] as SearchEngine);
-
-                this.SaveSearchEngineSettingValue(selectedSearchEngine);
+                this.SearchEngineSelectedItem = selectedSearchEngine;
             }
         }
 
@@ -407,23 +263,142 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private void LoadSearchEngineSetting()
+        private void InitializeStorageManager()
         {
-            string selectedSearchEngineKey = this._storageManager.GetValue<string>(StorageKey.SEARCH_ENGINE, StorageDefaults.SEARCH_ENGINE);
+            this._storageManager = new StorageManager();
+        }
 
-            SearchEngine selectedSearchEngine = this._searchEngineProcessor.GetSearchEngineByKey(selectedSearchEngineKey);
-            if(selectedSearchEngine != null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="routedEventArgs"></param>
+        private void OnAboutThisAppButtonClick(RoutedEventArgs routedEventArgs)
+        {
+            this.OpenTab(new OpenTabEventArgs($"{App.BROWSER_RESERVED_SCHEME}://{BrowserReservedPages.ABOUT}"));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessSearchEngineSelectionChanged(SelectionChangedEventArgs eventArgs)
+        {
+            if (SAVE_VIA_BUTTON == false)
             {
-                this.SearchEngineSelectedItem = selectedSearchEngine;
+                SearchEngine selectedSearchEngine = (eventArgs.AddedItems[0] as SearchEngine);
+
+                this.SaveSearchEngineSettingValue(selectedSearchEngine);
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void InitializeStorageManager()
+        /// <param name="selectedSearchEngine"></param>
+        private void SaveSearchEngineSettingValue(SearchEngine selectedSearchEngine)
         {
-            this._storageManager = new StorageManager();
+            this._storageManager.SetValue(StorageKey.SEARCH_ENGINE, selectedSearchEngine.Key);
+
+            Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_SEARCH_ENGINE);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessShowHomepageButtonToggled(RoutedEventArgs eventArgs)
+        {
+            if (SAVE_VIA_BUTTON == false)
+            {
+                bool showHomepageButton = (eventArgs.OriginalSource as ToggleSwitch).IsOn;
+
+                this.SaveShowHomepageButtonSettingValue(showHomepageButton);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="showHomepageButton"></param>
+        private void SaveShowHomepageButtonSettingValue(bool showHomepageButton)
+        {
+            this._storageManager.SetValue(StorageKey.SHOW_HOMEPAGE_BUTTON, showHomepageButton);
+
+            Task.Factory.StartNew((args) =>
+            {
+                Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_SHOW_HOMEPAGE_BUTTON);
+            },
+            CancellationToken.None,
+            TaskCreationOptions.None);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessHomepageUriLostFocus(RoutedEventArgs eventArgs)
+        {
+            if (SAVE_VIA_BUTTON == false)
+            {
+                string homepageUri = (eventArgs.OriginalSource as TextBox).Text;
+
+                this.SaveHomepageUriSettingValue(homepageUri);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="homepageUri"></param>
+        private void SaveHomepageUriSettingValue(string homepageUri)
+        {
+            this._storageManager.SetValue(StorageKey.HOMEPAGE_URI, homepageUri);
+
+            Messenger.Default.Send<MessagingEventTypes>(MessagingEventTypes.SETTING_HOMEPAGE_URI);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        private void ProcessSaveSettingsButtonClick(RoutedEventArgs eventArgs)
+        {
+            if (SAVE_VIA_BUTTON == true)
+            {
+                this.SaveSearchEngineSetting();
+                this.SaveHomepageUriSetting();
+                this.SaveShowHomepageButtonSetting();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SaveSearchEngineSetting()
+        {
+            SearchEngine selectedSearchEngine = this.SearchEngineSelectedItem;
+
+            this.SaveSearchEngineSettingValue(selectedSearchEngine);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SaveHomepageUriSetting()
+        {
+            string homepageUri = this.HomepageUriSettingValue;
+
+            this.SaveHomepageUriSettingValue(homepageUri);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SaveShowHomepageButtonSetting()
+        {
+            bool showHomepageButton = this.ShowHomepageButtonSettingValue;
+
+            this.SaveShowHomepageButtonSettingValue(showHomepageButton);
         }
 
         #endregion

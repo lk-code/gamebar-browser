@@ -29,7 +29,6 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Gaming.XboxGameBar;
-using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -43,8 +42,20 @@ namespace browser
     /// </summary>
     sealed partial class App : Application
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private XboxGameBarWidget widgetBrowser = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private XboxGameBarWidget widgetBrowserSettings = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string BROWSER_RESERVED_SCHEME = "page";
 
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code

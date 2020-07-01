@@ -64,7 +64,8 @@
                     <controls:TabViewItem
                         Content="{Binding Content}"
                         Header="{Binding DocumentTitle}"
-                        IconSource="{Binding DocumentIcon}" />
+                        IconSource="{Binding DocumentIcon}"
+                        IsSelected="{Binding IsSelected}" />
                 </DataTemplate>
             </controls:TabView.TabItemTemplate>
 
