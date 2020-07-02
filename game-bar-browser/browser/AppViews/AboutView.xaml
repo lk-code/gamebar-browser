@@ -77,6 +77,17 @@
                     x:Name="AboutThisAppAboutText"
                     x:Uid="AboutThisAppAboutText"
                     Text="__About_This_App_About_Text__" />
+                <StackPanel Margin="20" Orientation="Horizontal">
+                    <FontIcon
+                        Margin="0,0,20,0"
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xE774;" />
+                    <HyperlinkButton
+                        x:Name="AboutThisAppDeveloperHomepageHyperlinkButton"
+                        x:Uid="AboutThisAppDeveloperHomepageHyperlinkButton"
+                        Command="{Binding OpenDeveloperHomepageCommand}"
+                        Content="__Homepage_HyperlinkButton__" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

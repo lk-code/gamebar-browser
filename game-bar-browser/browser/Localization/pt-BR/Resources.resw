@@ -120,6 +120,9 @@
   <data name="AboutThisAppAboutText.Text" xml:space="preserve">
     <value>Desenvolvimento por Lars Krämer (lk-code)</value>
   </data>
+  <data name="AboutThisAppDeveloperHomepageHyperlinkButton.Content" xml:space="preserve">
+    <value>Página inicial do desenvolvedor</value>
+  </data>
   <data name="AboutThisAppHeaderText.Text" xml:space="preserve">
     <value>Navegador Windows 10 Gamebar</value>
   </data>
