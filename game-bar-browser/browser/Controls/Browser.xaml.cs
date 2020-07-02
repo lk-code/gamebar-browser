@@ -141,7 +141,7 @@ namespace browser.Controls
         /// <param name="e"></param>
         private void BrowserWidget_HeaderRefreshActionButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.ViewModel.ActionButtonRefreshClickCommand.Execute(e);
+            this.BrowserWidget_MainContent_WebView.Refresh();
         }
 
         /// <summary>

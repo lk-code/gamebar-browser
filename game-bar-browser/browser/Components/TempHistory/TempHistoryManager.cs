@@ -95,21 +95,7 @@ namespace browser.Components.TempHistory
         /// <returns></returns>
         public bool CanGoBack()
         {
-            if(this._currentIndex > 1)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool CanGoForward()
-        {
-            if (this._currentIndex < this._temporaryHistory.Count())
+            if(this._temporaryHistory.Count() > 0 && this._currentIndex > 1)
             {
                 return true;
             }
@@ -123,7 +109,7 @@ namespace browser.Components.TempHistory
         /// <returns></returns>
         public Uri GoBack()
         {
-            if(this.CanGoBack() == true)
+            if (this.CanGoBack() == true)
             {
                 this._currentIndex--;
 
@@ -133,6 +119,20 @@ namespace browser.Components.TempHistory
             }
 
             throw new TempHistoryInvalidNavigationException("you can not go back");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool CanGoForward()
+        {
+            if (this._temporaryHistory.Count() > 0 && this._currentIndex < this._temporaryHistory.Count())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

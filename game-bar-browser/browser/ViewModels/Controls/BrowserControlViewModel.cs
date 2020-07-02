@@ -32,6 +32,8 @@ using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Gaming.XboxGameBar;
 using System;
 using System.Collections.Generic;
@@ -116,12 +118,6 @@ namespace browser.ViewModels.Controls
         /// 
         /// </summary>
         public ICommand ActionButtonForwardClickCommand => _actionButtonForwardClickCommand ?? (_actionButtonForwardClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonForwardClick(eventArgs as RoutedEventArgs); }));
-
-        private ICommand _actionButtonRefreshClickCommand;
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand ActionButtonRefreshClickCommand => _actionButtonRefreshClickCommand ?? (_actionButtonRefreshClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonRefreshClick(eventArgs as RoutedEventArgs); }));
 
         private ICommand _actionButtonHomeClickCommand;
         /// <summary>
@@ -471,9 +467,12 @@ namespace browser.ViewModels.Controls
         /// </summary>
         private async Task OnOpenInSystemDefaultClickAsync()
         {
-            string currentPageUri = this.WebViewAdressSource.ToString();
+            if(this.WebViewAdressSource != null)
+            {
+                Uri currentPageUri = this.WebViewAdressSource;
 
-            await Launcher.LaunchUriAsync(new Uri(currentPageUri));
+                await Launcher.LaunchUriAsync(currentPageUri);
+            }
         }
 
         /// <summary>
@@ -569,17 +568,6 @@ namespace browser.ViewModels.Controls
             {
                 this.IsActionButtonForwardEnabled = true;
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessActionButtonRefreshClick(RoutedEventArgs eventArgs)
-        {
-            string currentAdressUri = this.WebViewAdressSource.ToString();
-
-            this.WebViewAdressSource = new Uri(currentAdressUri);
         }
 
         /// <summary>
@@ -753,7 +741,18 @@ namespace browser.ViewModels.Controls
             // is valid url
             if (WebUriProcessorComponent.IsValidUri(sourceUriValue))
             {
-                targetUri = new Uri(sourceUriValue);
+                try
+                {
+                    targetUri = new Uri(sourceUriValue);
+                } catch (UriFormatException uriFormatException)
+                {
+                    Dictionary<string, string> properties = new Dictionary<string, string>
+                    {
+                        { "RequestedUri", sourceUriValue }
+                    };
+
+                    Crashes.TrackError(uriFormatException, properties);
+                }
             }
             else if (webUriProcessorComponent.IsValidAdress(sourceUriValue))
             {
