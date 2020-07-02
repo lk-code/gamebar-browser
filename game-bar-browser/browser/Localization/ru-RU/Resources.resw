@@ -120,6 +120,9 @@
   <data name="AboutThisAppAboutText.Text" xml:space="preserve">
     <value>Разработка Lars Krämer (lk-code)</value>
   </data>
+  <data name="AboutThisAppDeveloperHomepageHyperlinkButton.Content" xml:space="preserve">
+    <value>Главная страница разработчика</value>
+  </data>
   <data name="AboutThisAppHeaderText.Text" xml:space="preserve">
     <value>Игровой браузер Windows 10</value>
   </data>

@@ -57,6 +57,12 @@ namespace browser.ViewModels.AppViews
         /// </summary>
         public ICommand OpenProjectPageCommand => _openProjectPageCommand ?? (_openProjectPageCommand = new RelayCommand((eventArgs) => { this.OnOpenProjectPageClickAsync(); }));
 
+        private ICommand _openDeveloperHomepageCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand OpenDeveloperHomepageCommand => _openDeveloperHomepageCommand ?? (_openDeveloperHomepageCommand = new RelayCommand((eventArgs) => { this.OnOpenDeveloperHomepageClickAsync(); }));
+
         #endregion
 
         #region # private properties #
@@ -113,6 +119,14 @@ namespace browser.ViewModels.AppViews
         private async Task OnOpenProjectPageClickAsync()
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/lk-code/gamebar-browser"));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private async Task OnOpenDeveloperHomepageClickAsync()
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://lk-code.azurewebsites.net/"));
         }
 
         #endregion
