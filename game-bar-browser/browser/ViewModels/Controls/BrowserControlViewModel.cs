@@ -32,6 +32,8 @@ using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Gaming.XboxGameBar;
 using System;
 using System.Collections.Generic;
@@ -739,7 +741,18 @@ namespace browser.ViewModels.Controls
             // is valid url
             if (WebUriProcessorComponent.IsValidUri(sourceUriValue))
             {
-                targetUri = new Uri(sourceUriValue);
+                try
+                {
+                    targetUri = new Uri(sourceUriValue);
+                } catch (UriFormatException uriFormatException)
+                {
+                    Dictionary<string, string> properties = new Dictionary<string, string>
+                    {
+                        { "RequestedUri", sourceUriValue }
+                    };
+
+                    Crashes.TrackError(uriFormatException, properties);
+                }
             }
             else if (webUriProcessorComponent.IsValidAdress(sourceUriValue))
             {
