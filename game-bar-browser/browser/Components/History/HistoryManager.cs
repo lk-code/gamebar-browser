@@ -120,6 +120,14 @@ namespace browser.Components.History
             this.SaveHistoryItemAsync(historyItem);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Clear()
+        {
+            int i = 0;
+        }
+
         #endregion
 
         #region # private logic #

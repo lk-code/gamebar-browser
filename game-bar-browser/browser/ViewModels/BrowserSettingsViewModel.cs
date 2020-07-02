@@ -201,6 +201,17 @@ namespace browser.ViewModels
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSettingsFormSaveButtonVisible
+        {
+            get
+            {
+                return SAVE_VIA_BUTTON;
+            }
+        }
+
         #endregion
 
         #region # constructors #

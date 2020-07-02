@@ -23,6 +23,7 @@
  * SOFTWARE.
  */
 
+using browser.Components.History;
 using browser.Components.SearchEngine;
 using browser.Components.Storage;
 using browser.Core;
@@ -34,6 +35,8 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -86,6 +89,18 @@ namespace browser.ViewModels.AppViews
         /// </summary>
         public ICommand AboutThisAppButtonClickCommand => _aboutThisAppButtonClickCommand ?? (_aboutThisAppButtonClickCommand = new RelayCommand((eventArgs) => { this.OnAboutThisAppButtonClick(eventArgs as RoutedEventArgs); }));
 
+        private ICommand _showStorageButtonClickCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ShowStorageButtonClickCommand => _showStorageButtonClickCommand ?? (_showStorageButtonClickCommand = new RelayCommand((eventArgs) => { this.OnShowStorageButtonClick(eventArgs as RoutedEventArgs); }));
+
+        private ICommand _deleteStorageButtonClickCommand;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand DeleteStorageButtonClickCommand => _deleteStorageButtonClickCommand ?? (_deleteStorageButtonClickCommand = new RelayCommand((eventArgs) => { this.OnDeleteStorageButtonClick(eventArgs as RoutedEventArgs); }));
+
         #endregion
 
         #region # private properties #
@@ -104,6 +119,11 @@ namespace browser.ViewModels.AppViews
         /// 
         /// </summary>
         private SearchEngineProcessor _searchEngineProcessor { get; set; } = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private HistoryManager _historyManager { get; set; } = null;
 
         #endregion
 
@@ -173,6 +193,17 @@ namespace browser.ViewModels.AppViews
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSettingsFormSaveButtonVisible
+        {
+            get
+            {
+                return SAVE_VIA_BUTTON;
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -184,6 +215,7 @@ namespace browser.ViewModels.AppViews
         {
             this.InitializeStorageManager();
             this.InitializeSearchEngineProcessor();
+            this.InitializeHistoryManager();
             this.LoadSettingValues();
         }
 
@@ -202,6 +234,26 @@ namespace browser.ViewModels.AppViews
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="routedEventArgs"></param>
+        private void OnDeleteStorageButtonClick(RoutedEventArgs routedEventArgs)
+        {
+            this._historyManager.Clear();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="routedEventArgs"></param>
+        private async void OnShowStorageButtonClick(RoutedEventArgs routedEventArgs)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.RoamingFolder;
+
+            await Launcher.LaunchFolderAsync(storageFolder);
+        }
 
         /// <summary>
         /// 
@@ -266,6 +318,14 @@ namespace browser.ViewModels.AppViews
         private void InitializeStorageManager()
         {
             this._storageManager = new StorageManager();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeHistoryManager()
+        {
+            this._historyManager = new HistoryManager();
         }
 
         /// <summary>
