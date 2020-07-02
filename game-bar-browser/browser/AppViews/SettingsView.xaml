@@ -106,12 +106,15 @@
 
                         <Flyout>
 
-                            <StackPanel>
+                            <StackPanel MaxWidth="400">
 
                                 <TextBlock
+                                    x:Name="BrowserSettings_DeleteStorageInformationTextBlock"
+                                    x:Uid="BrowserSettings_DeleteStorageInformationTextBlock"
                                     Margin="0,0,0,12"
                                     Style="{ThemeResource BaseTextBlockStyle}"
-                                    Text="__sure_to_delete_browser_data__" />
+                                    Text="__sure_to_delete_browser_data__"
+                                    TextWrapping="WrapWholeWords" />
 
                                 <StackPanel Orientation="Horizontal">
 

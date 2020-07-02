@@ -123,9 +123,16 @@ namespace browser.Components.History
         /// <summary>
         /// 
         /// </summary>
-        public void Clear()
+        public async void Clear()
         {
-            int i = 0;
+            StorageFolder roamingStorageFolder = ApplicationData.Current.RoamingFolder;
+
+            var files = (await roamingStorageFolder.GetFilesAsync());
+
+            foreach (StorageFile file in files)
+            {
+                await file.DeleteAsync(StorageDeleteOption.Default);
+            }
         }
 
         #endregion
