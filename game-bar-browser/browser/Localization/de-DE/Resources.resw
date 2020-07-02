@@ -231,6 +231,9 @@
   <data name="ViewTitleAboutThisApp" xml:space="preserve">
     <value>Über diese App</value>
   </data>
+  <data name="ViewTitleGamerStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
   <data name="ViewTitleSettings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>

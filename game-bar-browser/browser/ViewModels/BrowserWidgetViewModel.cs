@@ -243,6 +243,33 @@ namespace browser.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        private TabUiItem GenerateGamerStartPage()
+        {
+            ResourceLoader resources = ResourceLoader.GetForCurrentView("Resources");
+            string title = resources.GetString("ViewTitleGamerStart");
+            IconSource icon = new FontIconSource { Glyph = "\uE7FC", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 20 };
+            GamerStartPage view = new GamerStartPage();
+
+            view.ViewModel.OnOpenTabRequested += ViewModel_OnOpenTabRequested;
+
+            TabUiItem tabUiItem = this.GenerateTabUiItem(view, title, icon);
+
+            return tabUiItem;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OpenGamerStartPage()
+        {
+            TabUiItem tabUiItem = this.GenerateGamerStartPage();
+
+            this.AddTab(tabUiItem);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="content"></param>
         /// <param name="title"></param>
         /// <param name="icon"></param>
@@ -424,6 +451,7 @@ namespace browser.ViewModels
             if(this.CurrentTabUiItems.Count() <= 0)
             {
                 this.OpenNewDefaultWebViewTab();
+                this.OpenGamerStartPage();
             }
         }
 
