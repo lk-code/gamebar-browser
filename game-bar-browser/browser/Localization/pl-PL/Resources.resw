@@ -138,6 +138,18 @@
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>O aplikacji</value>
   </data>
+  <data name="BrowserSettings_DeleteStorageButton.Content" xml:space="preserve">
+    <value>Usuń magazynowanie</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageInformationTextBlock.Text" xml:space="preserve">
+    <value>Czy na pewno chcesz wyczyścić pamięć masową przeglądarki? Spowoduje to usunięcie całej historii.</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageNoButton.Content" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageYesButton.Content" xml:space="preserve">
+    <value>Tak, usuń teraz!</value>
+  </data>
   <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
     <value>Strona główna Url</value>
   </data>
@@ -161,6 +173,9 @@
   </data>
   <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OnContent" xml:space="preserve">
     <value>Tak</value>
+  </data>
+  <data name="BrowserSettings_ShowStorageButton.Content" xml:space="preserve">
+    <value>Składowanie otwarte</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Informacja zwrotna</value>

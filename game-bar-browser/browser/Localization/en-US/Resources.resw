@@ -138,6 +138,18 @@
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>About this App</value>
   </data>
+  <data name="BrowserSettings_DeleteStorageButton.Content" xml:space="preserve">
+    <value>Delete Browserstorage</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageInformationTextBlock.Text" xml:space="preserve">
+    <value>Are you sure you want to clear the browser storage? This will delete the entire history.</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageNoButton.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageYesButton.Content" xml:space="preserve">
+    <value>Yes, delete now!</value>
+  </data>
   <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
     <value>Homepage Url</value>
   </data>
@@ -161,6 +173,9 @@
   </data>
   <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OnContent" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="BrowserSettings_ShowStorageButton.Content" xml:space="preserve">
+    <value>Open Browserstorage</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Feedback</value>

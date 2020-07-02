@@ -138,6 +138,18 @@
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>Informazioni sull'App</value>
   </data>
+  <data name="BrowserSettings_DeleteStorageButton.Content" xml:space="preserve">
+    <value>Cancellare Browserstorage</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageInformationTextBlock.Text" xml:space="preserve">
+    <value>Sei sicuro di voler cancellare la memoria del browser? In questo modo si cancellerà l'intera cronologia.</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageNoButton.Content" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageYesButton.Content" xml:space="preserve">
+    <value>Sì, cancella ora!</value>
+  </data>
   <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
     <value>Homepage Url</value>
   </data>
@@ -161,6 +173,9 @@
   </data>
   <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OnContent" xml:space="preserve">
     <value>Sì</value>
+  </data>
+  <data name="BrowserSettings_ShowStorageButton.Content" xml:space="preserve">
+    <value>Aprire Browserstorage</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Feedback</value>

@@ -97,5 +97,31 @@ namespace browser.AppViews
         }
 
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_DeleteStorageNoButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.BrowserSettings_DeleteStorageButton.Flyout is Flyout flayout)
+            {
+                flayout.Hide();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowserSettings_DeleteStorageYesButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.BrowserSettings_DeleteStorageButton.Flyout is Flyout flayout)
+            {
+                flayout.Hide();
+            }
+        }
     }
 }

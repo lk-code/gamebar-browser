@@ -120,6 +120,21 @@ namespace browser.Components.History
             this.SaveHistoryItemAsync(historyItem);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public async void Clear()
+        {
+            StorageFolder roamingStorageFolder = ApplicationData.Current.RoamingFolder;
+
+            var files = (await roamingStorageFolder.GetFilesAsync());
+
+            foreach (StorageFile file in files)
+            {
+                await file.DeleteAsync(StorageDeleteOption.Default);
+            }
+        }
+
         #endregion
 
         #region # private logic #

@@ -138,6 +138,18 @@
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>关于应用程序</value>
   </data>
+  <data name="BrowserSettings_DeleteStorageButton.Content" xml:space="preserve">
+    <value>删除浏览器存储</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageInformationTextBlock.Text" xml:space="preserve">
+    <value>是否确实要清除浏览器存储？这将删除整个历史记录。</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageNoButton.Content" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="BrowserSettings_DeleteStorageYesButton.Content" xml:space="preserve">
+    <value>是，现在删除！</value>
+  </data>
   <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
     <value>首页网址</value>
   </data>
@@ -161,6 +173,9 @@
   </data>
   <data name="BrowserSettings_ShowHomepageButtonToggleSwitch.OnContent" xml:space="preserve">
     <value>是的，是的</value>
+  </data>
+  <data name="BrowserSettings_ShowStorageButton.Content" xml:space="preserve">
+    <value>打开浏览器存储</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>意见反馈</value>
