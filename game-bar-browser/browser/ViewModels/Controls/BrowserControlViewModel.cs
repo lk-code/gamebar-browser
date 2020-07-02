@@ -117,12 +117,6 @@ namespace browser.ViewModels.Controls
         /// </summary>
         public ICommand ActionButtonForwardClickCommand => _actionButtonForwardClickCommand ?? (_actionButtonForwardClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonForwardClick(eventArgs as RoutedEventArgs); }));
 
-        private ICommand _actionButtonRefreshClickCommand;
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand ActionButtonRefreshClickCommand => _actionButtonRefreshClickCommand ?? (_actionButtonRefreshClickCommand = new RelayCommand((eventArgs) => { this.ProcessActionButtonRefreshClick(eventArgs as RoutedEventArgs); }));
-
         private ICommand _actionButtonHomeClickCommand;
         /// <summary>
         /// 
@@ -471,9 +465,12 @@ namespace browser.ViewModels.Controls
         /// </summary>
         private async Task OnOpenInSystemDefaultClickAsync()
         {
-            string currentPageUri = this.WebViewAdressSource.ToString();
+            if(this.WebViewAdressSource != null)
+            {
+                Uri currentPageUri = this.WebViewAdressSource;
 
-            await Launcher.LaunchUriAsync(new Uri(currentPageUri));
+                await Launcher.LaunchUriAsync(currentPageUri);
+            }
         }
 
         /// <summary>
@@ -569,17 +566,6 @@ namespace browser.ViewModels.Controls
             {
                 this.IsActionButtonForwardEnabled = true;
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        private void ProcessActionButtonRefreshClick(RoutedEventArgs eventArgs)
-        {
-            string currentAdressUri = this.WebViewAdressSource.ToString();
-
-            this.WebViewAdressSource = new Uri(currentAdressUri);
         }
 
         /// <summary>
