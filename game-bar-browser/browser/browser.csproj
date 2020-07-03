@@ -188,6 +188,13 @@
     <Content Include="Assets\GamerStartPagePattern\bullseye_gradient.png" />
     <Content Include="Assets\GamerStartPagePattern\bullseye_gradient.svg" />
     <Content Include="Assets\GamerStartPagePattern\diamond_sunset.svg" />
+    <Content Include="Assets\GamerStartPagePattern\Minecraft\Minecraft_Horizontal_Key_Art.jpg" />
+    <Content Include="Assets\GamerStartPagePattern\rainbow_01.png" />
+    <Content Include="Assets\GamerStartPagePattern\SeaOfThieves\SoT_HS_Ghost_Armada.png" />
+    <Content Include="Assets\GamerStartPagePattern\SeaOfThieves\SoT_HS_Olivia.png" />
+    <Content Include="Assets\GamerStartPagePattern\SeaOfThieves\SoT_LT_Key_Art_4k.png" />
+    <Content Include="Assets\GamerStartPagePattern\SeaOfThieves\SoT_LT_Merchant_Alliance_4k.png" />
+    <Content Include="Assets\GamerStartPagePattern\SeaOfThieves\SoT_LT_Pirate_Emporium_4k.png" />
     <Content Include="Assets\GamerStartPagePattern\vanishing_stripes.png" />
     <Content Include="Assets\GamerStartPagePattern\vanishing_stripes.svg" />
     <Content Include="Assets\LargeTile.scale-100.png" />

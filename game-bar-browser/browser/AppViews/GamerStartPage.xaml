@@ -40,7 +40,10 @@
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         <Grid.Background>
-            <ImageBrush ImageSource="/Assets/GamerStartPagePattern/bullseye_gradient.png" Stretch="UniformToFill" />
+            <ImageBrush
+                AlignmentY="Top"
+                ImageSource="/Assets/GamerStartPagePattern/rainbow_01.png"
+                Stretch="UniformToFill" />
         </Grid.Background>
 
         <StackPanel>
