@@ -147,6 +147,7 @@
     <Compile Include="Components\TempHistory\TempHistoryItem.cs" />
     <Compile Include="Components\TempHistory\TempHistoryManager.cs" />
     <Compile Include="Components\Twitch\TwitchService.cs" />
+    <Compile Include="Components\Twitch\TwitchVideo.cs" />
     <Compile Include="Config\AppConfig.cs" />
     <Compile Include="Controls\Browser.xaml.cs">
       <DependentUpon>Browser.xaml</DependentUpon>

@@ -24,10 +24,11 @@
  */
 
 using browser.Config;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace browser.Components.Twitch
@@ -44,6 +45,15 @@ namespace browser.Components.Twitch
 
         #region # private properties #
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly string TWITCH_CLIENT_ID = AppConfig.Settings["twitch:client_id"];
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly string TWITCH_CLIENT_SECRET = AppConfig.Settings["twitch:client_secret"];
+
         #endregion
 
         #region # public properties #
@@ -54,25 +64,70 @@ namespace browser.Components.Twitch
 
         public TwitchService()
         {
-            this.InitializeTwitch();
+
         }
 
         #endregion
 
         #region # public methods #
 
-        #endregion
-
-        #region # private logic #
-
         /// <summary>
         /// 
         /// </summary>
-        private void InitializeTwitch()
+        /// <param name="gameTitle"></param>
+        /// <param name="period">like the twitch arguments => Specifies the window of time to search. Valid values: week, month, all. Default: week</param>
+        /// <returns></returns>
+        public async Task<List<TwitchVideo>> GetVideosForGame(string gameTitle, string period = "week")
         {
-            string twitchId = AppConfig.Settings["twitch:client_id"];
-            string twitchSecret = AppConfig.Settings["twitch:client_secret"];
+            List<TwitchVideo> videos = new List<TwitchVideo>();
+
+            try
+            {
+                string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+                HttpClient httpClient = new HttpClient();
+
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.twitchtv.v5+json");
+                httpClient.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIENT_ID);
+
+                string requestUriString = $"https://api.twitch.tv/kraken/videos/top?limit=5&language={twitchLanguage}&period={period}&game={gameTitle}";
+
+                string responseJson = await httpClient.GetStringAsync(requestUriString);
+
+                dynamic json = JValue.Parse(responseJson);
+
+                JArray vods = json.vods;
+
+                foreach (JToken vod in vods)
+                {
+                    JToken channel = vod.SelectToken("channel");
+                    JToken previewImages = vod.SelectToken("preview");
+
+                    TwitchVideo video = new TwitchVideo
+                    {
+                        VideoTitle = vod.Value<string>("title"),
+                        VideoUri = new Uri(vod.Value<string>("url")),
+                        ViewsCount = vod.Value<long>("views"),
+                        PreviewImageUri = new Uri(previewImages.Value<string>("large")),
+                        ChannelTitle = channel.Value<string>("name"),
+                        ChannelLogoUri = new Uri(channel.Value<string>("logo")),
+                        ChannelUri = new Uri(channel.Value<string>("url"))
+                    };
+
+                    videos.Add(video);
+                }
+            }
+            catch (Exception err)
+            {
+                int i = 0;
+            }
+
+            return videos;
         }
+
+        #endregion
+
+        #region # private logic #
 
         #endregion
     }

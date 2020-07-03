@@ -27,6 +27,7 @@ using browser.Components.Twitch;
 using browser.Core;
 using browser.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
@@ -76,6 +77,8 @@ namespace browser.ViewModels.AppViews
         public GamerStartPageViewModel() : base(Window.Current)
         {
             this.InitializeTwitchService();
+
+            this.LoadTwitchContent();
         }
 
         #endregion
@@ -93,6 +96,14 @@ namespace browser.ViewModels.AppViews
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private async void LoadTwitchContent()
+        {
+            List<TwitchVideo> twitchVideos = await this._twitchService.GetVideosForGame("Minecraft");
+        }
 
         /// <summary>
         /// 
