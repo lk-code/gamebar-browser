@@ -32,8 +32,8 @@
     xmlns:local="using:browser.AppViews"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
+    d:DesignHeight="768"
+    d:DesignWidth="1024"
     Background="Black"
     mc:Ignorable="d">
 
@@ -46,9 +46,11 @@
                 Stretch="UniformToFill" />
         </Grid.Background>
 
-        <StackPanel>
-            <TextBlock Margin="100" Text=" Hi" />
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="200" />
+        </Grid.RowDefinitions>
 
     </Grid>
 
