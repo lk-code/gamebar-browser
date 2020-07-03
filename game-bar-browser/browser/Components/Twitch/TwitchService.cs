@@ -23,40 +23,22 @@
  * SOFTWARE.
  */
 
-using browser.Components.Twitch;
-using browser.Core;
-using browser.Models;
+using browser.Config;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.UI.Xaml;
 
-namespace browser.ViewModels.AppViews
+namespace browser.Components.Twitch
 {
-    public class GamerStartPageViewModel : WindowViewModel, IBrowserContentElement
+    public class TwitchService
     {
         #region # events #
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event EventHandler OnOpenTabRequested;
 
         #endregion
 
         #region # dependencies #
-
-        private TwitchService _twitchService = null;
-
-        #endregion
-
-        #region # commands #
-
-        private ICommand _openProjectPageCommand;
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand OpenProjectPageCommand => _openProjectPageCommand ?? (_openProjectPageCommand = new RelayCommand((eventArgs) => { this.OnOpenProjectPageClickAsync(); }));
 
         #endregion
 
@@ -70,25 +52,14 @@ namespace browser.ViewModels.AppViews
 
         #region # constructors #
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public GamerStartPageViewModel() : base(Window.Current)
+        public TwitchService()
         {
-            this.InitializeTwitchService();
+            this.InitializeTwitch();
         }
 
         #endregion
 
         #region # public methods #
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void OpenTab(OpenTabEventArgs eventArgs)
-        {
-            if (OnOpenTabRequested != null) OnOpenTabRequested(this, eventArgs);
-        }
 
         #endregion
 
@@ -97,17 +68,10 @@ namespace browser.ViewModels.AppViews
         /// <summary>
         /// 
         /// </summary>
-        private void InitializeTwitchService()
+        private void InitializeTwitch()
         {
-            this._twitchService = new TwitchService();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private async Task OnOpenProjectPageClickAsync()
-        {
-
+            string twitchId = AppConfig.Settings["twitch:client_id"];
+            string twitchSecret = AppConfig.Settings["twitch:client_secret"];
         }
 
         #endregion

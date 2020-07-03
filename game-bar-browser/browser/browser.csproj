@@ -146,6 +146,8 @@
     <Compile Include="Components\TempHistory\TempHistoryInvalidNavigationException.cs" />
     <Compile Include="Components\TempHistory\TempHistoryItem.cs" />
     <Compile Include="Components\TempHistory\TempHistoryManager.cs" />
+    <Compile Include="Components\Twitch\TwitchService.cs" />
+    <Compile Include="Config\AppConfig.cs" />
     <Compile Include="Controls\Browser.xaml.cs">
       <DependentUpon>Browser.xaml</DependentUpon>
     </Compile>
@@ -260,6 +262,8 @@
     <PRIResource Include="Localization\el-GR\Resources.resw" />
     <PRIResource Include="Localization\hu-HU\Resources.resw" />
     <PRIResource Include="Localization\cs-CZ\Resources.resw" />
+    <EmbeddedResource Include="appsettings.json" />
+    <EmbeddedResource Include="appsettings_DEFAULT.json" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Images\xbox_gamebar_widget_browser_entry.png" />
     <Content Include="Images\xbox_gamebar_widget_menu.png" />
@@ -314,6 +318,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
       <Version>3.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions">
+      <Version>3.1.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Gaming.XboxGameBar">
       <Version>5.3.200605002</Version>
