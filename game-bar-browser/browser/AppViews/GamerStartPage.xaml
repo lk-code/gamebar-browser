@@ -38,22 +38,59 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
+
         <DataTemplate x:Name="VideoTemplate">
+
             <StackPanel
+                Width="320"
                 Margin="0"
-                Padding="0"
-                CornerRadius="8">
+                Padding="0">
+
                 <Image
                     Width="320"
                     Height="180"
                     Margin="0"
                     Source="{Binding PreviewImageUri}"
                     Stretch="UniformToFill" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel Width="56" Orientation="Vertical">
+                        <PersonPicture
+                            Width="48"
+                            Height="48"
+                            Margin="0,8,8,8"
+                            ProfilePicture="{Binding ChannelLogoUri}" />
+                    </StackPanel>
+
+                    <StackPanel Width="264" Orientation="Vertical">
+                        <TextBlock
+                            Width="264"
+                            Margin="0,8,0,0"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="{Binding VideoTitle}"
+                            TextTrimming="CharacterEllipsis" />
+                        <TextBlock
+                            Width="264"
+                            Margin="0,0,0,0"
+                            FontSize="14"
+                            Text="{Binding ChannelTitle}"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+
+                </StackPanel>
+
             </StackPanel>
+
         </DataTemplate>
+
     </UserControl.Resources>
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid
+        Padding="0,48"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
 
         <Grid.Background>
             <ImageBrush
@@ -65,15 +102,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="204" />
-            <RowDefinition Height="204" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ListView
+            x:Name="GamerStartPage_TwitchContent_ListView"
+            x:Uid="GamerStartPage_TwitchContent_ListView"
             Grid.Row="2"
-            Height="180"
             Margin="0,8"
             Padding="0"
             Background="Transparent"
+            IsItemClickEnabled="True"
+            ItemClick="GamerStartPage_TwitchContent_ListView_ItemClick"
             ItemTemplate="{StaticResource VideoTemplate}"
             ItemsSource="{Binding TwitchVideos}"
             ScrollViewer.HorizontalScrollBarVisibility="Visible"

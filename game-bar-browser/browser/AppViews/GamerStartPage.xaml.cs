@@ -62,5 +62,14 @@ namespace browser.AppViews
 
             this.DataContext = _viewModel = new GamerStartPageViewModel();
         }
+
+        #region #  event to viewmodel commands #
+
+        private void GamerStartPage_TwitchContent_ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.ViewModel.TwitchVideoSelected.Execute(e);
+        }
+
+        #endregion
     }
 }

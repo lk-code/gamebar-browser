@@ -301,15 +301,21 @@ namespace browser.ViewModels
         /// <param name="eventArgs"></param>
         private void OnTabViewAddTabClick(RoutedEventArgs eventArgs)
         {
-            this.OpenNewDefaultWebViewTab();
+            this.OpenWebViewTab();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void OpenNewDefaultWebViewTab()
+        private TabUiItem GenerateWebViewTab(Uri requestUri = null)
         {
             Browser browserControl = new Browser();
+
+            if(requestUri != null)
+            {
+                browserControl.ViewModel.AdressBarDisplayText = requestUri.ToString();
+                browserControl.ViewModel.WebViewAdressSource = requestUri;
+            }
 
             browserControl.ViewModel.OnWebViewHeaderChanged += ViewModel_OnWebViewHeaderChanged;
             browserControl.ViewModel.OnOpenTabRequested += ViewModel_OnOpenTabRequested;
@@ -319,6 +325,16 @@ namespace browser.ViewModels
                 DocumentTitle = " ",
                 Content = browserControl
             };
+
+            return tabUiItem;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OpenWebViewTab()
+        {
+            TabUiItem tabUiItem = this.GenerateWebViewTab();
 
             this.AddTab(tabUiItem);
         }
@@ -369,10 +385,18 @@ namespace browser.ViewModels
                             }
                             break;
                     }
+                } else
+                {
+                    string requestUri = eventArgs.RequestedUrl;
+                    TabUiItem tabUiItem = this.GenerateWebViewTab(new Uri(requestUri));
+
+                    return tabUiItem;
                 }
             }
 
-            return new TabUiItem();
+            TabUiItem defaultTabUiItem = this.GenerateWebViewTab();
+
+            return defaultTabUiItem;
         }
 
         /// <summary>
@@ -450,7 +474,7 @@ namespace browser.ViewModels
         {
             if(this.CurrentTabUiItems.Count() <= 0)
             {
-                this.OpenNewDefaultWebViewTab();
+                this.OpenWebViewTab();
                 this.OpenGamerStartPage();
             }
         }

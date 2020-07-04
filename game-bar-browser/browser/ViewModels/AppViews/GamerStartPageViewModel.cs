@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace browser.ViewModels.AppViews
 {
@@ -53,11 +54,11 @@ namespace browser.ViewModels.AppViews
 
         #region # commands #
 
-        private ICommand _openProjectPageCommand;
+        private ICommand _twitchVideoSelected;
         /// <summary>
         /// 
         /// </summary>
-        public ICommand OpenProjectPageCommand => _openProjectPageCommand ?? (_openProjectPageCommand = new RelayCommand((eventArgs) => { this.OnOpenProjectPageClickAsync(); }));
+        public ICommand TwitchVideoSelected => _twitchVideoSelected ?? (_twitchVideoSelected = new RelayCommand((eventArgs) => { this.OnTwitchVideoSelected(eventArgs); }));
 
         #endregion
 
@@ -150,9 +151,15 @@ namespace browser.ViewModels.AppViews
         /// <summary>
         /// 
         /// </summary>
-        private async Task OnOpenProjectPageClickAsync()
+        /// <param name="eventArgs"></param>
+        private void OnTwitchVideoSelected(object eventArgs)
         {
+            ItemClickEventArgs args = (eventArgs as ItemClickEventArgs);
+            Video video = (args.ClickedItem as Video);
 
+            string twitchContentUri = video.VideoUri.ToString();
+
+            this.OpenTab(new OpenTabEventArgs(twitchContentUri));
         }
 
         #endregion
