@@ -67,6 +67,22 @@ namespace browser.ViewModels.AppViews
 
         #region # public properties #
 
+        ItemsChangeObservableCollection<Video> _twitchVideos = new ItemsChangeObservableCollection<Video>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public ItemsChangeObservableCollection<Video> TwitchVideos
+        {
+            get
+            {
+                return _twitchVideos;
+            }
+            set
+            {
+                _twitchVideos = value;
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -103,6 +119,24 @@ namespace browser.ViewModels.AppViews
         private async void LoadTwitchContent()
         {
             List<TwitchVideo> twitchVideos = await this._twitchService.GetVideosForGame("Minecraft");
+
+            this.TwitchVideos.Clear();
+
+            foreach (TwitchVideo twitchVideo in twitchVideos)
+            {
+                Video video = new Video
+                {
+                    VideoTitle = twitchVideo.VideoTitle,
+                    VideoUri = twitchVideo.VideoUri,
+                    ViewsCount = twitchVideo.ViewsCount,
+                    PreviewImageUri = twitchVideo.PreviewImageUri,
+                    ChannelTitle = twitchVideo.ChannelTitle,
+                    ChannelUri = twitchVideo.ChannelUri,
+                    ChannelLogoUri = twitchVideo.ChannelLogoUri
+                };
+
+                this.TwitchVideos.Add(video);
+            }
         }
 
         /// <summary>

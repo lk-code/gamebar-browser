@@ -37,6 +37,22 @@
     Background="Black"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <DataTemplate x:Name="VideoTemplate">
+            <StackPanel
+                Margin="0"
+                Padding="0"
+                CornerRadius="8">
+                <Image
+                    Width="320"
+                    Height="180"
+                    Margin="0"
+                    Source="{Binding PreviewImageUri}"
+                    Stretch="UniformToFill" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         <Grid.Background>
@@ -48,9 +64,36 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="200" />
-            <RowDefinition Height="200" />
+            <RowDefinition Height="204" />
+            <RowDefinition Height="204" />
         </Grid.RowDefinitions>
+
+        <ListView
+            Grid.Row="2"
+            Height="180"
+            Margin="0,8"
+            Padding="0"
+            Background="Transparent"
+            ItemTemplate="{StaticResource VideoTemplate}"
+            ItemsSource="{Binding TwitchVideos}"
+            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+            ScrollViewer.HorizontalScrollMode="Enabled"
+            ScrollViewer.IsHorizontalRailEnabled="True"
+            ScrollViewer.IsHorizontalScrollChainingEnabled="True"
+            ScrollViewer.VerticalScrollMode="Disabled">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="8,0" />
+                    <Setter Property="CornerRadius" Value="8" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
 
     </Grid>
 

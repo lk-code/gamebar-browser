@@ -164,6 +164,7 @@
     <Compile Include="Models\AutoSuggestItem.cs" />
     <Compile Include="Models\OpenTabEventArgs.cs" />
     <Compile Include="Models\TabIndexChangedEventArgs.cs" />
+    <Compile Include="Models\Video.cs" />
     <Compile Include="Models\WebViewHeaderChangedEventArgs.cs" />
     <Compile Include="Models\TabUiItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -32,7 +32,6 @@ using browser.core.Components.WebUriProcessor;
 using browser.Core;
 using browser.Models;
 using GalaSoft.MvvmLight.Messaging;
-using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Gaming.XboxGameBar;
 using System;

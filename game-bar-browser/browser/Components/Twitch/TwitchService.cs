@@ -75,9 +75,10 @@ namespace browser.Components.Twitch
         /// 
         /// </summary>
         /// <param name="gameTitle"></param>
+        /// <param name="limit"></param>
         /// <param name="period">like the twitch arguments => Specifies the window of time to search. Valid values: week, month, all. Default: week</param>
         /// <returns></returns>
-        public async Task<List<TwitchVideo>> GetVideosForGame(string gameTitle, string period = "week")
+        public async Task<List<TwitchVideo>> GetVideosForGame(string gameTitle, int limit = 10, string period = "week")
         {
             List<TwitchVideo> videos = new List<TwitchVideo>();
 
@@ -90,7 +91,7 @@ namespace browser.Components.Twitch
                 httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.twitchtv.v5+json");
                 httpClient.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIENT_ID);
 
-                string requestUriString = $"https://api.twitch.tv/kraken/videos/top?limit=5&language={twitchLanguage}&period={period}&game={gameTitle}";
+                string requestUriString = $"https://api.twitch.tv/kraken/videos/top?limit={limit}&language={twitchLanguage}&period={period}&game={gameTitle}";
 
                 string responseJson = await httpClient.GetStringAsync(requestUriString);
 
