@@ -138,6 +138,9 @@
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>Az alkalmazásról</value>
   </data>
+  <data name="BrowserSettings_ContentPivot.Title" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
   <data name="BrowserSettings_DeleteStorageButton.Content" xml:space="preserve">
     <value>Böngészőtároló törlése</value>
   </data>
@@ -150,6 +153,9 @@
   <data name="BrowserSettings_DeleteStorageYesButton.Content" xml:space="preserve">
     <value>Igen, törölje most!</value>
   </data>
+  <data name="BrowserSettings_GlobalContentPivotItem.Header" xml:space="preserve">
+    <value>Általános</value>
+  </data>
   <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
     <value>Kezdőlap URL-címe</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="BrowserSettings_SaveSettingsButton.Content" xml:space="preserve">
     <value>Beállítások mentése</value>
+  </data>
+  <data name="BrowserSettings_SearchContentPivotItem.Header" xml:space="preserve">
+    <value>Keresés</value>
   </data>
   <data name="BrowserSettings_SearchEngineComboBox.Header" xml:space="preserve">
     <value>Kereső</value>
@@ -176,6 +185,9 @@
   </data>
   <data name="BrowserSettings_ShowStorageButton.Content" xml:space="preserve">
     <value>Böngészőtároló megnyitása</value>
+  </data>
+  <data name="BrowserSettings_StartPageContentPivotItem.Header" xml:space="preserve">
+    <value>Otthon</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Visszajelzés</value>

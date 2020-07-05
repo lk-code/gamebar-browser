@@ -46,123 +46,159 @@
 
     <Grid Padding="8,0,8,0">
 
-        <StackPanel Orientation="Vertical">
+        <Pivot
+            x:Name="BrowserSettings_ContentPivot"
+            x:Uid="BrowserSettings_ContentPivot"
+            Title="__Settings__">
 
-            <StackPanel Orientation="Vertical">
+            <PivotItem
+                x:Name="BrowserSettings_GlobalContentPivotItem"
+                x:Uid="BrowserSettings_GlobalContentPivotItem"
+                Header="__Global__">
 
-                <ComboBox
-                    x:Name="BrowserSettings_SearchEngineComboBox"
-                    x:Uid="BrowserSettings_SearchEngineComboBox"
-                    Margin="0,8,0,0"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    Header="__Search_Engine__"
-                    ItemsSource="{Binding AvailableSearchEngines}"
-                    PlaceholderText="__Pick_a_search_engine__"
-                    SelectedItem="{Binding SearchEngineSelectedItem, Mode=TwoWay}"
-                    SelectionChanged="BrowserSettings_SearchEngineComboBox_SelectionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{Binding Title}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                <StackPanel
+                    Width="400"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
 
-                <TextBox
-                    x:Name="BrowserSettings_HomepageUriTextBox"
-                    x:Uid="BrowserSettings_HomepageUriTextBox"
-                    Margin="0,8,0,0"
-                    Header="__Homepage_Uri__"
-                    LostFocus="BrowserSettings_HomepageUriTextBox_LostFocus"
-                    PlaceholderText="__Homepage_Uri_Placeholder__"
-                    Text="{Binding HomepageUriSettingValue, Mode=TwoWay}" />
+                    <TextBox
+                        x:Name="BrowserSettings_HomepageUriTextBox"
+                        x:Uid="BrowserSettings_HomepageUriTextBox"
+                        Margin="0,16,0,0"
+                        Header="__Homepage_Uri__"
+                        LostFocus="BrowserSettings_HomepageUriTextBox_LostFocus"
+                        PlaceholderText="__Homepage_Uri_Placeholder__"
+                        Text="{Binding HomepageUriSettingValue, Mode=TwoWay}" />
 
-                <ToggleSwitch
-                    x:Name="BrowserSettings_ShowHomepageButtonToggleSwitch"
-                    x:Uid="BrowserSettings_ShowHomepageButtonToggleSwitch"
-                    Margin="0,8,0,0"
-                    Header="__Show_Homepage_Button__"
-                    IsOn="{Binding ShowHomepageButtonSettingValue, Mode=TwoWay}"
-                    OffContent="__No__"
-                    OnContent="__Yes__"
-                    Toggled="BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled" />
+                    <ToggleSwitch
+                        x:Name="BrowserSettings_ShowHomepageButtonToggleSwitch"
+                        x:Uid="BrowserSettings_ShowHomepageButtonToggleSwitch"
+                        Margin="0,16,0,0"
+                        Header="__Show_Homepage_Button__"
+                        IsOn="{Binding ShowHomepageButtonSettingValue, Mode=TwoWay}"
+                        OffContent="__No__"
+                        OnContent="__Yes__"
+                        Toggled="BrowserSettings_ShowHomepageButtonToggleSwitch_Toggled" />
 
-                <Button
-                    x:Name="BrowserSettings_ShowStorageButton"
-                    x:Uid="BrowserSettings_ShowStorageButton"
-                    Margin="0,8,0,0"
-                    Command="{Binding ShowStorageButtonClickCommand}"
-                    Content="__Show_Storage__" />
+                    <Button
+                        x:Name="BrowserSettings_ShowStorageButton"
+                        x:Uid="BrowserSettings_ShowStorageButton"
+                        Margin="0,40,0,0"
+                        Command="{Binding ShowStorageButtonClickCommand}"
+                        Content="__Show_Storage__" />
 
-                <Button
-                    x:Name="BrowserSettings_DeleteStorageButton"
-                    x:Uid="BrowserSettings_DeleteStorageButton"
-                    Margin="0,8,0,0"
-                    Content="__Delete_Storage__">
+                    <Button
+                        x:Name="BrowserSettings_DeleteStorageButton"
+                        x:Uid="BrowserSettings_DeleteStorageButton"
+                        Margin="0,16,0,0"
+                        Content="__Delete_Storage__">
 
-                    <Button.Flyout>
+                        <Button.Flyout>
 
-                        <Flyout>
+                            <Flyout>
 
-                            <StackPanel MaxWidth="400">
+                                <StackPanel MaxWidth="400">
 
-                                <TextBlock
-                                    x:Name="BrowserSettings_DeleteStorageInformationTextBlock"
-                                    x:Uid="BrowserSettings_DeleteStorageInformationTextBlock"
-                                    Margin="0,0,0,12"
-                                    Style="{ThemeResource BaseTextBlockStyle}"
-                                    Text="__sure_to_delete_browser_data__"
-                                    TextWrapping="WrapWholeWords" />
+                                    <TextBlock
+                                        x:Name="BrowserSettings_DeleteStorageInformationTextBlock"
+                                        x:Uid="BrowserSettings_DeleteStorageInformationTextBlock"
+                                        Margin="0,0,0,12"
+                                        Style="{ThemeResource BaseTextBlockStyle}"
+                                        Text="__sure_to_delete_browser_data__"
+                                        TextWrapping="WrapWholeWords" />
 
-                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal">
 
-                                    <Button
-                                        x:Name="BrowserSettings_DeleteStorageYesButton"
-                                        x:Uid="BrowserSettings_DeleteStorageYesButton"
-                                        Margin="0,0,8,0"
-                                        Click="BrowserSettings_DeleteStorageYesButton_Click"
-                                        Command="{Binding DeleteStorageButtonClickCommand}"
-                                        Content="__Yes__" />
+                                        <Button
+                                            x:Name="BrowserSettings_DeleteStorageYesButton"
+                                            x:Uid="BrowserSettings_DeleteStorageYesButton"
+                                            Margin="0,0,8,0"
+                                            Click="BrowserSettings_DeleteStorageYesButton_Click"
+                                            Command="{Binding DeleteStorageButtonClickCommand}"
+                                            Content="__Yes__" />
 
-                                    <Button
-                                        x:Name="BrowserSettings_DeleteStorageNoButton"
-                                        x:Uid="BrowserSettings_DeleteStorageNoButton"
-                                        Click="BrowserSettings_DeleteStorageNoButton_Click"
-                                        Content="__No__" />
+                                        <Button
+                                            x:Name="BrowserSettings_DeleteStorageNoButton"
+                                            x:Uid="BrowserSettings_DeleteStorageNoButton"
+                                            Click="BrowserSettings_DeleteStorageNoButton_Click"
+                                            Content="__No__" />
+
+                                    </StackPanel>
 
                                 </StackPanel>
 
-                            </StackPanel>
+                            </Flyout>
 
-                        </Flyout>
+                        </Button.Flyout>
 
-                    </Button.Flyout>
+                    </Button>
 
-                </Button>
+                    <HyperlinkButton
+                        x:Name="BrowserSettings_AboutThisAppHyperlinkButton"
+                        x:Uid="BrowserSettings_AboutThisAppHyperlinkButton"
+                        Margin="0,40,0,0"
+                        Command="{Binding AboutThisAppButtonClickCommand}"
+                        Content="__about_this_app__" />
 
-                <Button
-                    x:Name="BrowserSettings_SaveSettingsButton"
-                    x:Uid="BrowserSettings_SaveSettingsButton"
-                    Margin="0,24,0,0"
-                    Command="{Binding SaveSettingsButtonClickCommand}"
-                    Content="__Save_Settings__"
-                    Visibility="{Binding IsSettingsFormSaveButtonVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
+                </StackPanel>
 
-            </StackPanel>
+            </PivotItem>
 
-            <StackPanel Margin="0,40,0,0" Orientation="Vertical">
+            <PivotItem
+                x:Name="BrowserSettings_SearchContentPivotItem"
+                x:Uid="BrowserSettings_SearchContentPivotItem"
+                Header="__Search__">
 
-                <HyperlinkButton
-                    x:Name="BrowserSettings_AboutThisAppHyperlinkButton"
-                    x:Uid="BrowserSettings_AboutThisAppHyperlinkButton"
-                    Command="{Binding AboutThisAppButtonClickCommand}"
-                    Content="__about_this_app__" />
+                <StackPanel
+                    Width="400"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
 
-            </StackPanel>
+                    <ComboBox
+                        x:Name="BrowserSettings_SearchEngineComboBox"
+                        x:Uid="BrowserSettings_SearchEngineComboBox"
+                        Margin="0,16,0,0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        Header="__Search_Engine__"
+                        ItemsSource="{Binding AvailableSearchEngines}"
+                        PlaceholderText="__Pick_a_search_engine__"
+                        SelectedItem="{Binding SearchEngineSelectedItem, Mode=TwoWay}"
+                        SelectionChanged="BrowserSettings_SearchEngineComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-        </StackPanel>
+                </StackPanel>
+
+            </PivotItem>
+
+            <PivotItem
+                x:Name="BrowserSettings_StartPageContentPivotItem"
+                x:Uid="BrowserSettings_StartPageContentPivotItem"
+                Header="__Gamer_Start_Page__">
+
+                <StackPanel
+                    Width="400"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical" />
+
+            </PivotItem>
+
+        </Pivot>
+
+        <Button
+            x:Name="BrowserSettings_SaveSettingsButton"
+            x:Uid="BrowserSettings_SaveSettingsButton"
+            Margin="0,24,0,0"
+            Command="{Binding SaveSettingsButtonClickCommand}"
+            Content="__Save_Settings__"
+            Visibility="{Binding IsSettingsFormSaveButtonVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
 
     </Grid>
 </UserControl>

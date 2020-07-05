@@ -138,6 +138,9 @@
   <data name="BrowserSettings_AboutThisAppHyperlinkButton.Content" xml:space="preserve">
     <value>À propos de l'application</value>
   </data>
+  <data name="BrowserSettings_ContentPivot.Title" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
   <data name="BrowserSettings_DeleteStorageButton.Content" xml:space="preserve">
     <value>Supprimer la mémoire du navigateur</value>
   </data>
@@ -150,6 +153,9 @@
   <data name="BrowserSettings_DeleteStorageYesButton.Content" xml:space="preserve">
     <value>Oui, supprimez maintenant !</value>
   </data>
+  <data name="BrowserSettings_GlobalContentPivotItem.Header" xml:space="preserve">
+    <value>Généralités</value>
+  </data>
   <data name="BrowserSettings_HomepageUriTextBox.Header" xml:space="preserve">
     <value>Url de la page d'accueil</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="BrowserSettings_SaveSettingsButton.Content" xml:space="preserve">
     <value>Sauvegarder les paramètres</value>
+  </data>
+  <data name="BrowserSettings_SearchContentPivotItem.Header" xml:space="preserve">
+    <value>Recherchez</value>
   </data>
   <data name="BrowserSettings_SearchEngineComboBox.Header" xml:space="preserve">
     <value>moteur de recherche</value>
@@ -176,6 +185,9 @@
   </data>
   <data name="BrowserSettings_ShowStorageButton.Content" xml:space="preserve">
     <value>Ouvrir un navigateur</value>
+  </data>
+  <data name="BrowserSettings_StartPageContentPivotItem.Header" xml:space="preserve">
+    <value>Page d'accueil</value>
   </data>
   <data name="BrowserWidget_AppMenuCommandBarFlyout_FeedbackButton.Label" xml:space="preserve">
     <value>Retour d'information</value>
