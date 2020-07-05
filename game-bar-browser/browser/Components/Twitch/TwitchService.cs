@@ -78,7 +78,7 @@ namespace browser.Components.Twitch
         /// <param name="limit"></param>
         /// <param name="period">like the twitch arguments => Specifies the window of time to search. Valid values: week, month, all. Default: week</param>
         /// <returns></returns>
-        public async Task<List<TwitchVideo>> GetVideosForGame(string gameTitle, int limit = 10, string period = "week")
+        public async Task<List<TwitchVideo>> GetVideosForGame(string gameTitle, int limit = 20, string period = "week")
         {
             List<TwitchVideo> videos = new List<TwitchVideo>();
 

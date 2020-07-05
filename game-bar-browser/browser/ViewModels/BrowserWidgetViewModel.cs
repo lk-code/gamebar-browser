@@ -474,7 +474,6 @@ namespace browser.ViewModels
         {
             if(this.CurrentTabUiItems.Count() <= 0)
             {
-                this.OpenWebViewTab();
                 this.OpenGamerStartPage();
             }
         }

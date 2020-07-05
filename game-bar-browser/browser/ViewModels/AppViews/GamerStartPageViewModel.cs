@@ -28,7 +28,6 @@ using browser.Core;
 using browser.Models;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -84,6 +83,38 @@ namespace browser.ViewModels.AppViews
             }
         }
 
+        bool _isLoadingTwitchContent = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsLoadingTwitchContent
+        {
+            get
+            {
+                return _isLoadingTwitchContent;
+            }
+            set
+            {
+                SetProperty(ref _isLoadingTwitchContent, value);
+            }
+        }
+
+        Visibility _twitchContentVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// 
+        /// </summary>
+        public Visibility TwitchContentVisibility
+        {
+            get
+            {
+                return _twitchContentVisibility;
+            }
+            set
+            {
+                SetProperty(ref _twitchContentVisibility, value);
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -119,6 +150,8 @@ namespace browser.ViewModels.AppViews
         /// </summary>
         private async void LoadTwitchContent()
         {
+            this.IsLoadingTwitchContent = true;
+
             List<TwitchVideo> twitchVideos = await this._twitchService.GetVideosForGame("Minecraft");
 
             this.TwitchVideos.Clear();
@@ -137,6 +170,26 @@ namespace browser.ViewModels.AppViews
                 };
 
                 this.TwitchVideos.Add(video);
+            }
+
+            this.IsLoadingTwitchContent = false;
+            this.UpdateTwitchContentVisibility();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void UpdateTwitchContentVisibility()
+        {
+            if (!this.IsLoadingTwitchContent
+                && this.TwitchVideos != null
+                && this.TwitchVideos.Count > 0)
+            {
+                this.TwitchContentVisibility = Visibility.Visible;
+            }
+            else
+            {
+                this.TwitchContentVisibility = Visibility.Collapsed;
             }
         }
 
