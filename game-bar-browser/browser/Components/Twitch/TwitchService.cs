@@ -76,9 +76,63 @@ namespace browser.Components.Twitch
         /// </summary>
         /// <param name="gameTitle"></param>
         /// <param name="limit"></param>
+        /// <returns></returns>
+        public async Task<List<TwitchVideo>> GetStreamsForGameAsync(string gameTitle, int limit = 20)
+        {
+            List<TwitchVideo> videos = new List<TwitchVideo>();
+
+            try
+            {
+                string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+                HttpClient httpClient = new HttpClient();
+
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.twitchtv.v5+json");
+                httpClient.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIENT_ID);
+
+                string requestUriString = $"https://api.twitch.tv/kraken/streams?limit={limit}&language={twitchLanguage}&game={gameTitle}";
+
+                string responseJson = await httpClient.GetStringAsync(requestUriString);
+
+                dynamic json = JValue.Parse(responseJson);
+
+                JArray streams = json.streams;
+
+                foreach (JToken stream in streams)
+                {
+                    JToken channel = stream.SelectToken("channel");
+                    JToken previewImages = stream.SelectToken("preview");
+
+                    TwitchVideo video = new TwitchVideo
+                    {
+                        VideoTitle = channel.Value<string>("status"),
+                        VideoUri = new Uri(channel.Value<string>("url")),
+                        ViewsCount = stream.Value<long>("viewers"),
+                        PreviewImageUri = new Uri(previewImages.Value<string>("large")),
+                        ChannelTitle = channel.Value<string>("name"),
+                        ChannelLogoUri = new Uri(channel.Value<string>("logo")),
+                        ChannelUri = new Uri(channel.Value<string>("url"))
+                    };
+
+                    videos.Add(video);
+                }
+            }
+            catch (Exception err)
+            {
+                int i = 0;
+            }
+
+            return videos;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameTitle"></param>
+        /// <param name="limit"></param>
         /// <param name="period">like the twitch arguments => Specifies the window of time to search. Valid values: week, month, all. Default: week</param>
         /// <returns></returns>
-        public async Task<List<TwitchVideo>> GetVideosForGame(string gameTitle, int limit = 20, string period = "week")
+        public async Task<List<TwitchVideo>> GetTopVideosForGameAsync(string gameTitle, int limit = 20, string period = "week")
         {
             List<TwitchVideo> videos = new List<TwitchVideo>();
 

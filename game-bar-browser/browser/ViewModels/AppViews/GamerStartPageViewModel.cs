@@ -152,7 +152,7 @@ namespace browser.ViewModels.AppViews
         {
             this.IsLoadingTwitchContent = true;
 
-            List<TwitchVideo> twitchVideos = await this._twitchService.GetVideosForGame("Minecraft");
+            List<TwitchVideo> twitchVideos = await this._twitchService.GetStreamsForGameAsync("Minecraft");
 
             this.TwitchVideos.Clear();
 
