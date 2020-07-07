@@ -1,0 +1,15 @@
+﻿{
+  "meta": {
+    "author": "lk-code",
+    "title": "Standard"
+  },
+  "content": {
+    "background": "/Assets/GamerStartPagePattern/Minecraft/Minecraft_Horizontal_Key_Art.jpg",
+    "twitch": {
+      "enabled": true,
+      "game": "Minecraft",
+      "useAppLanguage": true,
+      "language": ""
+    }
+  }
+}

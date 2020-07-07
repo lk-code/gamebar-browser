@@ -145,6 +145,18 @@
             </PivotItem>
 
             <PivotItem
+                x:Name="BrowserSettings_StartPageContentPivotItem"
+                x:Uid="BrowserSettings_StartPageContentPivotItem"
+                Header="__Gamer_Start_Page__">
+
+                <StackPanel
+                    Width="400"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical" />
+
+            </PivotItem>
+
+            <PivotItem
                 x:Name="BrowserSettings_SearchContentPivotItem"
                 x:Uid="BrowserSettings_SearchContentPivotItem"
                 Header="__Search__">
@@ -175,18 +187,6 @@
                     </ComboBox>
 
                 </StackPanel>
-
-            </PivotItem>
-
-            <PivotItem
-                x:Name="BrowserSettings_StartPageContentPivotItem"
-                x:Uid="BrowserSettings_StartPageContentPivotItem"
-                Header="__Gamer_Start_Page__">
-
-                <StackPanel
-                    Width="400"
-                    HorizontalAlignment="Left"
-                    Orientation="Vertical" />
 
             </PivotItem>
 

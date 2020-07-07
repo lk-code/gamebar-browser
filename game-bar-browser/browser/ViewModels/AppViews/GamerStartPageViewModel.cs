@@ -28,6 +28,7 @@ using browser.Core;
 using browser.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -155,7 +156,10 @@ namespace browser.ViewModels.AppViews
         {
             this.IsLoadingTwitchContent = true;
 
-            List<TwitchVideo> twitchVideos = await this._twitchService.GetStreamsForGameAsync("Minecraft");
+            string twitchGame = "Sea of Thieves";
+            string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+            List<TwitchVideo> twitchVideos = await this._twitchService.GetStreamsForGameAsync(twitchLanguage, twitchGame);
 
             this.TwitchVideos.Clear();
 

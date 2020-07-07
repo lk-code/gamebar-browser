@@ -73,13 +73,16 @@
                     <StackPanel Width="264" Orientation="Vertical">
                         <TextBlock
                             Width="264"
+                            Height="24"
                             Margin="0,8,0,0"
                             FontSize="16"
                             FontWeight="SemiBold"
                             Text="{Binding VideoTitle}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                         <TextBlock
                             Width="264"
+                            Height="20"
                             Margin="0,0,0,0"
                             FontSize="14"
                             Text="{Binding ChannelTitle}"

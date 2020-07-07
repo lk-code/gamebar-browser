@@ -27,8 +27,8 @@ using browser.Config;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace browser.Components.Twitch
@@ -80,22 +80,86 @@ namespace browser.Components.Twitch
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="language"></param>
         /// <param name="gameTitle"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public async Task<List<TwitchVideo>> GetStreamsForGameAsync(string gameTitle, int limit = 20)
+        public async Task<List<TwitchVideo>> GetStreamsForGameAsync(string language, string gameTitle = "", int limit = 20)
         {
             List<TwitchVideo> videos = new List<TwitchVideo>();
 
+            string responseJson = string.Empty;
+
             try
             {
-                string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-                string requestUriString = $"https://api.twitch.tv/kraken/streams?limit={limit}&language={twitchLanguage}&game={gameTitle}";
-                string responseJson = await this._httpClient.GetStringAsync(requestUriString);
-                dynamic json = JValue.Parse(responseJson);
+                StringBuilder uriStringBuilder = new StringBuilder();
+                uriStringBuilder.Append("https://api.twitch.tv");
+                uriStringBuilder.Append("/kraken");
+                uriStringBuilder.Append("/streams");
+                uriStringBuilder.Append($"?limit={limit}");
+                uriStringBuilder.Append($"&language={language}");
 
-                JArray streams = json.streams;
-                foreach (JToken stream in streams)
+                if(!string.IsNullOrEmpty(gameTitle.Trim())
+                    && !string.IsNullOrWhiteSpace(gameTitle.Trim()))
+                {
+                    uriStringBuilder.Append($"&game={gameTitle}");
+                }
+
+                string requestUriString = uriStringBuilder.ToString();
+                responseJson = await this._httpClient.GetStringAsync(requestUriString);
+            }
+            catch (ArgumentNullException err)
+            {
+                // exception
+                int i = 0;
+                return videos;
+            }
+            catch (HttpRequestException err)
+            {
+                // exception
+                int i = 0;
+                return videos;
+            }
+            catch (Exception err)
+            {
+                // exception
+                int i = 0;
+                return videos;
+            }
+
+            if (string.IsNullOrEmpty(responseJson.Trim())
+                    || string.IsNullOrWhiteSpace(responseJson.Trim()))
+            {
+                // exception
+                int i = 0;
+                return videos;
+            }
+
+            JArray streams = null;
+
+            try
+            {
+                dynamic json = JValue.Parse(responseJson);
+                streams = json.streams;
+            }
+            catch (Exception err)
+            {
+                // exception
+                int i = 0;
+                return videos;
+            }
+
+            if (streams == null
+                || (streams != null && streams.Count <= 0))
+            {
+                // exception
+                int i = 0;
+                return videos;
+            }
+
+            foreach (JToken stream in streams)
+            {
+                try
                 {
                     JToken channel = stream.SelectToken("channel");
                     JToken previewImages = stream.SelectToken("preview");
@@ -113,56 +177,11 @@ namespace browser.Components.Twitch
 
                     videos.Add(video);
                 }
-            }
-            catch (Exception err)
-            {
-                int i = 0;
-            }
-
-            return videos;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gameTitle"></param>
-        /// <param name="limit"></param>
-        /// <param name="period">like the twitch arguments => Specifies the window of time to search. Valid values: week, month, all. Default: week</param>
-        /// <returns></returns>
-        public async Task<List<TwitchVideo>> GetTopVideosForGameAsync(string gameTitle, int limit = 20, string period = "week")
-        {
-            List<TwitchVideo> videos = new List<TwitchVideo>();
-
-            try
-            {
-                string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-                string requestUriString = $"https://api.twitch.tv/kraken/videos/top?limit={limit}&language={twitchLanguage}&period={period}&game={gameTitle}";
-                string responseJson = await this._httpClient.GetStringAsync(requestUriString);
-                dynamic json = JValue.Parse(responseJson);
-
-                JArray vods = json.vods;
-                foreach (JToken vod in vods)
+                catch (Exception err)
                 {
-                    JToken channel = vod.SelectToken("channel");
-                    JToken previewImages = vod.SelectToken("preview");
-
-                    TwitchVideo video = new TwitchVideo
-                    {
-                        VideoTitle = vod.Value<string>("title"),
-                        VideoUri = new Uri(vod.Value<string>("url")),
-                        ViewsCount = vod.Value<long>("views"),
-                        PreviewImageUri = new Uri(previewImages.Value<string>("large")),
-                        ChannelTitle = channel.Value<string>("name"),
-                        ChannelLogoUri = new Uri(channel.Value<string>("logo")),
-                        ChannelUri = new Uri(channel.Value<string>("url"))
-                    };
-
-                    videos.Add(video);
+                    // exception
+                    int i = 0;
                 }
-            }
-            catch (Exception err)
-            {
-                int i = 0;
             }
 
             return videos;
