@@ -47,6 +47,9 @@ namespace browser.ViewModels.AppViews
 
         #region # dependencies #
 
+        /// <summary>
+        /// 
+        /// </summary>
         private TwitchService _twitchService = null;
 
         #endregion

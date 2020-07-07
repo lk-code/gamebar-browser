@@ -49,10 +49,16 @@ namespace browser.Components.Twitch
         /// 
         /// </summary>
         private readonly string TWITCH_CLIENT_ID = AppConfig.Settings["twitch:client_id"];
+
         /// <summary>
         /// 
         /// </summary>
         private readonly string TWITCH_CLIENT_SECRET = AppConfig.Settings["twitch:client_secret"];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private HttpClient _httpClient = null;
 
         #endregion
 
@@ -64,7 +70,7 @@ namespace browser.Components.Twitch
 
         public TwitchService()
         {
-
+            this.InitializeHttpClient();
         }
 
         #endregion
@@ -84,20 +90,11 @@ namespace browser.Components.Twitch
             try
             {
                 string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-
-                HttpClient httpClient = new HttpClient();
-
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.twitchtv.v5+json");
-                httpClient.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIENT_ID);
-
                 string requestUriString = $"https://api.twitch.tv/kraken/streams?limit={limit}&language={twitchLanguage}&game={gameTitle}";
-
-                string responseJson = await httpClient.GetStringAsync(requestUriString);
-
+                string responseJson = await this._httpClient.GetStringAsync(requestUriString);
                 dynamic json = JValue.Parse(responseJson);
 
                 JArray streams = json.streams;
-
                 foreach (JToken stream in streams)
                 {
                     JToken channel = stream.SelectToken("channel");
@@ -139,20 +136,11 @@ namespace browser.Components.Twitch
             try
             {
                 string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-
-                HttpClient httpClient = new HttpClient();
-
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.twitchtv.v5+json");
-                httpClient.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIENT_ID);
-
                 string requestUriString = $"https://api.twitch.tv/kraken/videos/top?limit={limit}&language={twitchLanguage}&period={period}&game={gameTitle}";
-
-                string responseJson = await httpClient.GetStringAsync(requestUriString);
-
+                string responseJson = await this._httpClient.GetStringAsync(requestUriString);
                 dynamic json = JValue.Parse(responseJson);
 
                 JArray vods = json.vods;
-
                 foreach (JToken vod in vods)
                 {
                     JToken channel = vod.SelectToken("channel");
@@ -183,6 +171,18 @@ namespace browser.Components.Twitch
         #endregion
 
         #region # private logic #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeHttpClient()
+        {
+            this._httpClient = null;
+            this._httpClient = new HttpClient();
+
+            this._httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.twitchtv.v5+json");
+            this._httpClient.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIENT_ID);
+        }
 
         #endregion
     }
