@@ -136,7 +136,11 @@
     <Compile Include="AppViews\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\GamerSets\GamerSet.cs" />
     <Compile Include="Components\GamerSets\GamerSetsService.cs" />
+    <Compile Include="Components\GamerSets\Models\Content.cs" />
+    <Compile Include="Components\GamerSets\Models\Meta.cs" />
+    <Compile Include="Components\GamerSets\Models\Twitch.cs" />
     <Compile Include="Components\History\HistoryItem.cs" />
     <Compile Include="Components\History\HistoryManager.cs" />
     <Compile Include="Components\SearchEngine\SearchEngine.cs" />
@@ -248,8 +252,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <None Include="Ressources\GamerSets\default.json" />
-    <None Include="Ressources\GamerSets\minecraft.json" />
+    <EmbeddedResource Include="Ressources\GamerSets\default.json" />
+    <EmbeddedResource Include="Ressources\GamerSets\minecraft.json" />
     <PRIResource Include="Localization\de-DE\Resources.resw" />
     <PRIResource Include="Localization\en-US\Resources.resw" />
     <Content Include="Images\key_g.png" />

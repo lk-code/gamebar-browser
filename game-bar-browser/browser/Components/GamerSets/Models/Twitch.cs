@@ -23,28 +23,28 @@
  * SOFTWARE.
  */
 
-namespace browser.Components.Storage
+namespace browser.Components.GamerSets.Models
 {
-    public static class StorageDefaults
+    public class Twitch
     {
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string SEARCH_ENGINE = "bing";
+        public bool Enabled { get; set; } = false;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly bool SHOW_HOMEPAGE_BUTTON = false;
+        public string Game { get; set; } = string.Empty;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string HOMEPAGE_URI = "";
+        public bool UseAppLanguage { get; set; } = true;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string SELECTED_GAMERSET_KEY = "";
+        public string Language { get; set; } = string.Empty;
     }
 }

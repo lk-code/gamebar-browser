@@ -29,6 +29,7 @@ namespace browser.Components.Storage
     {
         SEARCH_ENGINE,
         HOMEPAGE_URI,
-        SHOW_HOMEPAGE_BUTTON
+        SHOW_HOMEPAGE_BUTTON,
+        SELECTED_GAMERSET_KEY
     }
 }

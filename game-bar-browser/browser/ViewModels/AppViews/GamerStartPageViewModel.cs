@@ -23,6 +23,7 @@
  * SOFTWARE.
  */
 
+using browser.Components.GamerSets;
 using browser.Components.Twitch;
 using browser.Core;
 using browser.Models;
@@ -32,6 +33,8 @@ using System.Globalization;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace browser.ViewModels.AppViews
 {
@@ -53,6 +56,11 @@ namespace browser.ViewModels.AppViews
         /// </summary>
         private TwitchService _twitchService = null;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private GamerSetsService _gamerSetsService = null;
+
         #endregion
 
         #region # commands #
@@ -66,6 +74,11 @@ namespace browser.ViewModels.AppViews
         #endregion
 
         #region # private properties #
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private GamerSet _currentGamerSet = null;
 
         #endregion
 
@@ -119,6 +132,22 @@ namespace browser.ViewModels.AppViews
             }
         }
 
+        ImageSource _backgroundImageSource = null;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ImageSource BackgroundImageSource
+        {
+            get
+            {
+                return _backgroundImageSource;
+            }
+            set
+            {
+                SetProperty(ref _backgroundImageSource, value);
+            }
+        }
+
         #endregion
 
         #region # constructors #
@@ -128,9 +157,10 @@ namespace browser.ViewModels.AppViews
         /// </summary>
         public GamerStartPageViewModel() : base(Window.Current)
         {
+            this.InitializeGamerSetsService();
             this.InitializeTwitchService();
 
-            this.LoadTwitchContent();
+            this.LoadCurrentGamerSet();
         }
 
         #endregion
@@ -152,13 +182,56 @@ namespace browser.ViewModels.AppViews
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        private void ProcessCurrentGamerSet()
+        {
+            this.BackgroundImageSource = new BitmapImage(new Uri(this._currentGamerSet.Content.Background, UriKind.RelativeOrAbsolute));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadCurrentGamerSet()
+        {
+            GamerSet gamerSet = this._gamerSetsService.GetCurrentSetOrDefault();
+
+            this._currentGamerSet = gamerSet;
+
+            this.ProcessCurrentGamerSet();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private string GetLanguageForTwitchContent()
+        {
+            if (!this._currentGamerSet.Content.Twitch.UseAppLanguage
+                && string.IsNullOrEmpty(this._currentGamerSet.Content.Twitch.Language.Trim())
+                && string.IsNullOrWhiteSpace(this._currentGamerSet.Content.Twitch.Language.Trim()))
+            {
+                return this._currentGamerSet.Content.Twitch.Language.ToLowerInvariant();
+            }
+            else
+            {
+                return CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToLowerInvariant();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private async void LoadTwitchContent()
         {
+            if(!this._currentGamerSet.Content.Twitch.Enabled)
+            {
+                return;
+            }
+
             this.IsLoadingTwitchContent = true;
 
-            string twitchGame = "Sea of Thieves";
-            string twitchLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-
+            string twitchGame = this._currentGamerSet.Content.Twitch.Game;
+            string twitchLanguage = this.GetLanguageForTwitchContent();
             List<TwitchVideo> twitchVideos = await this._twitchService.GetStreamsForGameAsync(twitchLanguage, twitchGame);
 
             this.TwitchVideos.Clear();
@@ -206,6 +279,14 @@ namespace browser.ViewModels.AppViews
         private void InitializeTwitchService()
         {
             this._twitchService = new TwitchService();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeGamerSetsService()
+        {
+            this._gamerSetsService = new GamerSetsService();
         }
 
         /// <summary>

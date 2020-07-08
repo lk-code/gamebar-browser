@@ -47,29 +47,34 @@ namespace browser.Config
         /// <summary>
         /// 
         /// </summary>
-        private const string Namespace = "browser";
+        private const string RESSOURCE_NAMESPACE = "browser";
 
         /// <summary>
         /// 
         /// </summary>
-        private const string FileName = "appsettings.json";
+        private const string RESSOURCE_CONFIG_FILENAME = "appsettings.json";
 
         /// <summary>
         /// 
         /// </summary>
         private static bool _loaded = false;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public AppConfig()
         {
             try
             {
-                var assembly = IntrospectionExtensions.GetTypeInfo(typeof(AppConfig)).Assembly;
-                string appSettingFileResourceName = $"{Namespace}.{FileName}";
-                var stream = assembly.GetManifestResourceStream(appSettingFileResourceName);
-                using (var reader = new StreamReader(stream))
+                Assembly assembly = IntrospectionExtensions.GetTypeInfo(typeof(AppConfig)).Assembly;
+                string appSettingFileResourceName = $"{RESSOURCE_NAMESPACE}.{RESSOURCE_CONFIG_FILENAME}";
+                Stream stream = assembly.GetManifestResourceStream(appSettingFileResourceName);
+                using (StreamReader reader = new StreamReader(stream))
                 {
                     string json = reader.ReadToEnd();
+
                     Analytics.TrackEvent($"AppConfig() - Load AppSettings JSON: {json}");
+
                     _secrets = JObject.Parse(json);
                 }
             }
@@ -108,7 +113,7 @@ namespace browser.Config
             {
                 try
                 {
-                    var path = name.Split(':');
+                    string[] path = name.Split(':');
 
                     JToken node = _secrets[path[0]];
                     for (int index = 1; index < path.Length; index++)

@@ -23,28 +23,18 @@
  * SOFTWARE.
  */
 
-namespace browser.Components.Storage
+namespace browser.Components.GamerSets.Models
 {
-    public static class StorageDefaults
+    public class Meta
     {
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string SEARCH_ENGINE = "bing";
+        public string Author { get; set; } = string.Empty;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly bool SHOW_HOMEPAGE_BUTTON = false;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly string HOMEPAGE_URI = "";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly string SELECTED_GAMERSET_KEY = "";
+        public string Title { get; set; } = string.Empty;
     }
 }
