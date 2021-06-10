@@ -72,7 +72,14 @@ namespace browser.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this._viewModel.XboxGameBarWidgetInstance = (e.Parameter as XboxGameBarWidget);
+            if(e.Parameter.GetType() == typeof(DeveloperViewModel))
+            {
+                DeveloperViewModel developerViewModel = (e.Parameter as DeveloperViewModel);
+            } else if (e.Parameter.GetType() == typeof(XboxGameBarWidget))
+            {
+                XboxGameBarWidget xboxGameBarWidget = (e.Parameter as XboxGameBarWidget);
+                this._viewModel.XboxGameBarWidgetInstance = xboxGameBarWidget;
+            }
         }
 
         #endregion

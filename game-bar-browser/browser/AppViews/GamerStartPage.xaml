@@ -117,7 +117,10 @@
             <RowDefinition Height="260" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="3" HorizontalAlignment="Left">
+        <StackPanel
+            Grid.Row="3"
+            HorizontalAlignment="Left"
+            Visibility="{Binding TwitchContentVisibility}">
             <Image
                 Height="32"
                 Margin="20,0"
@@ -131,7 +134,8 @@
             Margin="40,0"
             HorizontalAlignment="Center"
             Foreground="White"
-            IsActive="{Binding IsLoadingTwitchContent}" />
+            IsActive="{Binding IsLoadingTwitchContent}"
+            Visibility="{Binding TwitchContentVisibility}" />
 
         <ListView
             x:Name="GamerStartPage_TwitchContent_ListView"
@@ -150,6 +154,7 @@
             ScrollViewer.IsHorizontalScrollChainingEnabled="True"
             ScrollViewer.VerticalScrollMode="Disabled"
             Visibility="{Binding TwitchContentVisibility}">
+
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Padding" Value="0" />
@@ -157,11 +162,13 @@
                     <Setter Property="CornerRadius" Value="8" />
                 </Style>
             </ListView.ItemContainerStyle>
+
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
+
         </ListView>
 
     </Grid>

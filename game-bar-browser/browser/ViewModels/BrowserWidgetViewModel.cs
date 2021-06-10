@@ -105,9 +105,12 @@ namespace browser.ViewModels
             {
                 _xboxGameBarWidgetInstance = value;
 
-                this.XboxGameBarWidgetControlInstance = new XboxGameBarWidgetControl(this._xboxGameBarWidgetInstance);
+                if(this._xboxGameBarWidgetInstance != null)
+                {
+                    this.XboxGameBarWidgetControlInstance = new XboxGameBarWidgetControl(this._xboxGameBarWidgetInstance);
 
-                _xboxGameBarWidgetInstance.SettingsClicked += XboxGameBarWidgetInstance_SettingsClicked;
+                    _xboxGameBarWidgetInstance.SettingsClicked += XboxGameBarWidgetInstance_SettingsClicked;
+                }
             }
         }
 

@@ -7,7 +7,7 @@
     "background": "ms-appx:///Assets/GamerStartPagePattern/rainbow_01.png",
     "twitch": {
       "enabled": true,
-      "game": "",
+      "game": "Minecraft",
       "useAppLanguage": true,
       "language": ""
     }

@@ -37,13 +37,21 @@
     <Grid Background="{ThemeResource CMapUwpAcrylicBrush}">
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
             <Image Width="160" Source="/Images/logo.png" />
+
             <TextBlock
                 x:Uid="MainPage_AppTitle"
                 Margin="0,32,0,0"
                 FontSize="48"
                 HorizontalTextAlignment="Center"
                 Text="Windows Gamebar Browser" />
+
+            <Button
+                Margin="0,20,0,20"
+                HorizontalAlignment="Center"
+                Click="OpenDeveloperView_Click"
+                Content="DeveloperView" />
 
             <FlipView
                 Width="600"

@@ -10,9 +10,9 @@
   <Identity
     Name="45012KrimmerStudios.WindowsGamebarBrowser"
     Publisher="CN=685DD444-787C-4F01-AFD6-C59B21F062E1"
-    Version="1.2.20.0" />
+    Version="1.2.22.0" />
 
-  <mp:PhoneIdentity PhoneProductId="4ffcb5e4-227d-48e6-bccb-f6996b6bbe38" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="1e613798-c8b2-4a72-94db-2b2467b9e6f5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Gamebar Browser</DisplayName>

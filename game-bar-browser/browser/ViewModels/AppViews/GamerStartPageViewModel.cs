@@ -186,6 +186,8 @@ namespace browser.ViewModels.AppViews
         private void ProcessCurrentGamerSet()
         {
             this.BackgroundImageSource = new BitmapImage(new Uri(this._currentGamerSet.Content.Background, UriKind.RelativeOrAbsolute));
+
+            this.LoadTwitchContent();
         }
 
         /// <summary>
