@@ -50,7 +50,7 @@
                              PublicFolder="GameBar">
             <uap3:Properties>
               <GameBarWidget Type="Standard">
-                <HomeMenuVisible>false</HomeMenuVisible>
+                <HomeMenuVisible>true</HomeMenuVisible>
                 <PinningSupported>true</PinningSupported>
                 <!-- <SettingsSupported AppExtensionId="WidgetBrowserSettings" /> -->
                 <ActivateAfterInstall>true</ActivateAfterInstall>

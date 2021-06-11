@@ -36,8 +36,6 @@ namespace browser.core.test.Components.WebUriProcessor
         [TestMethod]
         public void TestIsValidUri()
         {
-            WebUriProcessorComponent webUriProcessorComponent = new WebUriProcessorComponent();
-
             Dictionary<string, bool> testValues = new Dictionary<string, bool>
             {
                 { "https://www.google.de", true },
@@ -49,7 +47,7 @@ namespace browser.core.test.Components.WebUriProcessor
 
             foreach (KeyValuePair<string, bool> testValue in testValues)
             {
-                bool result = webUriProcessorComponent.IsValidUri(testValue.Key);
+                bool result = WebUriProcessorComponent.IsValidUri(testValue.Key);
 
                 if (result == testValue.Value)
                 {
