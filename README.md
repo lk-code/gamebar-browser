@@ -3,6 +3,8 @@
 ## What is Gamebar Browser?
 Gamebar Browser is a Windows 10 app for the Xbox Gamebar (you can open it with the shortcut [Win] + [G] or on the Xbox controller with the Xbox-Guide button). As the name suggests, this app adds a simple browser to the Gamebar. You can get the app from the [Microsoft Store]([https://www.microsoft.com/store/productId/9P7X6CTWMSLG).
 
+<a href="https://www.buymeacoffee.com/lk.code" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ## Requirements
 The Gamebar extension requires Windows 10 and the 2004 update (May 2020). You can check your version by searching for "winver" in the start menu and see which update is installed.
 
